@@ -1953,6 +1953,10 @@
 		B29A7E3E19EE1B7700872B35 /* AnimationState.c in Sources */ = {isa = PBXBuildFile; fileRef = B29A7DC519EE1B7700872B35 /* AnimationState.c */; };
 		B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC619EE1B7700872B35 /* AnimationState.h */; };
 		B29A7E4019EE1B7700872B35 /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC619EE1B7700872B35 /* AnimationState.h */; };
+		B2B9EABD1AD3D85000A4F792 /* CCCommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B9EABB1AD3D85000A4F792 /* CCCommandBuffer.cpp */; };
+		B2B9EABE1AD3D85000A4F792 /* CCCommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B9EABB1AD3D85000A4F792 /* CCCommandBuffer.cpp */; };
+		B2B9EABF1AD3D85000A4F792 /* CCCommandBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B9EABC1AD3D85000A4F792 /* CCCommandBuffer.h */; };
+		B2B9EAC01AD3D85000A4F792 /* CCCommandBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B9EABC1AD3D85000A4F792 /* CCCommandBuffer.h */; };
 		B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A170721807CE7A005B8026 /* CCPhysicsJoint.cpp */; };
 		B603F1A81AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1A91AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
@@ -3677,6 +3681,8 @@
 		B29A7DC419EE1B7700872B35 /* Animation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Animation.c; sourceTree = "<group>"; };
 		B29A7DC519EE1B7700872B35 /* AnimationState.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AnimationState.c; sourceTree = "<group>"; };
 		B29A7DC619EE1B7700872B35 /* AnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationState.h; sourceTree = "<group>"; };
+		B2B9EABB1AD3D85000A4F792 /* CCCommandBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCommandBuffer.cpp; sourceTree = "<group>"; };
+		B2B9EABC1AD3D85000A4F792 /* CCCommandBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCommandBuffer.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTerrain.cpp; sourceTree = "<group>"; };
@@ -5877,6 +5883,8 @@
 				B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */,
 				B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */,
 				5034CA5D191D591900CE6051 /* shaders */,
+				B2B9EABB1AD3D85000A4F792 /* CCCommandBuffer.cpp */,
+				B2B9EABC1AD3D85000A4F792 /* CCCommandBuffer.h */,
 			);
 			name = renderer;
 			path = ../cocos/renderer;
@@ -6697,6 +6705,7 @@
 				B665E3101AA80A6500DDB1C5 /* CCPUObserver.h in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
+				B2B9EABF1AD3D85000A4F792 /* CCCommandBuffer.h in Headers */,
 				15AE182A19AAD2F700C27E9E /* CCMeshSkin.h in Headers */,
 				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
@@ -7395,6 +7404,7 @@
 				3E6176751960F89B00DE83F5 /* CCEventController.h in Headers */,
 				15AE18CD19AAD33D00C27E9E /* CCNode+CCBRelativePositioning.h in Headers */,
 				382384121A259092002C4610 /* NodeReaderDefine.h in Headers */,
+				B2B9EAC01AD3D85000A4F792 /* CCCommandBuffer.h in Headers */,
 				50ABBE781925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
 				15AE1BC019AADFF000C27E9E /* WebSocket.h in Headers */,
 				B665E2FD1AA80A6500DDB1C5 /* CCPUMaterialManager.h in Headers */,
@@ -8192,6 +8202,7 @@
 				1A57011B180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
 				B29A7E3719EE1B7700872B35 /* AnimationStateData.c in Sources */,
 				15AE182419AAD2F700C27E9E /* CCMesh.cpp in Sources */,
+				B2B9EABD1AD3D85000A4F792 /* CCCommandBuffer.cpp in Sources */,
 				15AE190D19AAD35000C27E9E /* CCDisplayManager.cpp in Sources */,
 				382383FA1A258FA7002C4610 /* idl_gen_go.cpp in Sources */,
 				382383FE1A258FA7002C4610 /* idl_parser.cpp in Sources */,
@@ -9084,6 +9095,7 @@
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				15AE193219AAD35100C27E9E /* CCActionNode.cpp in Sources */,
 				15AE195319AAD35100C27E9E /* CCDisplayFactory.cpp in Sources */,
+				B2B9EABE1AD3D85000A4F792 /* CCCommandBuffer.cpp in Sources */,
 				182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,

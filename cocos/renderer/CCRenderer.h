@@ -32,7 +32,9 @@
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCCommandBuffer.h"
 #include "platform/CCGL.h"
+
 
 /**
  * @addtogroup support
@@ -261,6 +263,15 @@ protected:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;
 #endif
+    
+public:
+    /**@{
+     Interfaces used for commandBuffer
+     */
+    void applyCommandBuffer(CommandBufferDepth& cmd);
+    void applyCommandBuffer(CommandBufferBlend& cmd);
+    
+    /**@}*/
 };
 
 NS_CC_END

@@ -722,7 +722,7 @@ std::string RawStencilBufferTest3::subtitle() const
 void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDisable(GL_DEPTH_TEST);
+    CommandBufferDepth(false,GL_LEQUAL).apply();
     glDepthMask(GL_FALSE);
 }
 
@@ -784,7 +784,7 @@ std::string RawStencilBufferTest5::subtitle() const
 void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDisable(GL_DEPTH_TEST);
+    CommandBufferDepth(false,GL_LEQUAL).apply();
     glDepthMask(GL_FALSE);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -877,7 +877,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    glDisable(GL_DEPTH_TEST);
+    CommandBufferDepth(false,GL_LEQUAL).apply();
     glDepthMask(GL_FALSE);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glEnable(GL_ALPHA_TEST);

@@ -99,10 +99,9 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     glDepthMask(GL_TRUE);
     GLboolean depthTestCheck;
     glGetBooleanv(GL_DEPTH_TEST,&depthTestCheck);
-    if(!depthTestCheck)
-    {
-        glEnable(GL_DEPTH_TEST);
-    }
+    
+    CommandBufferDepth(!depthTestCheck,GL_LEQUAL).apply();
+    
     GLboolean blendCheck;
     glGetBooleanv(GL_BLEND,&blendCheck);
     if(blendCheck)
@@ -161,13 +160,8 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         _isCameraViewChanged = false;
     }
     glActiveTexture(GL_TEXTURE0);
-    if(depthTestCheck)
-    {
-        glEnable(GL_DEPTH_TEST);
-    }else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
+    CommandBufferDepth(depthTestCheck, GL_LEQUAL).apply();
+    
     if(blendCheck)
     {
         glEnable(GL_BLEND);

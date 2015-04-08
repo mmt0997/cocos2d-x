@@ -155,15 +155,7 @@ void RenderQueue::restoreRenderState()
         glDisable(GL_CULL_FACE);
     }
     
-    
-    if (_isDepthEnabled)
-    {
-        glEnable(GL_DEPTH_TEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
+    CommandBufferDepth(_isDepthEnabled,GL_LEQUAL).apply();
     
     glDepthMask(_isDepthWrite);
     
@@ -514,14 +506,15 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
     if (zNegQueue.size() > 0)
     {
+        
+        CommandBufferDepth(_isDepthTestFor2D,GL_LEQUAL).apply();
+        
         if(_isDepthTestFor2D)
         {
-            glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
         }
         else
         {
-            glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
         }
         for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
@@ -539,7 +532,8 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     {
         //Clear depth to achieve layered rendering
         glDepthMask(true);
-        glEnable(GL_DEPTH_TEST);
+        
+        CommandBufferDepth(true,GL_LEQUAL).apply();
         
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
         {
@@ -554,7 +548,8 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
     if (transQueue.size() > 0)
     {
-        glEnable(GL_DEPTH_TEST);
+        CommandBufferDepth(true,GL_LEQUAL).apply();
+        
         glDepthMask(false);
         
         for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
@@ -570,14 +565,15 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
     if (zZeroQueue.size() > 0)
     {
+        
+        CommandBufferDepth(_isDepthTestFor2D,GL_LEQUAL).apply();
+        
         if(_isDepthTestFor2D)
         {
-            glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
         }
         else
         {
-            glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
         }
         for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
@@ -661,14 +657,10 @@ void Renderer::setDepthTest(bool enable)
     if (enable)
     {
         glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
 //        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
+    
+    CommandBufferDepth(enable,GL_LEQUAL).apply();
     
     _isDepthTestFor2D = enable;
     CHECK_GL_ERROR_DEBUG();
@@ -1004,5 +996,29 @@ void Renderer::setClearColor(const Color4F &clearColor)
     _clearColor = clearColor;
     glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 }
+
+
+//begin CommandBuffer
+void Renderer::applyCommandBuffer(CommandBufferDepth &cmd)
+{
+    if(!cmd.isEnabled) glDisable(GL_DEPTH_TEST);
+    else
+    {
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(cmd.compareFunction);
+    }
+}
+
+void Renderer::applyCommandBuffer(CommandBufferBlend &cmd)
+{
+    if(!cmd.isEnabled) glDisable(GL_BLEND);
+    else
+    {
+        glEnable(GL_BLEND);
+        glBlendEquation(cmd.blendMode);
+        glBlendFunc(cmd.srcFactor, cmd.dstFactor);
+    }
+}
+//end CommandBuffer
 
 NS_CC_END

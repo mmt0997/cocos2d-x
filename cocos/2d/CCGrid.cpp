@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCCommandBuffer.h"
 #include "renderer/CCTexture2D.h"
 #include "platform/CCGL.h"
 
@@ -322,7 +323,7 @@ void Grid3D::beforeBlit()
         glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriteMask);
 		_oldDepthWriteValue = depthWriteMask != GL_FALSE;
         CHECK_GL_ERROR_DEBUG();
-        glEnable(GL_DEPTH_TEST);
+        CommandBufferDepth(true,GL_LEQUAL).apply();
         glDepthMask(true);
     }
 }
@@ -331,10 +332,7 @@ void Grid3D::afterBlit()
 {
     if(_needDepthTestForBlit)
     {
-        if(_oldDepthTestValue)
-            glEnable(GL_DEPTH_TEST);
-        else
-            glDisable(GL_DEPTH_TEST);
+        CommandBufferDepth(_oldDepthTestValue,GL_LEQUAL).apply();
         
         glDepthMask(_oldDepthWriteValue);
     }

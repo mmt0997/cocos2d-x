@@ -213,7 +213,7 @@ void MeshCommand::applyRenderState()
     
     if (_depthTestEnabled != _renderStateDepthTest)
     {
-        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+        CommandBufferDepth(_depthTestEnabled,GL_LEQUAL).apply();
     }
     
     if (_depthWriteEnabled != _renderStateDepthWrite)
@@ -236,7 +236,7 @@ void MeshCommand::restoreRenderState()
     
     if (_depthTestEnabled != _renderStateDepthTest)
     {
-        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+        CommandBufferDepth(_renderStateDepthTest,GL_LEQUAL).apply();
     }
     
     if (_depthWriteEnabled != _renderStateDepthWrite)
