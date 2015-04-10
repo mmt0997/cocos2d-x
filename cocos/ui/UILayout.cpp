@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
 
+#define TEST_COMMAND_BUFFER_STENCIL 1
 
 NS_CC_BEGIN
 
@@ -318,7 +319,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
-    
+
 void Layout::onBeforeVisitStencil()
 {
     s_layer++;
@@ -334,18 +335,27 @@ void Layout::onBeforeVisitStencil()
     glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
     glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
     
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil stencil;
+    stencil.setEnable(true).setFunc(GL_NEVER, mask_layer, mask_layer).setMask(mask_layer).setOp(GL_ZERO, GL_KEEP, GL_KEEP).apply();
+#else
     glEnable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
     glStencilMask(mask_layer);
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
-    glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
+#endif
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
+    glDepthMask(GL_FALSE);
 
     this->drawFullScreenQuadClearStencil();
-    
+
+#if TEST_COMMAND_BUFFER_STENCIL
+    stencil.apply();
+#else
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+#endif
 }
     
 void Layout::drawFullScreenQuadClearStencil()
@@ -392,13 +402,27 @@ void Layout::drawFullScreenQuadClearStencil()
 void Layout::onAfterDrawStencil()
 {
     glDepthMask(_currentDepthWriteMask);
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil stencil;
+    stencil.setFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+#endif
 }
 
 
 void Layout::onAfterVisitStencil()
 {
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil stencil;
+    stencil.setFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask).setMask(_currentStencilWriteMask);
+    if (!_currentStencilEnabled)
+    {
+        stencil.setEnable(false);
+    }
+    stencil.apply();
+#else
     glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
     glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
     glStencilMask(_currentStencilWriteMask);
@@ -406,6 +430,7 @@ void Layout::onAfterVisitStencil()
     {
         glDisable(GL_STENCIL_TEST);
     }
+#endif
     s_layer--;
 }
     

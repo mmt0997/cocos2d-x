@@ -962,7 +962,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     if (scene && scene->_defaultCamera != Camera::getVisitingCamera())
         return true;
     
-    // half size of the screen
+    // half size of the screenR
     Size screen_half = Director::getInstance()->getWinSize();
     screen_half.width /= 2;
     screen_half.height /= 2;
@@ -999,24 +999,67 @@ void Renderer::setClearColor(const Color4F &clearColor)
 
 
 //begin CommandBuffer
-void Renderer::applyCommandBuffer(CommandBufferDepth &cmd)
+void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
 {
-    if(!cmd.isEnabled) glDisable(GL_DEPTH_TEST);
-    else
-    {
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(cmd.compareFunction);
-    }
-}
-
-void Renderer::applyCommandBuffer(CommandBufferBlend &cmd)
-{
-    if(!cmd.isEnabled) glDisable(GL_BLEND);
-    else
-    {
-        glEnable(GL_BLEND);
-        glBlendEquation(cmd.blendMode);
-        glBlendFunc(cmd.srcFactor, cmd.dstFactor);
+    switch (cmdBuf->_type) {
+        case CommandBufferType::DEPTH:
+        {
+            CommandBufferDepth &cmd = *static_cast<CommandBufferDepth *>(cmdBuf);
+            if(!cmd.isEnabled) glDisable(GL_DEPTH_TEST);
+            else
+            {
+                glEnable(GL_DEPTH_TEST);
+                glDepthFunc(cmd.compareFunction);
+            }
+            break;
+        }
+        case CommandBufferType::BLEND:
+        {
+            CommandBufferBlend &cmd = *static_cast<CommandBufferBlend *>(cmdBuf);
+            if(!cmd.isEnabled) glDisable(GL_BLEND);
+            else
+            {
+                glEnable(GL_BLEND);
+                glBlendEquation(cmd.blendMode);
+                glBlendFunc(cmd.srcFactor, cmd.dstFactor);
+            }
+            break;
+        }
+        case CommandBufferType::STENCIL:
+        {
+            CommandBufferStencil &cmd = *static_cast<CommandBufferStencil *>(cmdBuf);
+            if (cmd.flags.setEnabled) {
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_STENCIL_TEST);
+                }
+                else
+                {
+                    glDisable(GL_STENCIL_TEST);
+                }
+                if (cmd.flags.setFuncFront) {
+                    glStencilFuncSeparate(GL_FRONT, cmd.func[0].func, cmd.func[0].ref, cmd.func[0].mask);
+                }
+                if (cmd.flags.setFuncBack) {
+                    glStencilFuncSeparate(GL_BACK, cmd.func[1].func, cmd.func[1].ref, cmd.func[1].mask);
+                }
+                if (cmd.flags.setMaskFront) {
+                    glStencilMaskSeparate(GL_FRONT, cmd.mask[0]);
+                }
+                if (cmd.flags.setMaskBack) {
+                    glStencilMaskSeparate(GL_BACK, cmd.mask[1]);
+                }
+                if (cmd.flags.setOpFront) {
+                    glStencilOpSeparate(GL_FRONT, cmd.op[0].sfail, cmd.op[0].dpfail, cmd.op[0].dppass);
+                }
+                if (cmd.flags.setOpBack) {
+                    glStencilOpSeparate(GL_BACK, cmd.op[1].sfail, cmd.op[1].dpfail, cmd.op[1].dppass);
+                }
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 //end CommandBuffer

@@ -268,9 +268,7 @@ public:
     /**@{
      Interfaces used for commandBuffer
      */
-    void applyCommandBuffer(CommandBufferDepth& cmd);
-    void applyCommandBuffer(CommandBufferBlend& cmd);
-    
+    void applyCommandBuffer(CommandBuffer* cmd);
     /**@}*/
 };
 

@@ -35,22 +35,21 @@ NS_CC_BEGIN
 enum class CommandBufferType
 {
     INVALID,
-    DEPTH,
     BLEND,
+    DEPTH,
+    STENCIL,
 };
 
 class CommandBuffer
 {
-private:
-    void (*applyImplementation)(CommandBuffer*);
 public:
     CommandBufferType _type;    
-    CommandBuffer(void (*applyFunction)(CommandBuffer*)): _type(CommandBufferType::INVALID), applyImplementation(applyFunction) {}
+    virtual ~CommandBuffer() {}
     
-    void apply()
-    {
-        applyImplementation(this);
-    }
+    // this function is a temp function for restruct code, it will be removed at last
+    void apply();
+protected:
+    CommandBuffer(CommandBufferType type = CommandBufferType::INVALID): _type(type){}
 };
 
 struct CommandBufferDepth : public CommandBuffer
@@ -68,10 +67,9 @@ public:
      Constructor.
      */
     CommandBufferDepth()
-    : CommandBuffer(rendererApplyDepth)
+    : CommandBuffer(CommandBufferType::DEPTH)
     , isEnabled(false), compareFunction(GL_ALWAYS)
     {
-        _type = CommandBufferType::DEPTH;
     }
     /**
      Constructor.
@@ -79,14 +77,10 @@ public:
      @param compareFunc compareFunction used for depth test.
      */
     CommandBufferDepth(bool enable, GLenum compareFunc)
-    : CommandBuffer(rendererApplyDepth)
+    : CommandBuffer(CommandBufferType::DEPTH)
     , isEnabled(enable), compareFunction(compareFunc)
     {
-        _type = CommandBufferType::DEPTH;
     }
-    
-private:
-    static void rendererApplyDepth(CommandBuffer*);
 };
 
 struct CommandBufferBlend : public CommandBuffer
@@ -106,10 +100,9 @@ public:
      Constructor.
      */
     CommandBufferBlend()
-    : CommandBuffer(rendererApplyBlend)
+    : CommandBuffer(CommandBufferType::BLEND)
     , isEnabled(false), srcFactor(GL_ONE), dstFactor(GL_ZERO),blendMode(GL_FUNC_ADD)
     {
-        _type = CommandBufferType::BLEND;
     }
     /**
      Constructor.
@@ -119,18 +112,68 @@ public:
      @param mode Add or subtract.
      */
     CommandBufferBlend(bool enable, GLenum src, GLenum dst, GLenum mode)
-    : CommandBuffer(rendererApplyBlend)
+    : CommandBuffer(CommandBufferType::BLEND)
     , isEnabled(enable), srcFactor(src), dstFactor(dst),blendMode(mode)
     {
-        _type = CommandBufferType::BLEND;
     }
-private:
-    static void rendererApplyBlend(CommandBuffer*);
+};
+
+enum class FaceEnum
+{
+    FRONT,
+    BACK,
+    FRONT_AND_BACK,
+};
+
+/** Set stencil buffer status.
+ */
+class CommandBufferStencil : public CommandBuffer
+{
+public:
+    /** Constructor.*/
+    CommandBufferStencil():CommandBuffer(CommandBufferType::STENCIL), flag(0){}
+    
+    CommandBufferStencil& setEnable(bool enable);
+    CommandBufferStencil& setFunc(uint32_t func, int32_t ref = 0, uint32_t mask = -1, FaceEnum face = FaceEnum::FRONT_AND_BACK);
+    CommandBufferStencil& setMask(uint32_t mask, FaceEnum face = FaceEnum::FRONT_AND_BACK);
+    CommandBufferStencil& setOp(uint32_t sfail, uint32_t dpfail, uint32_t dppass, FaceEnum face = FaceEnum::FRONT_AND_BACK);
+    
+    union {
+        bool    flag;
+        struct
+        {
+            unsigned setEnabled:1;
+            unsigned setFuncFront:1;
+            unsigned setFuncBack:1;
+            unsigned setMaskFront:1;
+            unsigned setMaskBack:1;
+            unsigned setOpFront:1;
+            unsigned setOpBack:1;
+            unsigned enabled;
+        }flags;
+    };
+    struct  // StencilFuncParam
+    {
+        uint16_t func;
+        uint16_t ref;
+        uint16_t mask;
+    } func[2];
+    uint32_t mask[2];
+    struct // stencilOpParam
+    {
+        uint16_t sfail;
+        uint16_t dpfail;
+        uint16_t dppass;
+    } op[2];
 };
 
 //todo: add more commandBuffer
 
-NS_CC_END
+struct CommandBufferDraw : public CommandBuffer
+{
 
+};
+
+NS_CC_END
 
 #endif /* defined(__CC_COMMAND_BUFFER_H__) */
