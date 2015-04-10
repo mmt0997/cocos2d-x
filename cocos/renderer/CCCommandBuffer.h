@@ -130,6 +130,106 @@ private:
 
 //todo: add more commandBuffer
 
+enum VertexSemantic
+{
+    PLACEHOLDER = 0,    //no semantic, just used as place holders
+    POSIITON = PLACEHOLDER + 1,       //position
+    NORMAL = PLACEHOLDER + 2,         //normal
+    COLOR = PLACEHOLDER + 3,          //color
+    BLENDWEIGHT = PLACEHOLDER + 4,    //blend weight, used for hardware skinning
+    BLENDINDEX = PLACEHOLDER + 5,     //blend index, used for hardware skinning
+    TEXCOORD0 = PLACEHOLDER + 6,      //texture coordinate 0-7
+    TEXCOORD1 = PLACEHOLDER + 7,
+    TEXCOORD2 = PLACEHOLDER + 8,
+    TEXCOORD3 = PLACEHOLDER + 9,
+    TEXCOORD4 = PLACEHOLDER + 10,
+    TEXCOORD5 = PLACEHOLDER + 11,
+    TEXCOORD6 = PLACEHOLDER + 12,
+    TEXCOORD7 = PLACEHOLDER + 13,
+    
+    COUNT = 14,
+};
+
+enum class VertexElementType
+{
+    FLOAT,
+    INT,
+    BYTE,
+};
+
+class VertexElement
+{
+public:
+    VertexSemantic _semantic;
+    VertexElementType _type;
+    int _count; //1-4
+    
+    VertexElement(VertexSemantic semantic, VertexElementType type, int count)
+    :_semantic(semantic), _type(type), _count(count)
+    {
+    }
+};
+
+typedef std::vector<VertexElement> VertexBufferLayout;
+
+struct VertexStream
+{
+    VertexBuffer* buffer;
+    VertexBufferLayout layout;
+};
+
+typedef std::vector<VertexStream> VertexStreams;
+
+typedef unsigned char SemanticAttributeIndexMap[VertexSemantic::COUNT];
+
+SemanticAttributeIndexMap s_testMap;
+
+enum class GeometryType
+{
+    Points,
+    Lines,
+    Triangles,
+};
+
+struct CommandBufferBlendVertexStreams : public CommandBuffer
+{
+    VertexStreams streams;
+    
+public:
+    CommandBufferBlendVertexStreams(const VertexStreams& stream)
+    : streams(stream)
+    {
+        
+    }
+};
+
+struct CommandBufferDraw : public CommandBuffer
+{
+    int start;
+    int count;
+    GeometryType type;
+public:
+    CommandBufferDraw(GeometryType type,int start, int count)
+    :type(type),start(start), count(count)
+    {
+        
+    }
+};
+
+struct CommandBufferDrawIndexed : public CommandBuffer
+{
+    IndexBuffer* indices;
+    int start;
+    int count;
+    GeometryType type;
+public:
+    CommandBufferDrawIndexed(IndexBuffer* buffer,GeometryType type,int start, int count)
+    :indices(buffer),type(type),start(start), count(count)
+    {
+        
+    }
+};
+
 NS_CC_END
 
 
