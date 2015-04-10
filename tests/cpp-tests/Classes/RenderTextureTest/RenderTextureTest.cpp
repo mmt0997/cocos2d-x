@@ -459,25 +459,41 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
 
 void RenderTextureTestDepthStencil::onBeforeClear()
 {
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setMask(0xFF).apply();
+#else
     glStencilMask(0xFF);
+#endif
 }
 
 void RenderTextureTestDepthStencil::onBeforeStencil()
 {
     //! mark sprite quad into stencil buffer
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setEnable(true).setFunc(GL_NEVER, 1, 0xFF).setOp(GL_REPLACE, GL_REPLACE, GL_REPLACE).apply();
+#else
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+#endif
 }
 
 void RenderTextureTestDepthStencil::onBeforDraw()
 {
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setFunc(GL_NOTEQUAL, 1, 0xFF).apply();
+#else
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+#endif
 }
 
 void RenderTextureTestDepthStencil::onAfterDraw()
 {
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setEnable(false).apply();
+#else
     glDisable(GL_STENCIL_TEST);
+#endif
 }
 
 std::string RenderTextureTestDepthStencil::title() const

@@ -37,8 +37,6 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "base/CCEventFocus.h"
 
-#define TEST_COMMAND_BUFFER_STENCIL 1
-
 NS_CC_BEGIN
 
 namespace ui {
@@ -351,7 +349,8 @@ void Layout::onBeforeVisitStencil()
     this->drawFullScreenQuadClearStencil();
 
 #if TEST_COMMAND_BUFFER_STENCIL
-    stencil.apply();
+    stencil.flag = 0;
+    stencil.setFunc(GL_NEVER, mask_layer, mask_layer).setOp(GL_REPLACE, GL_KEEP, GL_KEEP).apply();
 #else
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
@@ -403,8 +402,7 @@ void Layout::onAfterDrawStencil()
 {
     glDepthMask(_currentDepthWriteMask);
 #if TEST_COMMAND_BUFFER_STENCIL
-    CommandBufferStencil stencil;
-    stencil.setFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
+    CommandBufferStencil().setFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
 #else
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);

@@ -1037,24 +1037,24 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
                 {
                     glDisable(GL_STENCIL_TEST);
                 }
-                if (cmd.flags.setFuncFront) {
-                    glStencilFuncSeparate(GL_FRONT, cmd.func[0].func, cmd.func[0].ref, cmd.func[0].mask);
-                }
-                if (cmd.flags.setFuncBack) {
-                    glStencilFuncSeparate(GL_BACK, cmd.func[1].func, cmd.func[1].ref, cmd.func[1].mask);
-                }
-                if (cmd.flags.setMaskFront) {
-                    glStencilMaskSeparate(GL_FRONT, cmd.mask[0]);
-                }
-                if (cmd.flags.setMaskBack) {
-                    glStencilMaskSeparate(GL_BACK, cmd.mask[1]);
-                }
-                if (cmd.flags.setOpFront) {
-                    glStencilOpSeparate(GL_FRONT, cmd.op[0].sfail, cmd.op[0].dpfail, cmd.op[0].dppass);
-                }
-                if (cmd.flags.setOpBack) {
-                    glStencilOpSeparate(GL_BACK, cmd.op[1].sfail, cmd.op[1].dpfail, cmd.op[1].dppass);
-                }
+            }
+            if (cmd.flags.setFuncFront) {
+                glStencilFuncSeparate(GL_FRONT, cmd.func[0].func, cmd.func[0].ref, cmd.func[0].mask);
+            }
+            if (cmd.flags.setFuncBack) {
+                glStencilFuncSeparate(GL_BACK, cmd.func[1].func, cmd.func[1].ref, cmd.func[1].mask);
+            }
+            if (cmd.flags.setMaskFront) {
+                glStencilMaskSeparate(GL_FRONT, cmd.mask[0]);
+            }
+            if (cmd.flags.setMaskBack) {
+                glStencilMaskSeparate(GL_BACK, cmd.mask[1]);
+            }
+            if (cmd.flags.setOpFront) {
+                glStencilOpSeparate(GL_FRONT, cmd.op[0].sfail, cmd.op[0].dpfail, cmd.op[0].dppass);
+            }
+            if (cmd.flags.setOpBack) {
+                glStencilOpSeparate(GL_BACK, cmd.op[1].sfail, cmd.op[1].dpfail, cmd.op[1].dppass);
             }
             break;
         }

@@ -604,13 +604,21 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint3
 
 void RawStencilBufferTest::onEnableStencil()
 {
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setEnable(true).apply();
+#else
     glEnable(GL_STENCIL_TEST);
+#endif
     CHECK_GL_ERROR_DEBUG();
 }
 
 void RawStencilBufferTest::onDisableStencil()
 {
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setEnable(false).apply();
+#else
     glDisable(GL_STENCIL_TEST);
+#endif
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -678,19 +686,31 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
 {
     GLint planeMask = 0x1 << plane;
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setMask(planeMask).apply();
+#else
     glStencilMask(planeMask);
+#endif
     glClearStencil(0x0);
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setFunc(GL_NEVER, planeMask, planeMask).setOp(GL_REPLACE, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+#endif
 }
 
 void RawStencilBufferTest::setupStencilForDrawingOnPlane(GLint plane)
 {
     GLint planeMask = 0x1 << plane;
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setFunc(GL_EQUAL, planeMask, planeMask).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilFunc(GL_EQUAL, planeMask, planeMask);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+#endif
 }
 
 //@implementation RawStencilBufferTest2
@@ -822,7 +842,11 @@ void RawStencilBufferTest6::setup()
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
     //by default, glReadPixels will pack data with 4 bytes allignment
     unsigned char bits[4] = {0,0,0,0};
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setMask(~0).apply();
+#else
     glStencilMask(~0);
+#endif
     glClearStencil(0);
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
@@ -830,7 +854,11 @@ void RawStencilBufferTest6::setup()
     auto clearToZeroLabel = Label::createWithTTF(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
     clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
     this->addChild(clearToZeroLabel);
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setMask(0x0F).apply();
+#else
     glStencilMask(0x0F);
+#endif
     glClearStencil(0xAA);
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
@@ -839,16 +867,23 @@ void RawStencilBufferTest6::setup()
     clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
     this->addChild(clearToMaskLabel);
 #endif
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setMask(~0).apply();
+#else
     glStencilMask(~0);
+#endif
 }
 
 void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
 {
     GLint planeMask = 0x1 << plane;
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setFunc(GL_NEVER, 0, planeMask).setMask(planeMask).setOp(GL_REPLACE, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilMask(planeMask);
     glStencilFunc(GL_NEVER, 0, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-  
+#endif
     Vec2 pt = Director::getInstance()->getWinSize();
     Vec2 vertices[] = {
         Vec2::ZERO,
@@ -874,9 +909,12 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-    
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setFunc(GL_NEVER, planeMask, planeMask).setOp(GL_REPLACE, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+#endif
     CommandBufferDepth(false,GL_LEQUAL).apply();
     glDepthMask(GL_FALSE);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
