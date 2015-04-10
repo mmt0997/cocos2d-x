@@ -169,11 +169,6 @@ public:
 
 //todo: add more commandBuffer
 
-struct CommandBufferDraw : public CommandBuffer
-{
-
-};
-
 NS_CC_END
 
 #endif /* defined(__CC_COMMAND_BUFFER_H__) */
