@@ -40,6 +40,41 @@ void CommandBuffer::apply()
     }
 }
 
+CommandBufferBlend& CommandBufferBlend::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setColor(float r, float g, float b, float a)
+{
+    this->flags.setColor = true;
+    this->color.r = r;
+    this->color.g = g;
+    this->color.b = b;
+    this->color.a = a;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setEquation(uint32_t mode, uint32_t modeAlpha)
+{
+    this->flags.setEquation = true;
+    this->equation[0] = mode;
+    this->equation[1] = (modeAlpha == GL_INVALID_ENUM) ? mode : modeAlpha;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setFunction(uint32_t src, uint32_t dst, uint32_t srcAlpha, uint32_t dstAlpha)
+{
+    this->flags.setFunction = true;
+    this->srcFunc[0] = src;
+    this->dstFunc[0] = dst;
+    this->srcFunc[1] = (srcAlpha == GL_INVALID_ENUM) ? src : srcAlpha;
+    this->dstFunc[1] = (dstAlpha == GL_INVALID_ENUM) ? dst : dstAlpha;
+    return *this;
+}
+
 CommandBufferStencil& CommandBufferStencil::setEnable(bool enable)
 {
     this->flags.setEnabled = true;

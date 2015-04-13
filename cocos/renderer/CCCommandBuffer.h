@@ -83,39 +83,42 @@ public:
     }
 };
 
+#define TEST_COMMAND_BUFFER_BLEND 1
 struct CommandBufferBlend : public CommandBuffer
 {
-    /**
-     @{
-     RenderState used for blend , if isEnabled is false, other states will be discard.
-     isEnabled is false by default.
-     */
-    bool isEnabled;
-    GLenum srcFactor;
-    GLenum dstFactor;
-    GLenum blendMode;
-    /**@}*/
+    union {
+        bool    flag;
+        struct
+        {
+            unsigned setEnabled:1;
+            unsigned setColor:1;
+            unsigned setEquation:1;
+            unsigned setFunction:1;
+            unsigned enabled;
+        }flags;
+    };
+    struct {
+        float r;
+        float g;
+        float b;
+        float a;
+    } color;
+    
+    uint32_t equation[2];
+    uint32_t srcFunc[2];
+    uint32_t dstFunc[2];
 public:
     /**
      Constructor.
      */
-    CommandBufferBlend()
-    : CommandBuffer(CommandBufferType::BLEND)
-    , isEnabled(false), srcFactor(GL_ONE), dstFactor(GL_ZERO),blendMode(GL_FUNC_ADD)
+    CommandBufferBlend():CommandBuffer(CommandBufferType::BLEND), flag(0)
     {
     }
-    /**
-     Constructor.
-     @param enable Enable state for blend.
-     @param src source factor.
-     @param dst destiny factor.
-     @param mode Add or subtract.
-     */
-    CommandBufferBlend(bool enable, GLenum src, GLenum dst, GLenum mode)
-    : CommandBuffer(CommandBufferType::BLEND)
-    , isEnabled(enable), srcFactor(src), dstFactor(dst),blendMode(mode)
-    {
-    }
+    
+    CommandBufferBlend& setEnable(bool enable);
+    CommandBufferBlend& setColor(float r, float g, float b, float a);
+    CommandBufferBlend& setEquation(uint32_t mode, uint32_t modeAlpha = GL_INVALID_ENUM);
+    CommandBufferBlend& setFunction(uint32_t src, uint32_t dst, uint32_t srcAlpha = GL_INVALID_ENUM, uint32_t dstAlpha = GL_INVALID_ENUM);
 };
 
 enum class FaceEnum
@@ -126,7 +129,6 @@ enum class FaceEnum
 };
 
 #define TEST_COMMAND_BUFFER_STENCIL 1
-
 /** Set stencil buffer status.
  */
 class CommandBufferStencil : public CommandBuffer

@@ -1016,12 +1016,21 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
         case CommandBufferType::BLEND:
         {
             CommandBufferBlend &cmd = *static_cast<CommandBufferBlend *>(cmdBuf);
-            if(!cmd.isEnabled) glDisable(GL_BLEND);
-            else
-            {
-                glEnable(GL_BLEND);
-                glBlendEquation(cmd.blendMode);
-                glBlendFunc(cmd.srcFactor, cmd.dstFactor);
+            if (cmd.flags.setEnabled) {
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_BLEND);
+                }
+                else
+                {
+                    glDisable(GL_BLEND);
+                }
+            }
+            if (cmd.flags.setEquation) {
+                glBlendEquationSeparate(cmd.equation[0], cmd.equation[1]);
+            }
+            if (cmd.flags.setFunction) {
+                glBlendFuncSeparate(cmd.srcFunc[0], cmd.dstFunc[0], cmd.srcFunc[1], cmd.dstFunc[1]);
             }
             break;
         }
