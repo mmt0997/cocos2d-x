@@ -559,10 +559,17 @@ void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 
 void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 {
+#if TEST_COMMAND_BUFFER_SCISSOR
+    CommandBufferScissor().setBox(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor,
+                                  y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor,
+                                  w * _scaleX * _retinaFactor * _frameZoomFactor,
+                                  h * _scaleY * _retinaFactor * _frameZoomFactor).apply();
+#else
     glScissor((GLint)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
-               (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
-               (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor),
-               (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
+              (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
+              (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor),
+              (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
+#endif
 }
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)

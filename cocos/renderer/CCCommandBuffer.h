@@ -41,6 +41,7 @@ enum class CommandBufferType
     BLEND,
     STENCIL,
     CULLING,
+    SCISSOR,
     
     STEAMS,
     DRAW,
@@ -190,6 +191,15 @@ public:
 class CommandBufferCulling : public CommandBuffer
 {
 public:
+    /** Constructor.*/
+    CommandBufferCulling():CommandBuffer(CommandBufferType::CULLING), flag(0)
+    {
+    }
+    
+    CommandBufferCulling& setEnable(bool enable);
+    CommandBufferCulling& setCullFace(uint32_t mode);
+    CommandBufferCulling& setFrontFace(uint32_t mode);
+    
     union {
         bool    flag;
         struct
@@ -202,16 +212,35 @@ public:
     };
     uint32_t cullFace;
     uint32_t frontFace;
-    
-    CommandBufferCulling():CommandBuffer(CommandBufferType::CULLING), flag(0)
+};
+
+#define TEST_COMMAND_BUFFER_SCISSOR 1
+
+class CommandBufferScissor : public CommandBuffer
+{
+public:
+    /** Constructor.*/
+    CommandBufferScissor():CommandBuffer(CommandBufferType::SCISSOR), flag(0)
     {
     }
     
-    CommandBufferCulling& setEnable(bool enable);
-    CommandBufferCulling& setCullFace(uint32_t mode);
-    CommandBufferCulling& setFrontFace(uint32_t mode);
+    CommandBufferScissor& setEnable(bool enable);
+    CommandBufferScissor& setBox(int x, int y, int width, int height);
+    
+    union {
+        bool    flag;
+        struct
+        {
+            unsigned setEnabled:1;
+            unsigned setBox:1;
+            unsigned enabled:1;
+        }flags;
+    };
+    uint16_t x;
+    uint16_t y;
+    uint16_t width;
+    uint16_t height;
 };
-
 //todo: add more commandBuffer
 
 enum VertexSemantic

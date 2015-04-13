@@ -223,4 +223,21 @@ CommandBufferCulling& CommandBufferCulling::setFrontFace(uint32_t mode)
     return *this;
 }
 
+CommandBufferScissor& CommandBufferScissor::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferScissor& CommandBufferScissor::setBox(int x, int y, int width, int height)
+{
+    this->flags.setBox = true;
+    this->x = (uint16_t)x;
+    this->y = (uint16_t)y;
+    this->width = (uint16_t)width;
+    this->height = (uint16_t)height;
+    return *this;
+}
+
 NS_CC_END

@@ -1081,6 +1081,26 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
             }
             break;
         }
+        case CommandBufferType::SCISSOR:
+        {
+            CommandBufferScissor &cmd = *static_cast<CommandBufferScissor *>(cmdBuf);
+            if (cmd.flags.setEnabled)
+            {
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_SCISSOR_TEST);
+                }
+                else
+                {
+                    glDisable(GL_SCISSOR_TEST);
+                }
+            }
+            if (cmd.flags.setBox)
+            {
+                glScissor(cmd.x, cmd.y, cmd.width, cmd.height);
+            }
+            break;
+        }
         default:
             break;
     }

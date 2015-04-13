@@ -435,14 +435,22 @@ void Layout::onAfterVisitStencil()
 void Layout::onBeforeVisitScissor()
 {
     Rect clippingRect = getClippingRect();
+#if TEST_COMMAND_BUFFER_SCISSOR
+    CommandBufferScissor().setEnable(true).apply();
+#else
     glEnable(GL_SCISSOR_TEST);
+#endif
     auto glview = Director::getInstance()->getOpenGLView();
     glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
 }
 
 void Layout::onAfterVisitScissor()
 {
+#if TEST_COMMAND_BUFFER_SCISSOR
+    CommandBufferScissor().setEnable(false).apply();
+#else
     glDisable(GL_SCISSOR_TEST);
+#endif
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)

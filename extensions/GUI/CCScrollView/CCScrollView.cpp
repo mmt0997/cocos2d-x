@@ -545,7 +545,11 @@ void ScrollView::onBeforeDraw()
             }
         }
         else {
+#if TEST_COMMAND_BUFFER_SCISSOR
+            CommandBufferScissor().setEnable(true).apply();
+#else
             glEnable(GL_SCISSOR_TEST);
+#endif
             glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         }
     }
@@ -568,11 +572,14 @@ void ScrollView::onAfterDraw()
     {
         if (_scissorRestored) {//restore the parent's scissor rect
             auto glview = Director::getInstance()->getOpenGLView();
-
             glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
         }
         else {
+#if TEST_COMMAND_BUFFER_SCISSOR
+            CommandBufferScissor().setEnable(false).apply();
+#else
             glDisable(GL_SCISSOR_TEST);
+#endif
         }
     }
 }

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
+#include "renderer/CCCommandBuffer.h"
 
 NS_CC_BEGIN
 
@@ -234,10 +235,17 @@ void GLView::setViewPortInPoints(float x , float y , float w , float h)
 
 void GLView::setScissorInPoints(float x , float y , float w , float h)
 {
+#if TEST_COMMAND_BUFFER_SCISSOR
+    CommandBufferScissor().setBox(x * _scaleX + _viewPortRect.origin.x,
+                                  y * _scaleY + _viewPortRect.origin.y,
+                                  w * _scaleX,
+                                  h * _scaleY).apply();
+#else
     glScissor((GLint)(x * _scaleX + _viewPortRect.origin.x),
               (GLint)(y * _scaleY + _viewPortRect.origin.y),
               (GLsizei)(w * _scaleX),
               (GLsizei)(h * _scaleY));
+#endif
 }
 
 bool GLView::isScissorEnabled()
