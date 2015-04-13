@@ -29,6 +29,8 @@
 
 #include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
+#include <vector>
+#include <string>
 
 NS_CC_BEGIN
 
@@ -38,6 +40,12 @@ enum class CommandBufferType
     BLEND,
     DEPTH,
     STENCIL,
+    
+    STEAMS,
+    DRAW,
+    DRAWINDEXED,
+    GPUPROGRAM,
+    UNIFORM,
 };
 
 class CommandBuffer
@@ -211,6 +219,7 @@ public:
 
 typedef std::vector<VertexElement> VertexBufferLayout;
 
+class VertexBuffer;
 struct VertexStream
 {
     VertexBuffer* buffer;
@@ -221,7 +230,6 @@ typedef std::vector<VertexStream> VertexStreams;
 
 typedef unsigned char SemanticAttributeIndexMap[VertexSemantic::COUNT];
 
-SemanticAttributeIndexMap s_testMap;
 
 enum class GeometryType
 {
@@ -236,7 +244,7 @@ struct CommandBufferBlendVertexStreams : public CommandBuffer
     
 public:
     CommandBufferBlendVertexStreams(const VertexStreams& stream)
-    : streams(stream)
+    : CommandBuffer(CommandBufferType::STEAMS), streams(stream)
     {
         
     }
@@ -248,13 +256,14 @@ struct CommandBufferDraw : public CommandBuffer
     int count;
     GeometryType type;
 public:
-    CommandBufferDraw(GeometryType type,int start, int count)
-    :type(type),start(start), count(count)
+    CommandBufferDraw(GeometryType type_, int start_, int count_)
+    : CommandBuffer(CommandBufferType::DRAW), type(type_),start(start_), count(count_)
     {
         
     }
 };
 
+class IndexBuffer;
 struct CommandBufferDrawIndexed : public CommandBuffer
 {
     IndexBuffer* indices;
@@ -262,12 +271,73 @@ struct CommandBufferDrawIndexed : public CommandBuffer
     int count;
     GeometryType type;
 public:
-    CommandBufferDrawIndexed(IndexBuffer* buffer,GeometryType type,int start, int count)
-    :indices(buffer),type(type),start(start), count(count)
+    CommandBufferDrawIndexed(IndexBuffer* buffer_,GeometryType type_, int start_, int count_)
+    : CommandBuffer(CommandBufferType::DRAWINDEXED), indices(buffer_),type(type_),start(start_), count(count_)
     {
         
     }
 };
+
+//class GLProgram;
+//struct CommandBufferGPUProgram : public CommandBuffer
+//{
+//    GLProgram* program;
+//public:
+//    CommandBufferGPUProgram(GLProgram* glProgram)
+//    :CommandBuffer(CommandBufferType::GPUPROGRAM), program(glProgram)
+//    {
+//    }
+//};
+//
+//class UniformBuffer
+//{
+//public:
+//    enum class ConstantType
+//    {
+//        FLOAT,
+//        FLOAT2,
+//        FLOAT3,
+//        FLOAT4,
+//        FMAT4X4,
+//        INT,
+//        INT2,
+//        INT3,
+//        INT4,
+//        TEXTURE,
+//        
+//    };
+//    
+//    typedef std::vector<std::string> ConstantNames;
+//
+//    struct ConstantElement
+//    {
+//        int constantSlot;
+//        ConstantType type;
+//        int count;
+//    };
+//
+//    struct Data
+//    {
+//        void* data;
+//    };
+//    
+//    typedef std::vector<ConstantElement> ConstantLayouts;
+//    typedef std::vector<Data> ConstantData;
+//    
+//    ConstantNames names;
+//    ConstantLayouts layout;
+//    ConstantData data;
+//};
+//
+//struct CommandBufferUniform : public CommandBuffer
+//{
+//    
+//};
+//
+//struct CommandBufferRenderTargetViewport : public CommandBuffer
+//{
+//    
+//};
 
 NS_CC_END
 
