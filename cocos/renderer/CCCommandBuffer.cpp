@@ -202,4 +202,25 @@ CommandBufferStencil& CommandBufferStencil::setOp(uint32_t sfail, uint32_t dpfai
     return *this;
 }
 
+CommandBufferCulling& CommandBufferCulling::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferCulling& CommandBufferCulling::setCullFace(uint32_t mode)
+{
+    this->flags.setCullFace = true;
+    this->cullFace = mode;
+    return *this;
+}
+
+CommandBufferCulling& CommandBufferCulling::setFrontFace(uint32_t mode)
+{
+    this->flags.setFrontFace = true;
+    this->frontFace = mode;
+    return *this;
+}
+
 NS_CC_END

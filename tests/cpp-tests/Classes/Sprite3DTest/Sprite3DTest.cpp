@@ -1048,9 +1048,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
     _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
     if(_sprite && _sprite->getMesh())
     {
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);
-
+        CommandBufferCulling().setEnable(true).setCullFace(GL_FRONT).apply();
         CommandBufferDepth().setEnable(true).setFunction(GL_LEQUAL).apply();
         
         auto mesh = _sprite->getMesh();
@@ -1075,9 +1073,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
         CommandBufferDepth().setEnable(false).setFunction(GL_LEQUAL).apply();
-        
-        glCullFace(GL_BACK);
-        glDisable(GL_CULL_FACE);
+        CommandBufferCulling().setEnable(false).setCullFace(GL_BACK).apply();
     }
 }
 

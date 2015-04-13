@@ -40,6 +40,7 @@ enum class CommandBufferType
     DEPTH,
     BLEND,
     STENCIL,
+    CULLING,
     
     STEAMS,
     DRAW,
@@ -62,6 +63,19 @@ protected:
 struct CommandBufferDepth : public CommandBuffer
 {
 public:
+    /**
+     Constructor.
+     */
+    CommandBufferDepth(): CommandBuffer(CommandBufferType::DEPTH), flag(0)
+    {
+    }
+    
+    CommandBufferDepth& setEnable(bool enable);
+    CommandBufferDepth& setFunction(uint32_t func);
+    CommandBufferDepth& setWriteMask(bool enable);
+    CommandBufferDepth& setRangef(float near, float far);
+    CommandBufferDepth& setPolygonOffset(float factor, float units);
+
     union {
         bool    flag;
         struct
@@ -80,25 +94,24 @@ public:
     float rangfFar;
     float polygonOffsetFactor;
     float polygonOffsetUnits;
-    
-    /**
-     Constructor.
-     */
-    CommandBufferDepth(): CommandBuffer(CommandBufferType::DEPTH), flag(0)
-    {
-    }
-    
-    CommandBufferDepth& setEnable(bool enable);
-    CommandBufferDepth& setFunction(uint32_t func);
-    CommandBufferDepth& setWriteMask(bool enable);
-    CommandBufferDepth& setRangef(float near, float far);
-    CommandBufferDepth& setPolygonOffset(float factor, float units);
 };
 
 #define TEST_COMMAND_BUFFER_BLEND 1
 struct CommandBufferBlend : public CommandBuffer
 {
 public:
+    /**
+     Constructor.
+     */
+    CommandBufferBlend():CommandBuffer(CommandBufferType::BLEND), flag(0)
+    {
+    }
+    
+    CommandBufferBlend& setEnable(bool enable);
+    CommandBufferBlend& setColor(float r, float g, float b, float a);
+    CommandBufferBlend& setEquation(uint32_t mode, uint32_t modeAlpha = GL_INVALID_ENUM);
+    CommandBufferBlend& setFunction(uint32_t src, uint32_t dst, uint32_t srcAlpha = GL_INVALID_ENUM, uint32_t dstAlpha = GL_INVALID_ENUM);
+
     union {
         bool    flag;
         struct
@@ -120,17 +133,6 @@ public:
     uint32_t equation[2];
     uint32_t srcFunc[2];
     uint32_t dstFunc[2];
-    /**
-     Constructor.
-     */
-    CommandBufferBlend():CommandBuffer(CommandBufferType::BLEND), flag(0)
-    {
-    }
-    
-    CommandBufferBlend& setEnable(bool enable);
-    CommandBufferBlend& setColor(float r, float g, float b, float a);
-    CommandBufferBlend& setEquation(uint32_t mode, uint32_t modeAlpha = GL_INVALID_ENUM);
-    CommandBufferBlend& setFunction(uint32_t src, uint32_t dst, uint32_t srcAlpha = GL_INVALID_ENUM, uint32_t dstAlpha = GL_INVALID_ENUM);
 };
 
 enum class FaceEnum
@@ -181,6 +183,33 @@ public:
         uint16_t dpfail;
         uint16_t dppass;
     } op[2];
+};
+
+#define TEST_COMMAND_BUFFER_CULLING 1
+
+class CommandBufferCulling : public CommandBuffer
+{
+public:
+    union {
+        bool    flag;
+        struct
+        {
+            unsigned setEnabled:1;
+            unsigned setCullFace:1;
+            unsigned setFrontFace:1;
+            unsigned enabled:1;
+        }flags;
+    };
+    uint32_t cullFace;
+    uint32_t frontFace;
+    
+    CommandBufferCulling():CommandBuffer(CommandBufferType::CULLING), flag(0)
+    {
+    }
+    
+    CommandBufferCulling& setEnable(bool enable);
+    CommandBufferCulling& setCullFace(uint32_t mode);
+    CommandBufferCulling& setFrontFace(uint32_t mode);
 };
 
 //todo: add more commandBuffer

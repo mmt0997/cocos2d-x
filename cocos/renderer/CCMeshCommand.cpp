@@ -201,15 +201,14 @@ void MeshCommand::applyRenderState()
     glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
     _renderStateCullFace = (GLenum)cullface;
     
-    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-    {
-        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    }
-    
+    CommandBufferCulling culling;
+    culling.setEnable(_cullFaceEnabled);
     if (_cullFace != _renderStateCullFace)
     {
-        glCullFace(_cullFace);
+        culling.setCullFace(_cullFace);
     }
+    culling.apply();
+    
     CommandBufferDepth depth;
     if (_depthTestEnabled != _renderStateDepthTest)
     {
@@ -225,15 +224,14 @@ void MeshCommand::applyRenderState()
 
 void MeshCommand::restoreRenderState()
 {
-    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-    {
-        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    }
-    
+    CommandBufferCulling culling;
+    culling.setEnable(_renderStateCullFaceEnabled);
     if (_cullFace != _renderStateCullFace)
     {
-        glCullFace(_renderStateCullFace);
+        culling.setCullFace(_renderStateCullFace);
     }
+    culling.apply();
+
     CommandBufferDepth depth;
     if (_depthTestEnabled != _renderStateDepthTest)
     {

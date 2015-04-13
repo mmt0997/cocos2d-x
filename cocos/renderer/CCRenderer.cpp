@@ -146,14 +146,7 @@ void RenderQueue::saveRenderState()
 
 void RenderQueue::restoreRenderState()
 {
-    if (_isCullEnabled)
-    {
-        glEnable(GL_CULL_FACE);
-    }
-    else
-    {
-        glDisable(GL_CULL_FACE);
-    }
+    CommandBufferCulling().setEnable(_isCullEnabled).apply();
     CommandBufferDepth().setEnable(_isDepthEnabled).setFunction(GL_LEQUAL).setWriteMask(_isDepthWrite).apply();
 }
 
@@ -1061,6 +1054,30 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
             }
             if (cmd.flags.setOpBack) {
                 glStencilOpSeparate(GL_BACK, cmd.op[1].sfail, cmd.op[1].dpfail, cmd.op[1].dppass);
+            }
+            break;
+        }
+        case CommandBufferType::CULLING:
+        {
+            CommandBufferCulling &cmd = *static_cast<CommandBufferCulling *>(cmdBuf);
+            if (cmd.flags.setEnabled)
+            {
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_CULL_FACE);
+                }
+                else
+                {
+                    glDisable(GL_CULL_FACE);
+                }
+            }
+            if (cmd.flags.setCullFace)
+            {
+                glCullFace(cmd.cullFace);
+            }
+            if (cmd.flags.setFrontFace)
+            {
+                glFrontFace(cmd.frontFace);
             }
             break;
         }
