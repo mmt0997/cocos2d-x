@@ -32,7 +32,6 @@
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 
-
 NS_CC_BEGIN
 
 static GLint g_sStencilBits = -1;
@@ -387,6 +386,20 @@ void ClippingNode::onBeforeVisit()
     glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
     glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
 
+    // disable depth test while drawing the stencil
+    //glDisable(GL_DEPTH_TEST);
+    // disable update to the depth buffer while drawing the stencil,
+    // as the stencil is not meant to be rendered in the real scene,
+    // it should never prevent something else to be drawn,
+    // only disabling depth buffer update should do
+    glDepthMask(GL_FALSE);
+    
+    // manually save the depth test state
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
+
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setEnable(true).setFunc(GL_NEVER, mask_layer, mask_layer).setMask(mask_layer).setOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP).apply();
+#else
     // enable stencil use
     glEnable(GL_STENCIL_TEST);
     // check for OpenGL error while enabling stencil test
@@ -395,18 +408,6 @@ void ClippingNode::onBeforeVisit()
     // all bits on the stencil buffer are readonly, except the current layer bit,
     // this means that operation like glClear or glStencilOp will be masked with this value
     glStencilMask(mask_layer);
-
-    // manually save the depth test state
-
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
-
-    // disable depth test while drawing the stencil
-    //glDisable(GL_DEPTH_TEST);
-    // disable update to the depth buffer while drawing the stencil,
-    // as the stencil is not meant to be rendered in the real scene,
-    // it should never prevent something else to be drawn,
-    // only disabling depth buffer update should do
-    glDepthMask(GL_FALSE);
 
     ///////////////////////////////////
     // CLEAR STENCIL BUFFER
@@ -419,7 +420,7 @@ void ClippingNode::onBeforeVisit()
     //     if in inverted mode: set the current layer value to 1 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
-
+#endif
     // draw a fullscreen solid rectangle to clear the stencil buffer
     //ccDrawSolidRect(Vec2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
     drawFullScreenQuadClearStencil();
@@ -432,9 +433,12 @@ void ClippingNode::onBeforeVisit()
     //     never draw it into the frame buffer
     //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
     //     if in inverted mode: set the current layer value to 0 in the stencil buffer
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil().setFunc(GL_NEVER, mask_layer, mask_layer).setOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
-
+#endif
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
     if (_alphaThreshold < 1) {
@@ -489,9 +493,13 @@ void ClippingNode::onAfterDrawStencil()
     //         draw the pixel and keep the current layer in the stencil buffer
     //     else
     //         do not draw the pixel but keep the current layer in the stencil buffer
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil stencil;
+    stencil.setFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
+#else
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-
+#endif
     // draw (according to the stencil test func) this node and its childs
 }
 
@@ -502,6 +510,15 @@ void ClippingNode::onAfterVisit()
     // CLEANUP
 
     // manually restore the stencil state
+#if TEST_COMMAND_BUFFER_STENCIL
+    CommandBufferStencil stencil;
+    stencil.setFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask).setMask(_currentStencilWriteMask).setOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
+    if (!_currentStencilEnabled)
+    {
+        stencil.setEnable(false);
+    }
+    stencil.apply();
+#else
     glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
     glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
     glStencilMask(_currentStencilWriteMask);
@@ -509,7 +526,7 @@ void ClippingNode::onAfterVisit()
     {
         glDisable(GL_STENCIL_TEST);
     }
-
+#endif
     // we are done using this layer, decrement
     s_layer--;
 }

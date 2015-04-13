@@ -47,7 +47,7 @@ CommandBufferStencil& CommandBufferStencil::setEnable(bool enable)
     return *this;
 }
 
-CommandBufferStencil& CommandBufferStencil::setFunc(uint32_t func, int32_t ref, uint32_t mask, FaceEnum face)
+CommandBufferStencil& CommandBufferStencil::setFunc(uint32_t f, int32_t ref, uint32_t m, FaceEnum face)
 {
     if (FaceEnum::FRONT == face)
     {
@@ -63,20 +63,20 @@ CommandBufferStencil& CommandBufferStencil::setFunc(uint32_t func, int32_t ref, 
     }
     if(this->flags.setFuncFront)
     {
-        this->func[0].func = (uint16_t)func;
+        this->func[0].func = (uint16_t)f;
         this->func[0].ref = (uint16_t)ref;
-        this->func[0].mask = (uint16_t)mask;
+        this->func[0].mask = (uint16_t)m;
     }
     if(this->flags.setFuncBack)
     {
-        this->func[1].func = (uint16_t)func;
+        this->func[1].func = (uint16_t)f;
         this->func[1].ref = (uint16_t)ref;
-        this->func[1].mask = (uint16_t)mask;
+        this->func[1].mask = (uint16_t)m;
     }
     return *this;
 }
 
-CommandBufferStencil& CommandBufferStencil::setMask(uint32_t mask, FaceEnum face)
+CommandBufferStencil& CommandBufferStencil::setMask(uint32_t m, FaceEnum face)
 {
     if (FaceEnum::FRONT == face)
     {
@@ -92,11 +92,11 @@ CommandBufferStencil& CommandBufferStencil::setMask(uint32_t mask, FaceEnum face
     }
     if(this->flags.setMaskFront)
     {
-        this->mask[0] = mask;
+        this->mask[0] = m;
     }
     if(this->flags.setMaskBack)
     {
-        this->mask[1] = mask;
+        this->mask[1] = m;
     }
     return *this;
 }

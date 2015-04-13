@@ -133,6 +133,8 @@ enum class FaceEnum
     FRONT_AND_BACK,
 };
 
+#define TEST_COMMAND_BUFFER_STENCIL 1
+
 /** Set stencil buffer status.
  */
 class CommandBufferStencil : public CommandBuffer
