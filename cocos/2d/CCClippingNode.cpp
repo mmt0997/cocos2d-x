@@ -392,7 +392,7 @@ void ClippingNode::onBeforeVisit()
     // as the stencil is not meant to be rendered in the real scene,
     // it should never prevent something else to be drawn,
     // only disabling depth buffer update should do
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setWriteMask(false).apply();
     
     // manually save the depth test state
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
@@ -479,7 +479,7 @@ void ClippingNode::onAfterDrawStencil()
     }
 
     // restore the depth test state
-    glDepthMask(_currentDepthWriteMask);
+    CommandBufferDepth().setWriteMask(_currentDepthWriteMask).apply();
     //if (currentDepthTestEnabled) {
     //    glEnable(GL_DEPTH_TEST);
     //}

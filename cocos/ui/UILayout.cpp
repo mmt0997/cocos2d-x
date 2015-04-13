@@ -344,7 +344,7 @@ void Layout::onBeforeVisitStencil()
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
 #endif
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setEnable(false).apply();
 
     this->drawFullScreenQuadClearStencil();
 
@@ -400,7 +400,7 @@ void Layout::drawFullScreenQuadClearStencil()
 
 void Layout::onAfterDrawStencil()
 {
-    glDepthMask(_currentDepthWriteMask);
+    CommandBufferDepth().setWriteMask(_currentDepthWriteMask).apply();
 #if TEST_COMMAND_BUFFER_STENCIL
     CommandBufferStencil().setFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
 #else

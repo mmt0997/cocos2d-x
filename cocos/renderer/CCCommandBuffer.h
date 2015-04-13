@@ -37,8 +37,8 @@ NS_CC_BEGIN
 enum class CommandBufferType
 {
     INVALID,
-    BLEND,
     DEPTH,
+    BLEND,
     STENCIL,
     
     STEAMS,
@@ -51,8 +51,7 @@ enum class CommandBufferType
 class CommandBuffer
 {
 public:
-    CommandBufferType _type;    
-    virtual ~CommandBuffer() {}
+    CommandBufferType _type;
     
     // this function is a temp function for restruct code, it will be removed at last
     void apply();
@@ -62,38 +61,44 @@ protected:
 
 struct CommandBufferDepth : public CommandBuffer
 {
-    /**
-     @{
-     RenderState used for Depth test, if isEnabled is false, compareFunction will be discard.
-     isEnabled is false by default.
-     */
-    bool isEnabled;
-    GLenum compareFunction;
-    /**@}*/
 public:
+    union {
+        bool    flag;
+        struct
+        {
+            unsigned setEnabled:1;
+            unsigned setWriteMask:1;
+            unsigned setFunction:1;
+            unsigned setRangef:1;
+            unsigned setPolygonOffset:1;
+            unsigned enabled:1;
+            unsigned writeEnabled:1;
+        }flags;
+    };
+    uint32_t function;
+    float rangefNear;
+    float rangfFar;
+    float polygonOffsetFactor;
+    float polygonOffsetUnits;
+    
     /**
      Constructor.
      */
-    CommandBufferDepth()
-    : CommandBuffer(CommandBufferType::DEPTH)
-    , isEnabled(false), compareFunction(GL_ALWAYS)
+    CommandBufferDepth(): CommandBuffer(CommandBufferType::DEPTH), flag(0)
     {
     }
-    /**
-     Constructor.
-     @param enable Enable state of depth test.
-     @param compareFunc compareFunction used for depth test.
-     */
-    CommandBufferDepth(bool enable, GLenum compareFunc)
-    : CommandBuffer(CommandBufferType::DEPTH)
-    , isEnabled(enable), compareFunction(compareFunc)
-    {
-    }
+    
+    CommandBufferDepth& setEnable(bool enable);
+    CommandBufferDepth& setFunction(uint32_t func);
+    CommandBufferDepth& setWriteMask(bool enable);
+    CommandBufferDepth& setRangef(float near, float far);
+    CommandBufferDepth& setPolygonOffset(float factor, float units);
 };
 
 #define TEST_COMMAND_BUFFER_BLEND 1
 struct CommandBufferBlend : public CommandBuffer
 {
+public:
     union {
         bool    flag;
         struct
@@ -102,7 +107,7 @@ struct CommandBufferBlend : public CommandBuffer
             unsigned setColor:1;
             unsigned setEquation:1;
             unsigned setFunction:1;
-            unsigned enabled;
+            unsigned enabled:1;
         }flags;
     };
     struct {
@@ -115,7 +120,6 @@ struct CommandBufferBlend : public CommandBuffer
     uint32_t equation[2];
     uint32_t srcFunc[2];
     uint32_t dstFunc[2];
-public:
     /**
      Constructor.
      */
@@ -161,7 +165,7 @@ public:
             unsigned setMaskBack:1;
             unsigned setOpFront:1;
             unsigned setOpBack:1;
-            unsigned enabled;
+            unsigned enabled:1;
         }flags;
     };
     struct  // StencilFuncParam

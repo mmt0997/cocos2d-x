@@ -210,16 +210,17 @@ void MeshCommand::applyRenderState()
     {
         glCullFace(_cullFace);
     }
-    
+    CommandBufferDepth depth;
     if (_depthTestEnabled != _renderStateDepthTest)
     {
-        CommandBufferDepth(_depthTestEnabled,GL_LEQUAL).apply();
+        depth.setEnable(_depthTestEnabled).setFunction(GL_LEQUAL);
     }
     
     if (_depthWriteEnabled != _renderStateDepthWrite)
     {
-        glDepthMask(_depthWriteEnabled);
+        depth.setWriteMask(_depthWriteEnabled);
     }
+    depth.apply();
 }
 
 void MeshCommand::restoreRenderState()
@@ -233,16 +234,17 @@ void MeshCommand::restoreRenderState()
     {
         glCullFace(_renderStateCullFace);
     }
-    
+    CommandBufferDepth depth;
     if (_depthTestEnabled != _renderStateDepthTest)
     {
-        CommandBufferDepth(_renderStateDepthTest,GL_LEQUAL).apply();
+        depth.setEnable(_depthTestEnabled).setFunction(GL_LEQUAL);
     }
     
     if (_depthWriteEnabled != _renderStateDepthWrite)
     {
-        glDepthMask(_renderStateDepthWrite);
+        depth.setWriteMask(_depthWriteEnabled);
     }
+    depth.apply();
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)

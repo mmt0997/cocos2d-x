@@ -40,6 +40,43 @@ void CommandBuffer::apply()
     }
 }
 
+CommandBufferDepth& CommandBufferDepth::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setFunction(uint32_t func)
+{
+    this->flags.setFunction = true;
+    this->function = func;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setWriteMask(bool enable)
+{
+    this->flags.setWriteMask = true;
+    this->flags.writeEnabled = enable;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setRangef(float near, float far)
+{
+    this->flags.setRangef = true;
+    this->rangefNear = near;
+    this->rangfFar = far;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setPolygonOffset(float factor, float units)
+{
+    this->flags.setPolygonOffset = true;
+    this->polygonOffsetFactor = factor;
+    this->polygonOffsetUnits = units;
+    return *this;
+}
+
 CommandBufferBlend& CommandBufferBlend::setEnable(bool enable)
 {
     this->flags.setEnabled = true;

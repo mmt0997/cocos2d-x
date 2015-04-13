@@ -723,12 +723,12 @@ std::string RawStencilBufferTest2::subtitle() const
 void RawStencilBufferTest2::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setWriteMask(false).apply();
 }
 
 void RawStencilBufferTest2::setupStencilForDrawingOnPlane(GLint plane)
 {
-    glDepthMask(GL_TRUE);
+    CommandBufferDepth().setWriteMask(true).apply();
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -742,13 +742,12 @@ std::string RawStencilBufferTest3::subtitle() const
 void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    CommandBufferDepth(false,GL_LEQUAL).apply();
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setEnable(false).setFunction(GL_LEQUAL).setWriteMask(false).apply();
 }
 
 void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 {
-    glDepthMask(GL_TRUE);
+    CommandBufferDepth().setWriteMask(true).apply();
     //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
@@ -772,7 +771,7 @@ std::string RawStencilBufferTest4::subtitle() const
 void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setWriteMask(false).apply();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glEnable(GL_ALPHA_TEST);
@@ -790,7 +789,7 @@ void RawStencilBufferTest4::setupStencilForDrawingOnPlane(GLint plane)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
-    glDepthMask(GL_TRUE);
+    CommandBufferDepth().setWriteMask(true).apply();
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -804,8 +803,7 @@ std::string RawStencilBufferTest5::subtitle() const
 void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    CommandBufferDepth(false,GL_LEQUAL).apply();
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setEnable(false).setFunction(GL_LEQUAL).setWriteMask(false).apply();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glEnable(GL_ALPHA_TEST);
@@ -823,7 +821,7 @@ void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
-    glDepthMask(GL_TRUE);
+    CommandBufferDepth().setWriteMask(true).apply();
     //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
@@ -915,8 +913,7 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 #endif
-    CommandBufferDepth(false,GL_LEQUAL).apply();
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setEnable(false).setFunction(GL_LEQUAL).setWriteMask(false).apply();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, _alphaThreshold);
@@ -934,7 +931,7 @@ void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     glDisable(GL_ALPHA_TEST);
 #endif
-    glDepthMask(GL_TRUE);
+    CommandBufferDepth().setWriteMask(true).apply();
     //glEnable(GL_DEPTH_TEST);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
     glFlush();
