@@ -344,7 +344,7 @@ void Layout::onBeforeVisitStencil()
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
 #endif
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
-    glDepthMask(GL_FALSE);
+    CommandBufferDepth().setEnable(false).apply();
 
     this->drawFullScreenQuadClearStencil();
 
@@ -400,7 +400,7 @@ void Layout::drawFullScreenQuadClearStencil()
 
 void Layout::onAfterDrawStencil()
 {
-    glDepthMask(_currentDepthWriteMask);
+    CommandBufferDepth().setWriteMask(_currentDepthWriteMask).apply();
 #if TEST_COMMAND_BUFFER_STENCIL
     CommandBufferStencil().setFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le).setOp(GL_KEEP, GL_KEEP, GL_KEEP).apply();
 #else
@@ -435,14 +435,22 @@ void Layout::onAfterVisitStencil()
 void Layout::onBeforeVisitScissor()
 {
     Rect clippingRect = getClippingRect();
+#if TEST_COMMAND_BUFFER_SCISSOR
+    CommandBufferScissor().setEnable(true).apply();
+#else
     glEnable(GL_SCISSOR_TEST);
+#endif
     auto glview = Director::getInstance()->getOpenGLView();
     glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
 }
 
 void Layout::onAfterVisitScissor()
 {
+#if TEST_COMMAND_BUFFER_SCISSOR
+    CommandBufferScissor().setEnable(false).apply();
+#else
     glDisable(GL_SCISSOR_TEST);
+#endif
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)

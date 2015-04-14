@@ -160,7 +160,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     GLint       depthFunc;
     glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
 
-    CommandBufferDepth(true,GL_LEQUAL).apply();
+    CommandBufferDepth().setEnable(true).setFunction(GL_LEQUAL).apply();
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -190,9 +190,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
 
-    CommandBufferDepth(depthFlag,depthFunc).apply();
-
-    CHECK_GL_ERROR_DEBUG();
+    CommandBufferDepth().setEnable(depthFlag).setFunction(depthFunc).apply();
 }
 
 void Skybox::setTexture(TextureCube* texture)

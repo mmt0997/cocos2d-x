@@ -140,7 +140,7 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     auto glProgram = getGLProgram();
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
-    CommandBufferDepth(true,GL_LEQUAL).apply();
+    CommandBufferDepth().setEnable(true).setFunction(GL_LEQUAL).apply();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
@@ -169,8 +169,7 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
-	CommandBufferDepth(false,GL_LEQUAL).apply();
-    CHECK_GL_ERROR_DEBUG();
+	CommandBufferDepth().setEnable(false).setFunction(GL_LEQUAL).apply();
 }
 
 void DrawNode3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color)

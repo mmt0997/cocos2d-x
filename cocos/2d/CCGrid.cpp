@@ -323,8 +323,7 @@ void Grid3D::beforeBlit()
         glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriteMask);
 		_oldDepthWriteValue = depthWriteMask != GL_FALSE;
         CHECK_GL_ERROR_DEBUG();
-        CommandBufferDepth(true,GL_LEQUAL).apply();
-        glDepthMask(true);
+        CommandBufferDepth().setEnable(true).setFunction(GL_LEQUAL).setWriteMask(true).apply();
     }
 }
 
@@ -332,9 +331,7 @@ void Grid3D::afterBlit()
 {
     if(_needDepthTestForBlit)
     {
-        CommandBufferDepth(_oldDepthTestValue,GL_LEQUAL).apply();
-        
-        glDepthMask(_oldDepthWriteValue);
+        CommandBufferDepth().setEnable(_oldDepthTestValue).setFunction(GL_LEQUAL).setWriteMask(_oldDepthWriteValue).apply();
     }
 }
 

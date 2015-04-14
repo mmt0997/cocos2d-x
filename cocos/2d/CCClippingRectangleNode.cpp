@@ -40,7 +40,11 @@ void ClippingRectangleNode::setClippingRegion(const Rect &clippingRegion)
 void ClippingRectangleNode::onBeforeVisitScissor()
 {
     if (_clippingEnabled) {
+#if TEST_COMMAND_BUFFER_SCISSOR
+        CommandBufferScissor().setEnable(true).apply();
+#else
         glEnable(GL_SCISSOR_TEST);
+#endif
         
         float scaleX = _scaleX;
         float scaleY = _scaleY;
@@ -64,7 +68,11 @@ void ClippingRectangleNode::onAfterVisitScissor()
 {
     if (_clippingEnabled)
     {
+#if TEST_COMMAND_BUFFER_SCISSOR
+        CommandBufferScissor().setEnable(false).apply();
+#else
         glDisable(GL_SCISSOR_TEST);
+#endif
     }
 }
 

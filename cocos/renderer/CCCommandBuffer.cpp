@@ -40,6 +40,78 @@ void CommandBuffer::apply()
     }
 }
 
+CommandBufferDepth& CommandBufferDepth::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setFunction(uint32_t func)
+{
+    this->flags.setFunction = true;
+    this->function = func;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setWriteMask(bool enable)
+{
+    this->flags.setWriteMask = true;
+    this->flags.writeEnabled = enable;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setRangef(float near, float far)
+{
+    this->flags.setRangef = true;
+    this->rangefNear = near;
+    this->rangfFar = far;
+    return *this;
+}
+
+CommandBufferDepth& CommandBufferDepth::setPolygonOffset(float factor, float units)
+{
+    this->flags.setPolygonOffset = true;
+    this->polygonOffsetFactor = factor;
+    this->polygonOffsetUnits = units;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setColor(float r, float g, float b, float a)
+{
+    this->flags.setColor = true;
+    this->color.r = r;
+    this->color.g = g;
+    this->color.b = b;
+    this->color.a = a;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setEquation(uint32_t mode, uint32_t modeAlpha)
+{
+    this->flags.setEquation = true;
+    this->equation[0] = mode;
+    this->equation[1] = (modeAlpha == GL_INVALID_ENUM) ? mode : modeAlpha;
+    return *this;
+}
+
+CommandBufferBlend& CommandBufferBlend::setFunction(uint32_t src, uint32_t dst, uint32_t srcAlpha, uint32_t dstAlpha)
+{
+    this->flags.setFunction = true;
+    this->srcFunc[0] = src;
+    this->dstFunc[0] = dst;
+    this->srcFunc[1] = (srcAlpha == GL_INVALID_ENUM) ? src : srcAlpha;
+    this->dstFunc[1] = (dstAlpha == GL_INVALID_ENUM) ? dst : dstAlpha;
+    return *this;
+}
+
 CommandBufferStencil& CommandBufferStencil::setEnable(bool enable)
 {
     this->flags.setEnabled = true;
@@ -127,6 +199,44 @@ CommandBufferStencil& CommandBufferStencil::setOp(uint32_t sfail, uint32_t dpfai
         this->op[1].dpfail = dpfail;
         this->op[1].dppass = dppass;
     }
+    return *this;
+}
+
+CommandBufferCulling& CommandBufferCulling::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferCulling& CommandBufferCulling::setCullFace(uint32_t mode)
+{
+    this->flags.setCullFace = true;
+    this->cullFace = mode;
+    return *this;
+}
+
+CommandBufferCulling& CommandBufferCulling::setFrontFace(uint32_t mode)
+{
+    this->flags.setFrontFace = true;
+    this->frontFace = mode;
+    return *this;
+}
+
+CommandBufferScissor& CommandBufferScissor::setEnable(bool enable)
+{
+    this->flags.setEnabled = true;
+    this->flags.enabled = enable;
+    return *this;
+}
+
+CommandBufferScissor& CommandBufferScissor::setBox(int x, int y, int width, int height)
+{
+    this->flags.setBox = true;
+    this->x = (uint16_t)x;
+    this->y = (uint16_t)y;
+    this->width = (uint16_t)width;
+    this->height = (uint16_t)height;
     return *this;
 }
 

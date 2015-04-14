@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCCommandBuffer.h"
 #include "base/CCDirector.h"
 #include "base/ccConfig.h"
 #include "base/CCConfiguration.h"
@@ -108,12 +109,20 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 {
 	if (sfactor == GL_ONE && dfactor == GL_ZERO)
     {
+#if TEST_COMMAND_BUFFER_BLEND
+        CommandBufferBlend().setEnable(false).apply();
+#else
 		glDisable(GL_BLEND);
+#endif
 	}
     else
     {
+#if TEST_COMMAND_BUFFER_BLEND
+        CommandBufferBlend().setEnable(true).setFunction(sfactor, dfactor).apply();
+#else
 		glEnable(GL_BLEND);
 		glBlendFunc(sfactor, dfactor);
+#endif
 	}
 }
 
@@ -133,7 +142,11 @@ void blendFunc(GLenum sfactor, GLenum dfactor)
 
 void blendResetToCache(void)
 {
+#if TEST_COMMAND_BUFFER_BLEND
+    CommandBufferBlend().setEquation(GL_FUNC_ADD).apply();
+#else
 	glBlendEquation(GL_FUNC_ADD);
+#endif
 #if CC_ENABLE_GL_STATE_CACHE
 	SetBlending(s_blendingSource, s_blendingDest);
 #else

@@ -146,20 +146,8 @@ void RenderQueue::saveRenderState()
 
 void RenderQueue::restoreRenderState()
 {
-    if (_isCullEnabled)
-    {
-        glEnable(GL_CULL_FACE);
-    }
-    else
-    {
-        glDisable(GL_CULL_FACE);
-    }
-    
-    CommandBufferDepth(_isDepthEnabled,GL_LEQUAL).apply();
-    
-    glDepthMask(_isDepthWrite);
-    
-    CHECK_GL_ERROR_DEBUG();
+    CommandBufferCulling().setEnable(_isCullEnabled).apply();
+    CommandBufferDepth().setEnable(_isDepthEnabled).setFunction(GL_LEQUAL).setWriteMask(_isDepthWrite).apply();
 }
 
 //
@@ -506,17 +494,8 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
     if (zNegQueue.size() > 0)
     {
-        
-        CommandBufferDepth(_isDepthTestFor2D,GL_LEQUAL).apply();
-        
-        if(_isDepthTestFor2D)
-        {
-            glDepthMask(true);
-        }
-        else
-        {
-            glDepthMask(false);
-        }
+        CommandBufferDepth().setEnable(_isDepthTestFor2D).setFunction(GL_LEQUAL).setWriteMask(_isDepthTestFor2D).apply();
+
         for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -531,10 +510,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     if (opaqueQueue.size() > 0)
     {
         //Clear depth to achieve layered rendering
-        glDepthMask(true);
-        
-        CommandBufferDepth(true,GL_LEQUAL).apply();
-        
+        CommandBufferDepth().setEnable(true).setFunction(GL_LEQUAL).apply();
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -548,10 +524,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
     if (transQueue.size() > 0)
     {
-        CommandBufferDepth(true,GL_LEQUAL).apply();
-        
-        glDepthMask(false);
-        
+        CommandBufferDepth().setEnable(true).setFunction(GL_LEQUAL).setWriteMask(false).apply();
         for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -565,17 +538,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
     if (zZeroQueue.size() > 0)
     {
-        
-        CommandBufferDepth(_isDepthTestFor2D,GL_LEQUAL).apply();
-        
-        if(_isDepthTestFor2D)
-        {
-            glDepthMask(true);
-        }
-        else
-        {
-            glDepthMask(false);
-        }
+        CommandBufferDepth().setEnable(_isDepthTestFor2D).setFunction(GL_LEQUAL).setWriteMask(_isDepthTestFor2D).apply();
         for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -647,9 +610,9 @@ void Renderer::clean()
 void Renderer::clear()
 {
     //Enable Depth mask to make sure glClear clear the depth buffer correctly
-    glDepthMask(true);
+    CommandBufferDepth().setEnable(true).apply();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDepthMask(false);
+    CommandBufferDepth().setEnable(false).apply();
 }
 
 void Renderer::setDepthTest(bool enable)
@@ -660,8 +623,7 @@ void Renderer::setDepthTest(bool enable)
 //        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     
-    CommandBufferDepth(enable,GL_LEQUAL).apply();
-    
+    CommandBufferDepth().setEnable(enable).setFunction(GL_LEQUAL).apply();
     _isDepthTestFor2D = enable;
     CHECK_GL_ERROR_DEBUG();
 }
@@ -1084,23 +1046,60 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
         case CommandBufferType::DEPTH:
         {
             CommandBufferDepth &cmd = *static_cast<CommandBufferDepth *>(cmdBuf);
-            if(!cmd.isEnabled) glDisable(GL_DEPTH_TEST);
-            else
+            if (cmd.flags.setEnabled)
             {
-                glEnable(GL_DEPTH_TEST);
-                glDepthFunc(cmd.compareFunction);
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_DEPTH_TEST);
+                }
+                else
+                {
+                    glDisable(GL_DEPTH_TEST);
+                }
+            }
+            if (cmd.flags.setFunction)
+            {
+                glDepthFunc(cmd.function);
+            }
+            if (cmd.flags.setWriteMask)
+            {
+                glDepthMask(cmd.flags.writeEnabled);
+            }
+            if (cmd.flags.setRangef)
+            {
+                glDepthRangef(cmd.rangefNear, cmd.rangfFar);
+            }
+            if (cmd.flags.setPolygonOffset)
+            {
+                glPolygonOffset(cmd.polygonOffsetFactor, cmd.polygonOffsetUnits);
             }
             break;
         }
         case CommandBufferType::BLEND:
         {
             CommandBufferBlend &cmd = *static_cast<CommandBufferBlend *>(cmdBuf);
-            if(!cmd.isEnabled) glDisable(GL_BLEND);
-            else
+            if (cmd.flags.setEnabled)
             {
-                glEnable(GL_BLEND);
-                glBlendEquation(cmd.blendMode);
-                glBlendFunc(cmd.srcFactor, cmd.dstFactor);
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_BLEND);
+                }
+                else
+                {
+                    glDisable(GL_BLEND);
+                }
+            }
+            if (cmd.flags.setColor)
+            {
+                glBlendColor(cmd.color.r, cmd.color.g, cmd.color.b, cmd.color.a);
+            }
+            if (cmd.flags.setEquation)
+            {
+                glBlendEquationSeparate(cmd.equation[0], cmd.equation[1]);
+            }
+            if (cmd.flags.setFunction)
+            {
+                glBlendFuncSeparate(cmd.srcFunc[0], cmd.dstFunc[0], cmd.srcFunc[1], cmd.dstFunc[1]);
             }
             break;
         }
@@ -1134,6 +1133,50 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
             }
             if (cmd.flags.setOpBack) {
                 glStencilOpSeparate(GL_BACK, cmd.op[1].sfail, cmd.op[1].dpfail, cmd.op[1].dppass);
+            }
+            break;
+        }
+        case CommandBufferType::CULLING:
+        {
+            CommandBufferCulling &cmd = *static_cast<CommandBufferCulling *>(cmdBuf);
+            if (cmd.flags.setEnabled)
+            {
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_CULL_FACE);
+                }
+                else
+                {
+                    glDisable(GL_CULL_FACE);
+                }
+            }
+            if (cmd.flags.setCullFace)
+            {
+                glCullFace(cmd.cullFace);
+            }
+            if (cmd.flags.setFrontFace)
+            {
+                glFrontFace(cmd.frontFace);
+            }
+            break;
+        }
+        case CommandBufferType::SCISSOR:
+        {
+            CommandBufferScissor &cmd = *static_cast<CommandBufferScissor *>(cmdBuf);
+            if (cmd.flags.setEnabled)
+            {
+                if (cmd.flags.enabled)
+                {
+                    glEnable(GL_SCISSOR_TEST);
+                }
+                else
+                {
+                    glDisable(GL_SCISSOR_TEST);
+                }
+            }
+            if (cmd.flags.setBox)
+            {
+                glScissor(cmd.x, cmd.y, cmd.width, cmd.height);
             }
             break;
         }
