@@ -270,6 +270,10 @@ public:
      */
     void applyCommandBuffer(CommandBuffer* cmd);
     /**@}*/
+private:
+    //track of currentGLProgram;
+    GLProgram* currentGLProgram;
+    VertexStreams currentStreams;
 };
 
 NS_CC_END

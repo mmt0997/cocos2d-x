@@ -1002,6 +1002,85 @@ void Renderer::setClearColor(const Color4F &clearColor)
 void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
 {
     switch (cmdBuf->_type) {
+        case CommandBufferType::GPUPROGRAM:
+        {
+            CommandBufferGPUProgram& cmd = *static_cast<CommandBufferGPUProgram*>(cmdBuf);
+            currentGLProgram = cmd.program;
+            currentGLProgram->use();
+            break;
+        }
+        case CommandBufferType::UNIFORM:
+        {
+            CommandBufferUniform& cmd = *static_cast<CommandBufferUniform*>(cmdBuf);
+            for(int index = 0; index < cmd.buffer.names.size(); ++index)
+            {
+                auto name = cmd.buffer.names[index];
+                auto slot = cmd.buffer.layout[index];
+                auto data = cmd.buffer.data[index];
+                if(data.data == nullptr) continue;
+                if(UniformBuffer::ConstantType::FLOAT == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith1fv(slot.constantSlot, (GLfloat*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::FLOAT2 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith2fv(slot.constantSlot, (GLfloat*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::FLOAT3 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith3fv(slot.constantSlot, (GLfloat*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::FLOAT4 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith4fv(slot.constantSlot, (GLfloat*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::FMAT4X4 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWithMatrix4fv(slot.constantSlot, (GLfloat*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::INT == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith1iv(slot.constantSlot, (GLint*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::INT2 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith2iv(slot.constantSlot, (GLint*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::INT3 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith3iv(slot.constantSlot, (GLint*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::INT4 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWith4iv(slot.constantSlot, (GLint*)data.data, slot.count);
+                }
+                else if(UniformBuffer::ConstantType::TEXTURE == slot.type)
+                {
+                    GLint* textureData = (GLint*) data.data;
+                    currentGLProgram->setUniformLocationWith1i(slot.constantSlot, textureData[0]);
+                    GL::bindTexture2DN(GL_TEXTURE0+textureData[0], textureData[1]);
+                }
+                else
+                {
+                    CCLOG("Error, invalid constant type");
+                }
+            }
+            break;
+        }
+        case CommandBufferType::STEAMS:
+        {
+            CommandBufferVertexStreams& cmd = *static_cast<CommandBufferVertexStreams*>(cmdBuf);
+            currentStreams = cmd.streams;
+            break;
+        }
+        case CommandBufferType::DRAW:
+        {
+            break;
+        }
+        case CommandBufferType::DRAWINDEXED:
+        {
+            break;
+        }
         case CommandBufferType::DEPTH:
         {
             CommandBufferDepth &cmd = *static_cast<CommandBufferDepth *>(cmdBuf);

@@ -562,7 +562,8 @@ bool GLProgram::link()
 
     parseVertexAttribs();
     parseUniforms();
-
+    parseAttributeBindings();
+    parseUniformBuffer();
     if (_vertShader)
     {
         glDeleteShader(_vertShader);
@@ -740,6 +741,16 @@ void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLi
     if( updated )
     {
         glUniform4i( (GLint)location, i1, i2, i3, i4);
+    }
+}
+
+void GLProgram::setUniformLocationWith1iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+{
+    bool updated = updateUniformLocation(location, ints, sizeof(int)*1*numberOfArrays);
+    
+    if( updated )
+    {
+        glUniform1iv( (GLint)location, (GLsizei)numberOfArrays, ints );
     }
 }
 
@@ -950,6 +961,111 @@ void GLProgram::reset()
     }
     
     _hashForUniforms.clear();
+}
+
+void GLProgram::parseAttributeBindings()
+{
+    for (int index = 0; index < VertexSemantic::COUNT; ++index)
+    {
+        _attributeBindings[index] = -1;
+        if(index != VertexSemantic::PLACEHOLDER)
+        {
+            _attributeBindings[index] = glGetAttribLocation(_program, getShaderSemanticString(VertexSemantic(index)).c_str());
+        }
+    }
+}
+
+void GLProgram::parseUniformBuffer()
+{
+    static std::map<GLenum,UniformBuffer::ConstantType> s_maps;
+    if(s_maps.size() == 0)
+    {
+        s_maps.insert(std::make_pair(GL_FLOAT, UniformBuffer::ConstantType::FLOAT));
+        s_maps.insert(std::make_pair(GL_FLOAT_VEC2, UniformBuffer::ConstantType::FLOAT2));
+        s_maps.insert(std::make_pair(GL_FLOAT_VEC3, UniformBuffer::ConstantType::FLOAT3));
+        s_maps.insert(std::make_pair(GL_FLOAT_VEC4, UniformBuffer::ConstantType::FLOAT4));
+        
+        s_maps.insert(std::make_pair(GL_INT, UniformBuffer::ConstantType::INT));
+        s_maps.insert(std::make_pair(GL_INT_VEC2, UniformBuffer::ConstantType::INT2));
+        s_maps.insert(std::make_pair(GL_INT_VEC3, UniformBuffer::ConstantType::INT3));
+        s_maps.insert(std::make_pair(GL_INT_VEC4, UniformBuffer::ConstantType::INT4));
+        
+        s_maps.insert(std::make_pair(GL_FLOAT_MAT4, UniformBuffer::ConstantType::FMAT4X4));
+        s_maps.insert(std::make_pair(GL_SAMPLER_2D, UniformBuffer::ConstantType::TEXTURE));
+    }
+    
+    UniformBuffer &buffer = _defaultUniformBuffer;
+    GLint uniformMaxLengh(0);
+    glGetProgramiv(_program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &uniformMaxLengh);
+    GLint numberUnifroms(0);
+    glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &numberUnifroms);
+    if(numberUnifroms <= 0)
+    {
+        return;
+    }
+    buffer.names.resize(numberUnifroms);
+    buffer.data.resize(numberUnifroms);
+    buffer.layout.resize(numberUnifroms);
+    char buff[255];
+    GLsizei length(0);
+    GLint size(0);
+    GLenum type(0);
+    GLint location(-1);
+    for(int index = 0 ; index < numberUnifroms; ++index)
+    {
+        memset(buff, 0, 255);
+        glGetActiveUniform(_program, index, 255, &length, &size, &type, buff);
+        location = glGetUniformLocation(_program, buff);
+        buffer.names[index] = buff;
+        buffer.layout[index].count = size;
+        buffer.layout[index].constantSlot = location;
+        buffer.layout[index].type = s_maps[type];
+        buffer.data[index].data = nullptr;
+    }
+    
+}
+
+const std::string& GLProgram::getShaderSemanticString(VertexSemantic semantic)
+{
+    static std::string semanticStrings[VertexSemantic::COUNT] =
+    {
+     "",
+     "a_position",
+     "a_color",
+     "a_normal",
+     "a_blendWeight",
+     "a_blendIndex",
+     "a_texCoord",
+     "a_texcoord1",
+     "a_texcoord2",
+     "a_texcoord3",
+     "a_texcoord4",
+     "a_texcoord5",
+     "a_texcoord6",
+     "a_texcoord7",
+    };
+    return semanticStrings[semantic];
+}
+const std::string& GLProgram::getShaderSemanticHeader()
+{
+    static const std::string header =
+    "\
+        attribute vec4 a_position;\
+        attribute vec4 a_normal;\
+        attribute vec4 a_color;\
+        attribute vec4 a_blendWeight;\
+        attribute vec4 a_blendIndex;\
+        attribute vec4 a_texcoord;\
+        attribute vec4 a_texcoord1;\
+        attribute vec4 a_texcoord2;\
+        attribute vec4 a_texcoord3;\
+        attribute vec4 a_texcoord4;\
+        attribute vec4 a_texcoord5;\
+        attribute vec4 a_texcoord6;\
+        attribute vec4 a_texcoord7;\
+    "
+    ;
+    return header;
 }
 
 NS_CC_END

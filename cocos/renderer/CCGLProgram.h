@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "platform/CCGL.h"
 #include "math/CCMath.h"
+#include "renderer/CCCommandBuffer.h"
 
 /**
  * @addtogroup support
@@ -376,6 +377,9 @@ public:
     
     /** calls glUniform4i only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4);
+
+    /** calls glUniform1iv only if the values are different than the previous call for this same shader program. */
+    void setUniformLocationWith1iv(GLint location, GLint* ints, unsigned int numberOfArrays);
     
     /** calls glUniform2iv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays);
@@ -466,6 +470,17 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addAttribute(const std::string &attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
 
 
+public:
+    typedef unsigned char SemanticAttributeIndexMap[VertexSemantic::COUNT];
+    const SemanticAttributeIndexMap& getAttributeBindings() const { return _attributeBindings;}
+    const UniformBuffer& getDefaultUniformBuffer() const { return _defaultUniformBuffer; }
+    static const std::string& getShaderSemanticString(VertexSemantic semantic);
+    static const std::string& getShaderSemanticHeader();
+private:
+    void parseAttributeBindings();
+    void parseUniformBuffer();
+    SemanticAttributeIndexMap _attributeBindings;
+    UniformBuffer _defaultUniformBuffer;
 protected:
     /**
     Update the uniform data in location.

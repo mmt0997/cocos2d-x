@@ -202,8 +202,8 @@ enum VertexSemantic
 enum class VertexElementType
 {
     FLOAT,
-    INT,
     BYTE,
+    UBYTE,
 };
 
 class VertexElement
@@ -212,9 +212,9 @@ public:
     VertexSemantic _semantic;
     VertexElementType _type;
     int _count; //1-4
-    
-    VertexElement(VertexSemantic semantic, VertexElementType type, int count)
-    :_semantic(semantic), _type(type), _count(count)
+    bool _normalize;
+    VertexElement(VertexSemantic semantic, VertexElementType type, int count, bool normalize = true)
+    :_semantic(semantic), _type(type), _count(count), _normalize(normalize)
     {
     }
 };
@@ -230,8 +230,6 @@ struct VertexStream
 
 typedef std::vector<VertexStream> VertexStreams;
 
-typedef unsigned char SemanticAttributeIndexMap[VertexSemantic::COUNT];
-
 
 enum class GeometryType
 {
@@ -240,12 +238,12 @@ enum class GeometryType
     Triangles,
 };
 
-struct CommandBufferBlendVertexStreams : public CommandBuffer
+struct CommandBufferVertexStreams : public CommandBuffer
 {
     VertexStreams streams;
     
 public:
-    CommandBufferBlendVertexStreams(const VertexStreams& stream)
+    CommandBufferVertexStreams(const VertexStreams& stream)
     : CommandBuffer(CommandBufferType::STEAMS), streams(stream)
     {
         
@@ -280,66 +278,72 @@ public:
     }
 };
 
-//class GLProgram;
-//struct CommandBufferGPUProgram : public CommandBuffer
-//{
-//    GLProgram* program;
-//public:
-//    CommandBufferGPUProgram(GLProgram* glProgram)
-//    :CommandBuffer(CommandBufferType::GPUPROGRAM), program(glProgram)
-//    {
-//    }
-//};
-//
-//class UniformBuffer
-//{
-//public:
-//    enum class ConstantType
-//    {
-//        FLOAT,
-//        FLOAT2,
-//        FLOAT3,
-//        FLOAT4,
-//        FMAT4X4,
-//        INT,
-//        INT2,
-//        INT3,
-//        INT4,
-//        TEXTURE,
-//        
-//    };
-//    
-//    typedef std::vector<std::string> ConstantNames;
-//
-//    struct ConstantElement
-//    {
-//        int constantSlot;
-//        ConstantType type;
-//        int count;
-//    };
-//
-//    struct Data
-//    {
-//        void* data;
-//    };
-//    
-//    typedef std::vector<ConstantElement> ConstantLayouts;
-//    typedef std::vector<Data> ConstantData;
-//    
-//    ConstantNames names;
-//    ConstantLayouts layout;
-//    ConstantData data;
-//};
-//
-//struct CommandBufferUniform : public CommandBuffer
-//{
-//    
-//};
-//
-//struct CommandBufferRenderTargetViewport : public CommandBuffer
-//{
-//    
-//};
+class GLProgram;
+struct CommandBufferGPUProgram : public CommandBuffer
+{
+    GLProgram* program;
+public:
+    CommandBufferGPUProgram(GLProgram* glProgram)
+    :CommandBuffer(CommandBufferType::GPUPROGRAM), program(glProgram)
+    {
+    }
+};
+
+class UniformBuffer
+{
+public:
+    enum class ConstantType
+    {
+        FLOAT,
+        FLOAT2,
+        FLOAT3,
+        FLOAT4,
+        FMAT4X4,
+        INT,
+        INT2,
+        INT3,
+        INT4,
+        TEXTURE,
+        
+    };
+    
+    typedef std::vector<std::string> ConstantNames;
+
+    struct ConstantElement
+    {
+        int constantSlot;
+        ConstantType type;
+        int count;
+    };
+
+    struct Data
+    {
+        //data stored, in GL, texture would use int2(textureunit, textureID) for recording
+        void* data;
+    };
+    
+    typedef std::vector<ConstantElement> ConstantLayouts;
+    typedef std::vector<Data> ConstantData;
+    
+    ConstantNames names;
+    ConstantLayouts layout;
+    ConstantData data;
+};
+
+struct CommandBufferUniform : public CommandBuffer
+{
+    UniformBuffer buffer;
+public:
+    CommandBufferUniform(UniformBuffer buff)
+    :CommandBuffer(CommandBufferType::UNIFORM), buffer(buff)
+    {
+    }
+};
+
+struct CommandBufferRenderTargetViewport : public CommandBuffer
+{
+    
+};
 
 NS_CC_END
 
