@@ -25,7 +25,6 @@
 
 const char* ccPosition_uColor_vert = STRINGIFY(
 
-attribute vec4 a_position;
 uniform vec4 u_color;
 uniform float u_pointSize;
 

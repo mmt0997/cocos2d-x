@@ -1,6 +1,5 @@
 const char* cc3D_Skybox_vert = STRINGIFY(
 
-attribute vec4 a_position;
 varying vec3 v_reflect;
 
 void main(void)

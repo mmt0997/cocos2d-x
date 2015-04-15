@@ -1,5 +1,3 @@
-attribute vec4 a_position;
-attribute vec3 a_normal;
 
 varying vec3 v_reflect;
 
@@ -11,6 +9,6 @@ void main(void)
     vec4 positionWorldViewSpace = CC_MVMatrix * a_position;;
     vec3 vEyeVertex     = normalize(positionWorldViewSpace.xyz / positionWorldViewSpace.w);
     
-    vec3 v_normalVector = CC_NormalMatrix * a_normal;
+    vec3 v_normalVector = CC_NormalMatrix * a_normal.xyz;
     v_reflect           = normalize(reflect(vEyeVertex, v_normalVector));
 }

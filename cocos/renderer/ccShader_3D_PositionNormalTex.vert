@@ -8,9 +8,6 @@ uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
 uniform vec3 u_SpotLightSourcePosition[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
 
-attribute vec4 a_position;
-attribute vec2 a_texCoord;
-attribute vec3 a_normal;
 varying vec2 TextureCoordOut;
 
 \n#if MAX_POINT_LIGHT_NUM\n
@@ -41,10 +38,10 @@ void main(void)
 \n#endif\n
         
 \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
-    v_normal = CC_NormalMatrix * a_normal;
+    v_normal = CC_NormalMatrix * a_normal.xyz;
 \n#endif\n
 
-    TextureCoordOut = a_texCoord;
+    TextureCoordOut = a_texCoord.xy;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
     gl_Position = CC_PMatrix * ePosition;
 }
@@ -58,15 +55,6 @@ uniform vec3 u_PointLightSourcePosition[MAX_POINT_LIGHT_NUM];
 \n#if (MAX_SPOT_LIGHT_NUM > 0)\n
 uniform vec3 u_SpotLightSourcePosition[MAX_SPOT_LIGHT_NUM];
 \n#endif\n
-
-attribute vec3 a_position;
-
-attribute vec4 a_blendWeight;
-attribute vec4 a_blendIndex;
-
-attribute vec2 a_texCoord;
-
-attribute vec3 a_normal;
 
 const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
@@ -120,14 +108,14 @@ void getPositionAndNormal(out vec4 position, out vec3 normal)
         }
     }
 
-    vec4 p = vec4(a_position, 1.0);
+    vec4 p = vec4(a_position.xyz, 1.0);
     position.x = dot(p, matrixPalette1);
     position.y = dot(p, matrixPalette2);
     position.z = dot(p, matrixPalette3);
     position.w = p.w;
 
 \n#if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))\n
-    vec4 n = vec4(a_normal, 0.0);
+    vec4 n = vec4(a_normal.xyz, 0.0);
     normal.x = dot(n, matrixPalette1);
     normal.y = dot(n, matrixPalette2);
     normal.z = dot(n, matrixPalette3);
@@ -159,7 +147,7 @@ void main()
     v_normal = CC_NormalMatrix * normal;
 \n#endif\n
 
-    TextureCoordOut = a_texCoord;
+    TextureCoordOut = a_texCoord.xy;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
     gl_Position = CC_PMatrix * ePosition;
 }
