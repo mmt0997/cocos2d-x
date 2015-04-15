@@ -338,7 +338,11 @@ void MeshCommand::execute()
         
     }
     
-    _glProgramState->apply(_mv);   
+    auto program = _glProgramState->getGLProgram();
+    CommandBufferGPUProgram(program).apply();
+    CommandBufferUniform(program->generateBuiltInUniformBuffer(_mv)).apply();
+    _glProgramState->applyAttributes();
+    _glProgramState->applyUniforms();
 
     const auto& scene = Director::getInstance()->getRunningScene();
     if (scene && scene->getLights().size() > 0)

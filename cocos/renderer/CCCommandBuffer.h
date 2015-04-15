@@ -382,8 +382,51 @@ public:
 
     struct Data
     {
+    private:
         //data stored, in GL, texture would use int2(textureunit, textureID) for recording
-        void* data;
+        void* _data;
+        unsigned int _size;
+        
+        void allocMem(unsigned int size)
+        {
+            if(_data) deallocMem();
+            _data = (void*)new char[size];
+        }
+        void deallocMem()
+        {
+            delete[] (char*)_data;
+            _data = nullptr;
+        }
+
+    public:
+        const void* getData() const { return _data;}
+        unsigned int getSize() const { return _size;}
+        void clear()
+        {
+            deallocMem();
+        }
+        void update(const void* pointer, unsigned int size)
+        {
+            if(pointer == nullptr && 0 == size) return;
+            
+            allocMem(size);
+            _size = size;
+            memcpy(_data, pointer, size);
+        }
+        
+        Data(): _data(nullptr), _size(0) {}
+        ~Data() { clear(); }
+        Data(const Data& other)
+        {
+            _data = nullptr;
+            _size = 0;
+            update(other.getData(), other.getSize());
+        }
+        Data& operator=(const Data& other)
+        {
+            update(other.getData(), other.getSize());
+            return *this;
+        }
     };
     
     typedef std::vector<ConstantElement> ConstantLayouts;
@@ -392,13 +435,38 @@ public:
     ConstantNames names;
     ConstantLayouts layout;
     ConstantData data;
+    
+    void clear()
+    {
+        for(auto& dataSlot : data)
+        {
+            dataSlot.clear();
+        }
+    }
+    
+    UniformBuffer() {}
+    
+    UniformBuffer(const UniformBuffer& other)
+    : names(other.names)
+    , layout(other.layout)
+    , data(other.data)
+    {
+    }
+    
+    UniformBuffer& operator=(const UniformBuffer& other)
+    {
+        names = other.names;
+        layout = other.layout;
+        data = other.data;
+        return *this;
+    }
 };
 
 struct CommandBufferUniform : public CommandBuffer
 {
     UniformBuffer buffer;
 public:
-    CommandBufferUniform(UniformBuffer buff)
+    CommandBufferUniform(const UniformBuffer& buff)
     :CommandBuffer(CommandBufferType::UNIFORM), buffer(buff)
     {
     }

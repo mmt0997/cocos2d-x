@@ -524,7 +524,7 @@ void GLProgram::updateUniforms()
                        _builtInUniforms[UNIFORM_COS_TIME] != -1
                        );
     _flags.usesRandom = _builtInUniforms[UNIFORM_RANDOM01] != -1;
-
+    
     this->use();
     
     // Since sample most probably won't change, set it to 0,1,2,3 now.
@@ -536,6 +536,8 @@ void GLProgram::updateUniforms()
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER2], 2);
     if(_builtInUniforms[UNIFORM_SAMPLER3] != -1)
         setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER3], 3);
+    
+    parseUniformBuffer();
 }
 
 bool GLProgram::link()
@@ -563,7 +565,6 @@ bool GLProgram::link()
     parseVertexAttribs();
     parseUniforms();
     parseAttributeBindings();
-    parseUniformBuffer();
     if (_vertShader)
     {
         glDeleteShader(_vertShader);
@@ -744,7 +745,7 @@ void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLi
     }
 }
 
-void GLProgram::setUniformLocationWith1iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith1iv(GLint location, const GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*1*numberOfArrays);
     
@@ -754,7 +755,7 @@ void GLProgram::setUniformLocationWith1iv(GLint location, GLint* ints, unsigned 
     }
 }
 
-void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith2iv(GLint location, const GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
     
@@ -764,7 +765,7 @@ void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned 
     }
 }
 
-void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith3iv(GLint location, const GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
     
@@ -774,7 +775,7 @@ void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned 
     }
 }
 
-void GLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith4iv(GLint location, const GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
     
@@ -1011,16 +1012,25 @@ void GLProgram::parseUniformBuffer()
     GLint size(0);
     GLenum type(0);
     GLint location(-1);
+    memset(_builtInUniformBufferIndex, -1, UNIFORM_MAX);
     for(int index = 0 ; index < numberUnifroms; ++index)
     {
         memset(buff, 0, 255);
         glGetActiveUniform(_program, index, 255, &length, &size, &type, buff);
         location = glGetUniformLocation(_program, buff);
+        if(location == -1) continue;
+        for(int builtinIndex = 0; builtinIndex < UNIFORM_MAX; ++builtinIndex)
+        {
+            if(location == _builtInUniforms[builtinIndex])
+            {
+                _builtInUniformBufferIndex[builtinIndex] = index;
+            }
+        }
         buffer.names[index] = buff;
         buffer.layout[index].count = size;
         buffer.layout[index].constantSlot = location;
         buffer.layout[index].type = s_maps[type];
-        buffer.data[index].data = nullptr;
+        buffer.data[index].clear();
     }
     
 }
@@ -1066,6 +1076,63 @@ const std::string& GLProgram::getShaderSemanticHeader()
     "
     ;
     return header;
+}
+
+UniformBuffer GLProgram::generateBuiltInUniformBuffer(const Mat4& matrixMV) const
+{
+    UniformBuffer result = _defaultUniformBuffer;
+    
+    {
+        auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        
+        if(_flags.usesP)
+            result.data[_builtInUniformBufferIndex[UNIFORM_P_MATRIX]].update(&matrixP.m, sizeof(float)* 16);
+        
+        if(_flags.usesMV)
+            result.data[_builtInUniformBufferIndex[UNIFORM_MV_MATRIX]].update(&matrixMV.m, sizeof(float)* 16);
+        
+        if(_flags.usesMVP) {
+            Mat4 matrixMVP = matrixP * matrixMV;
+            result.data[_builtInUniformBufferIndex[UNIFORM_MVP_MATRIX]].update(&matrixMVP.m, sizeof(float)* 16);
+        }
+        
+        if (_flags.usesNormal)
+        {
+            Mat4 mvInverse = matrixMV;
+            mvInverse.m[12] = mvInverse.m[13] = mvInverse.m[14] = 0.0f;
+            mvInverse.inverse();
+            mvInverse.transpose();
+            GLfloat normalMat[9];
+            normalMat[0] = mvInverse.m[0];normalMat[1] = mvInverse.m[1];normalMat[2] = mvInverse.m[2];
+            normalMat[3] = mvInverse.m[4];normalMat[4] = mvInverse.m[5];normalMat[5] = mvInverse.m[6];
+            normalMat[6] = mvInverse.m[8];normalMat[7] = mvInverse.m[9];normalMat[8] = mvInverse.m[10];
+            
+            result.data[_builtInUniformBufferIndex[UNIFORM_NORMAL_MATRIX]].update(normalMat, sizeof(float)* 9);
+        }
+        
+        if(_flags.usesTime) {
+            // This doesn't give the most accurate global time value.
+            // Cocos2D doesn't store a high precision time value, so this will have to do.
+            // Getting Mach time per frame per shader using time could be extremely expensive.
+            float time = _director->getTotalFrames() * _director->getAnimationInterval();
+            float timeArray[4] = {time/10, time, time*2, time*4};
+            result.data[_builtInUniformBufferIndex[UNIFORM_TIME]].update(timeArray, sizeof(float)* 4);
+            float timeArray2[4] = {time/8, time/4, time/2, sinf(time)};
+            result.data[_builtInUniformBufferIndex[UNIFORM_SIN_TIME]].update(timeArray2, sizeof(float)* 4);
+            float timeArray3[4] = {time/8, time/4, time/2, cosf(time)};
+            result.data[_builtInUniformBufferIndex[UNIFORM_COS_TIME]].update(timeArray3, sizeof(float)* 4);
+            
+        }
+        
+        if(_flags.usesRandom)
+        {
+           float farray[4] = {CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1()};
+            result.data[_builtInUniformBufferIndex[UNIFORM_RANDOM01]].update(farray, sizeof(float)* 4);
+        }
+        
+    }
+    
+    return result;
 }
 
 NS_CC_END

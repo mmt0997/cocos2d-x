@@ -99,8 +99,11 @@ void QuadCommand::useMaterial() const
     
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
-    
-    _glProgramState->apply(_mv);
+    auto program = _glProgramState->getGLProgram();
+    CommandBufferGPUProgram(program).apply();
+    CommandBufferUniform(program->generateBuiltInUniformBuffer(_mv)).apply();
+    _glProgramState->applyAttributes();
+    _glProgramState->applyUniforms();
 }
 
 NS_CC_END

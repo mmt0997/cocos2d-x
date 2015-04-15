@@ -379,17 +379,17 @@ public:
     void setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4);
 
     /** calls glUniform1iv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith1iv(GLint location, GLint* ints, unsigned int numberOfArrays);
+    void setUniformLocationWith1iv(GLint location, const GLint* ints, unsigned int numberOfArrays);
     
     /** calls glUniform2iv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays);
+    void setUniformLocationWith2iv(GLint location, const GLint* ints, unsigned int numberOfArrays);
     
     /** calls glUniform3iv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays);
+    void setUniformLocationWith3iv(GLint location, const GLint* ints, unsigned int numberOfArrays);
     
     /** calls glUniform4iv only if the values are different than the previous call for this same shader program. */
     
-    void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
+    void setUniformLocationWith4iv(GLint location, const GLint* ints, unsigned int numberOfArrays);
 
     /** calls glUniform1f only if the values are different than the previous call for this same shader program. 
      * In js or lua,please use setUniformLocationF32
@@ -474,6 +474,8 @@ public:
     typedef unsigned char SemanticAttributeIndexMap[VertexSemantic::COUNT];
     const SemanticAttributeIndexMap& getAttributeBindings() const { return _attributeBindings;}
     const UniformBuffer& getDefaultUniformBuffer() const { return _defaultUniformBuffer; }
+    UniformBuffer generateBuiltInUniformBuffer(const Mat4& matrixMV) const;
+    
     static const std::string& getShaderSemanticString(VertexSemantic semantic);
     static const std::string& getShaderSemanticHeader();
 private:
@@ -509,6 +511,8 @@ protected:
     GLuint            _fragShader;
     /**Built in uniforms.*/
     GLint             _builtInUniforms[UNIFORM_MAX];
+    /**Built in uniforms index in UniformBuffer.*/
+    int               _builtInUniformBufferIndex[UNIFORM_MAX];
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
         

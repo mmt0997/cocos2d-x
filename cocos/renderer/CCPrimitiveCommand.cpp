@@ -83,7 +83,11 @@ void PrimitiveCommand::execute() const
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
     
-    _glProgramState->apply(_mv);
+    auto program = _glProgramState->getGLProgram();
+    CommandBufferGPUProgram(program).apply();
+    CommandBufferUniform(program->generateBuiltInUniformBuffer(_mv)).apply();
+    _glProgramState->applyAttributes();
+    _glProgramState->applyUniforms();
     
     _primitive->draw();
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_primitive->getCount());
