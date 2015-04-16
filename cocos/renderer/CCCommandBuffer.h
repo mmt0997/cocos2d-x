@@ -29,6 +29,7 @@
 
 #include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
+#include "math/CCMath.h"
 #include <vector>
 #include <string>
 
@@ -362,13 +363,14 @@ public:
         FLOAT2,
         FLOAT3,
         FLOAT4,
+        FMAT3X3,
         FMAT4X4,
         INT,
         INT2,
         INT3,
         INT4,
         TEXTURE,
-        
+        TEXTURECUBE,
     };
     
     typedef std::vector<std::string> ConstantNames;
@@ -435,7 +437,6 @@ public:
     ConstantNames names;
     ConstantLayouts layout;
     ConstantData data;
-    
     void clear()
     {
         for(auto& dataSlot : data)
@@ -450,6 +451,8 @@ public:
     : names(other.names)
     , layout(other.layout)
     , data(other.data)
+    , textureUniformSlots(other.textureUniformSlots)
+    , uniformIndex(other.uniformIndex)
     {
     }
     
@@ -458,8 +461,44 @@ public:
         names = other.names;
         layout = other.layout;
         data = other.data;
+        textureUniformSlots = other.textureUniformSlots;
+        uniformIndex = other.uniformIndex;
         return *this;
     }
+    
+public:
+    void setUniformInt1(const std::string &uniformName, int value);
+    void setUniformInt2(const std::string &uniformName, int value1, int value2);
+    void setUniformInt3(const std::string &uniformName, int value1, int value2, int value3);
+    void setUniformInt4(const std::string &uniformName, int value1, int value2, int value3, int value4);
+    void setUniformInt1v(const std::string& uniformName, const int* value, unsigned int size);
+    void setUniformInt2v(const std::string& uniformName, const int* value, unsigned int size);
+    void setUniformInt3v(const std::string& uniformName, const int* value, unsigned int size);
+    void setUniformInt4v(const std::string& uniformName, const int* value, unsigned int size);
+
+    void setUniformFloat(const std::string &uniformName, float value);
+    void setUniformFloat2(const std::string &uniformName, const Vec2& value);
+    void setUniformFloat3(const std::string &uniformName, const Vec3& value);
+    void setUniformFloat4(const std::string &uniformName, const Vec4& value);
+    
+    void setUniformFloat1v(const std::string& uniformName, const float* value, unsigned int size);
+    void setUniformFloat2v(const std::string& uniformName, const Vec2* value, unsigned int size);
+    void setUniformFloat3v(const std::string& uniformName, const Vec3* value, unsigned int size);
+    void setUniformFloat4v(const std::string& uniformName, const Vec4* value, unsigned int size);
+    
+    void setUniformMat4(const std::string &uniformName, const Mat4& value);
+    void setUniformMat4v(const std::string &uniformName, const Mat4* value, unsigned int size);
+    
+    void setUniformMat3(const std::string &uniformName, const float* value);
+    void setUniformMat3v(const std::string &uniformName, const float* value, unsigned int size);
+    
+    void setUniformTexture(const std::string &uniformName, GLuint textureId);
+    
+    void build();
+private:
+    int getUniformIndex(const std::string &uniformName) const;
+    std::unordered_map<std::string, unsigned int> textureUniformSlots;
+    std::unordered_map<std::string, int> uniformIndex;
 };
 
 struct CommandBufferUniform : public CommandBuffer

@@ -240,4 +240,199 @@ CommandBufferScissor& CommandBufferScissor::setBox(int x, int y, int width, int 
     return *this;
 }
 
+void UniformBuffer::setUniformInt1(const std::string &uniformName, int value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::INT);
+    if(-1 == index) return;
+    data[index].update(&value, sizeof(int));
+}
+void UniformBuffer::setUniformInt2(const std::string &uniformName, int value1, int value2)
+{
+    int array[2] = {value1,value2};
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::INT2);
+    if(-1 == index) return;
+    data[index].update(&array, sizeof(int) * 2);
+}
+
+void UniformBuffer::setUniformInt3(const std::string &uniformName, int value1, int value2, int value3)
+{
+    int array[3] = {value1,value2,value3};
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::INT3);
+    if(-1 == index) return;
+    data[index].update(&array, sizeof(int) * 3);
+}
+
+void UniformBuffer::setUniformInt4(const std::string &uniformName, int value1, int value2, int value3, int value4)
+{
+    int array[4] = {value1,value2,value3,value4};
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::INT4);
+    if(-1 == index) return;
+    data[index].update(&array, sizeof(int) * 4);
+}
+
+void UniformBuffer::setUniformInt1v(const std::string& uniformName, const int* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::INT);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(int) * size);
+}
+
+void UniformBuffer::setUniformInt2v(const std::string& uniformName, const int* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::INT2);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(int) * 2 *size);
+}
+
+void UniformBuffer::setUniformInt3v(const std::string& uniformName, const int* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::INT3);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(int) * 3 *size);
+}
+
+void UniformBuffer::setUniformInt4v(const std::string& uniformName, const int* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::INT4);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(int) * 4 *size);
+}
+
+void UniformBuffer::setUniformFloat(const std::string &uniformName, float value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::FLOAT);
+    if(-1 == index) return;
+    data[index].update(&value, sizeof(float) );
+}
+
+void UniformBuffer::setUniformFloat2(const std::string &uniformName, const Vec2& value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::FLOAT2);
+    if(-1 == index) return;
+    data[index].update(&value, sizeof(float) * 2);
+}
+
+void UniformBuffer::setUniformFloat3(const std::string &uniformName, const Vec3& value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::FLOAT3);
+    if(-1 == index) return;
+    data[index].update(&value, sizeof(float) * 3);
+}
+
+void UniformBuffer::setUniformFloat4(const std::string &uniformName, const Vec4& value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::FLOAT4);
+    if(-1 == index) return;
+    data[index].update(&value, sizeof(float) * 4);
+}
+
+void UniformBuffer::setUniformFloat1v(const std::string& uniformName, const float* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::FLOAT);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * size);
+}
+
+void UniformBuffer::setUniformFloat2v(const std::string& uniformName, const Vec2* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::FLOAT2);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * 2 * size);
+}
+
+void UniformBuffer::setUniformFloat3v(const std::string& uniformName, const Vec3* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::FLOAT3);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * 3 * size);
+}
+
+void UniformBuffer::setUniformFloat4v(const std::string& uniformName, const Vec4* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::FLOAT4);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * 4 * size);
+}
+
+void UniformBuffer::setUniformMat3(const std::string &uniformName, const float* value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::FMAT3X3);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * 9 );
+}
+
+void UniformBuffer::setUniformMat3v(const std::string &uniformName, const float* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::FMAT3X3);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * 9 * size);
+}
+
+void UniformBuffer::setUniformMat4(const std::string &uniformName, const Mat4& value)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == 1 && layout[index].type == ConstantType::FMAT4X4);
+    if(-1 == index) return;
+    data[index].update(&value, sizeof(float) * 16 );
+}
+
+void UniformBuffer::setUniformMat4v(const std::string &uniformName, const Mat4* value, unsigned int size)
+{
+    auto index = getUniformIndex(uniformName);
+    CC_ASSERT(layout[index].count == size && layout[index].type == ConstantType::FMAT4X4);
+    if(-1 == index) return;
+    data[index].update(value, sizeof(float) * 16 * size);
+}
+
+void UniformBuffer::setUniformTexture(const std::string &uniformName, GLuint textureId)
+{
+    auto index = getUniformIndex(uniformName);
+    //CC_ASSERT(layout[index].count == 1 && (layout[index].type == (ConstantType::TEXTURE) || layout[index].type == (ConstantType::TEXTURECUBE)));
+    if(-1 == index) return;
+    int textureUnit = (int)textureUniformSlots[uniformName];
+    int array[2] = {textureUnit, (int)textureId};
+    data[index].update(array, sizeof(int) * 2 );
+}
+
+int UniformBuffer::getUniformIndex(const std::string &uniformName) const
+{
+    auto iter = uniformIndex.find(uniformName);
+    if(iter == uniformIndex.end()) return -1;
+    else return iter->second;
+}
+
+void UniformBuffer::build()
+{
+    textureUniformSlots.clear();
+    uniformIndex.clear();
+    unsigned int textureUnitslot = 0;
+    for(int index = 0; index < names.size(); ++index)
+    {
+        uniformIndex[names[index]] = index;
+        if(layout[index].type == ConstantType::TEXTURE || layout[index].type == ConstantType::TEXTURECUBE)
+        {
+            textureUniformSlots[names[index]] = textureUnitslot;
+            textureUnitslot++;
+        }
+    }
+}
+
 NS_CC_END

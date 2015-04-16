@@ -265,7 +265,7 @@ void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 void MeshCommand::preBatchDraw()
 {
     // Set material
-    GL::bindTexture2D(_textureID);
+    _glProgramState->setUniformTexture("CC_Texture0", _textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
 
     if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
@@ -294,7 +294,10 @@ void MeshCommand::batchDraw()
         
     }
     
-    _glProgramState->applyGLProgram(_mv);
+    //_glProgramState->applyGLProgram(_mv);
+    auto program = _glProgramState->getGLProgram();
+    CommandBufferGPUProgram(program).apply();
+    CommandBufferUniform(program->generateBuiltInUniformBuffer(_mv)).apply();
     _glProgramState->applyUniforms();
 
     const auto& scene = Director::getInstance()->getRunningScene();
@@ -326,11 +329,11 @@ void MeshCommand::execute()
     // set render state
     applyRenderState();
     // Set material
-    GL::bindTexture2D(_textureID);
+    _glProgramState->setUniformVec4("u_color", _displayColor);
+    _glProgramState->setUniformTexture("CC_Texture0", _textureID);
     GL::blendFunc(_blendType.src, _blendType.dst);
 
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    _glProgramState->setUniformVec4("u_color", _displayColor);
     
     if (_matrixPaletteSize && _matrixPalette)
     {

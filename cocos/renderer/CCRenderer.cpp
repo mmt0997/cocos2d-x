@@ -996,6 +996,10 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
                 {
                     currentGLProgram->setUniformLocationWith4fv(slot.constantSlot, (const GLfloat*)data.getData(), slot.count);
                 }
+                else if(UniformBuffer::ConstantType::FMAT3X3 == slot.type)
+                {
+                    currentGLProgram->setUniformLocationWithMatrix3fv(slot.constantSlot, (const GLfloat*)data.getData(), slot.count);
+                }
                 else if(UniformBuffer::ConstantType::FMAT4X4 == slot.type)
                 {
                     currentGLProgram->setUniformLocationWithMatrix4fv(slot.constantSlot, (const GLfloat*)data.getData(), slot.count);
@@ -1020,7 +1024,13 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
                 {
                     const GLint* textureData = (const GLint*) data.getData();
                     currentGLProgram->setUniformLocationWith1i(slot.constantSlot, textureData[0]);
-                    GL::bindTexture2DN(GL_TEXTURE0+textureData[0], textureData[1]);
+                    GL::bindTexture2DN(textureData[0], textureData[1]);
+                }
+                else if(UniformBuffer::ConstantType::TEXTURECUBE == slot.type)
+                {
+                    const GLint* textureData = (const GLint*) data.getData();
+                    currentGLProgram->setUniformLocationWith1i(slot.constantSlot, textureData[0]);
+                    GL::bindTextureN(textureData[0], textureData[1],GL_TEXTURE_CUBE_MAP);
                 }
                 else
                 {

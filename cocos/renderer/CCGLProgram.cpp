@@ -991,8 +991,11 @@ void GLProgram::parseUniformBuffer()
         s_maps.insert(std::make_pair(GL_INT_VEC3, UniformBuffer::ConstantType::INT3));
         s_maps.insert(std::make_pair(GL_INT_VEC4, UniformBuffer::ConstantType::INT4));
         
+        s_maps.insert(std::make_pair(GL_FLOAT_MAT3, UniformBuffer::ConstantType::FMAT3X3));
         s_maps.insert(std::make_pair(GL_FLOAT_MAT4, UniformBuffer::ConstantType::FMAT4X4));
+        
         s_maps.insert(std::make_pair(GL_SAMPLER_2D, UniformBuffer::ConstantType::TEXTURE));
+        s_maps.insert(std::make_pair(GL_SAMPLER_CUBE, UniformBuffer::ConstantType::TEXTURECUBE));
     }
     
     UniformBuffer &buffer = _defaultUniformBuffer;
@@ -1032,6 +1035,8 @@ void GLProgram::parseUniformBuffer()
         buffer.layout[index].type = s_maps[type];
         buffer.data[index].clear();
     }
+    
+    buffer.build();
     
 }
 

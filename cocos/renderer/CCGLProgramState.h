@@ -41,6 +41,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class GLProgram;
+class UniformBuffer;
 class Texture2D;
 struct Uniform;
 struct VertexAttrib;
@@ -308,6 +309,7 @@ protected:
     int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
+    UniformBuffer* _buffer;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundlistener;
