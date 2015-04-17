@@ -471,7 +471,7 @@ public:
 
 
 public:
-    typedef unsigned char SemanticAttributeIndexMap[VertexSemantic::COUNT];
+    typedef unsigned SemanticAttributeIndexMap[VertexSemantic::COUNT];
     const SemanticAttributeIndexMap& getAttributeBindings() const { return _attributeBindings;}
     const UniformBuffer& getDefaultUniformBuffer() const { return _defaultUniformBuffer; }
     UniformBuffer generateBuiltInUniformBuffer(const Mat4& matrixMV) const;

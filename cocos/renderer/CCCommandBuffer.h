@@ -225,7 +225,7 @@ public:
     }
     
     CommandBufferScissor& setEnable(bool enable);
-    CommandBufferScissor& setBox(int x, int y, int width, int height);
+    CommandBufferScissor& setBox(int x_, int y_, int width_, int height_);
     
     union {
         bool    flag;
@@ -263,54 +263,60 @@ enum VertexSemantic
     COUNT = 14,
 };
 
-enum class VertexElementType
+enum class VertexElementType : uint8_t
 {
     FLOAT,
     BYTE,
     UBYTE,
+    TOTAL_COUNT,
 };
 
-class VertexElement
+uint32_t VertexElementTypeSize(VertexElementType type);
+GLenum   VertexElementTypeToGLType(VertexElementType t);
+
+static uint32_t getSize(VertexElementType t);
+
+struct VertexElement
 {
-public:
-    VertexSemantic _semantic;
-    VertexElementType _type;
-    int _count; //1-4
-    bool _normalize;
-    VertexElement(VertexSemantic semantic, VertexElementType type, int count, bool normalize = true)
-    :_semantic(semantic), _type(type), _count(count), _normalize(normalize)
-    {
-    }
+    VertexSemantic semantic;
+    VertexElementType type;
+    uint8_t count; //1-4
+    bool normalize;
+    void *offset;
 };
-
-typedef std::vector<VertexElement> VertexBufferLayout;
 
 class VertexBuffer;
 struct VertexStream
 {
     VertexBuffer* buffer;
-    VertexBufferLayout layout;
+    std::vector<VertexElement> layout;
+    
+    uint32_t stride;
 };
-
-typedef std::vector<VertexStream> VertexStreams;
-
 
 enum class GeometryType
 {
-    Points,
-    Lines,
-    Triangles,
+    POINTS,
+    LINES,
+    TRIANGLES,
+    TOTAL_COUNT,
 };
+
+GLenum GeometryTypeToGLType(GeometryType t);
 
 struct CommandBufferVertexStreams : public CommandBuffer
 {
-    VertexStreams streams;
+    std::vector<VertexStream> streams;
     
 public:
-    CommandBufferVertexStreams(const VertexStreams& stream)
-    : CommandBuffer(CommandBufferType::STEAMS), streams(stream)
+    CommandBufferVertexStreams() : CommandBuffer(CommandBufferType::STEAMS)
     {
-        
+    }
+    
+    CommandBufferVertexStreams& addStream(const VertexStream& s)
+    {
+        streams.push_back(s);
+        return *this;
     }
 };
 

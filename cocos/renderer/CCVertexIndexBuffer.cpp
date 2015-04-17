@@ -305,4 +305,14 @@ void IndexBuffer::recreateVBO() const
     }
 }
 
+GLenum IndexTypeToGLType(IndexBuffer::IndexType t)
+{
+    static GLenum type[int(IndexBuffer::IndexType::TOTAL_COUNT)] =
+    {
+        GL_UNSIGNED_SHORT,  // INDEX_TYPE_SHORT_16,
+        GL_UNSIGNED_INT,    // INDEX_TYPE_UINT_32,
+    };
+    return type[int(t)];
+}
+
 NS_CC_END

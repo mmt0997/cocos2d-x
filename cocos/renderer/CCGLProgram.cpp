@@ -1043,11 +1043,11 @@ const std::string& GLProgram::getShaderSemanticString(VertexSemantic semantic)
     {
      "",
      "a_position",
-     "a_color",
      "a_normal",
+     "a_color",
      "a_blendWeight",
      "a_blendIndex",
-     "a_texCoord",
+     "a_texCoord",   // should be a_texCoord0, but for compatable reason using a_texCoord
      "a_texCoord1",
      "a_texCoord2",
      "a_texCoord3",

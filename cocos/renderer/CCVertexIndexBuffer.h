@@ -152,7 +152,9 @@ public:
         /**Short index will be used.*/
         INDEX_TYPE_SHORT_16,
         /**Int index will be used.*/
-        INDEX_TYPE_UINT_32
+        INDEX_TYPE_UINT_32,
+        /**Total index type count.*/
+        TOTAL_COUNT,
     };
     
 public:
@@ -255,6 +257,7 @@ public:
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
+GLenum IndexTypeToGLType(IndexBuffer::IndexType t);
 
 NS_CC_END
 
