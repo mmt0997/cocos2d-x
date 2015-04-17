@@ -24,11 +24,6 @@
 
 const char* ccPositionColorTextureAsPointsize_vert = STRINGIFY(
 
-attribute vec4 a_position;
-attribute vec4 a_color;
-
-attribute vec2 a_texCoord;
-
 \n#ifdef GL_ES\n
 varying lowp vec4 v_fragmentColor;
 \n#else\n

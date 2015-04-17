@@ -428,7 +428,9 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         return false;
     }
     
+    const char *pszAttribs = (type == GL_FRAGMENT_SHADER) ? "" : getShaderSemanticHeader().c_str();
     const GLchar *sources[] = {
+        pszAttribs,
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
         (type == GL_VERTEX_SHADER ? "precision mediump float;\n precision mediump int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
@@ -1049,18 +1051,18 @@ const std::string& GLProgram::getShaderSemanticString(VertexSemantic semantic)
     {
      "",
      "a_position",
-     "a_color",
      "a_normal",
+     "a_color",
      "a_blendWeight",
      "a_blendIndex",
-     "a_texCoord",
-     "a_texcoord1",
-     "a_texcoord2",
-     "a_texcoord3",
-     "a_texcoord4",
-     "a_texcoord5",
-     "a_texcoord6",
-     "a_texcoord7",
+     "a_texCoord",   // should be a_texCoord0, but for compatable reason using a_texCoord
+     "a_texCoord1",
+     "a_texCoord2",
+     "a_texCoord3",
+     "a_texCoord4",
+     "a_texCoord5",
+     "a_texCoord6",
+     "a_texCoord7",
     };
     return semanticStrings[semantic];
 }
@@ -1068,19 +1070,19 @@ const std::string& GLProgram::getShaderSemanticHeader()
 {
     static const std::string header =
     "\
-        attribute vec4 a_position;\
-        attribute vec4 a_normal;\
-        attribute vec4 a_color;\
-        attribute vec4 a_blendWeight;\
-        attribute vec4 a_blendIndex;\
-        attribute vec4 a_texcoord;\
-        attribute vec4 a_texcoord1;\
-        attribute vec4 a_texcoord2;\
-        attribute vec4 a_texcoord3;\
-        attribute vec4 a_texcoord4;\
-        attribute vec4 a_texcoord5;\
-        attribute vec4 a_texcoord6;\
-        attribute vec4 a_texcoord7;\
+        attribute vec4 a_position;\n\
+        attribute vec4 a_normal;\n\
+        attribute vec4 a_color;\n\
+        attribute vec4 a_blendWeight;\n\
+        attribute vec4 a_blendIndex;\n\
+        attribute vec4 a_texCoord;\n\
+        attribute vec4 a_texCoord1;\n\
+        attribute vec4 a_texCoord2;\n\
+        attribute vec4 a_texCoord3;\n\
+        attribute vec4 a_texCoord4;\n\
+        attribute vec4 a_texCoord5;\n\
+        attribute vec4 a_texCoord6;\n\
+        attribute vec4 a_texCoord7;\n\
     "
     ;
     return header;

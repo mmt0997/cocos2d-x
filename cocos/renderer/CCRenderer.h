@@ -197,9 +197,6 @@ protected:
 
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
-    void setupVBOAndVAO();
-    void setupVBO();
-    void mapBuffers();
     void drawBatchedTriangles();
     void drawBatchedQuads();
 
@@ -241,11 +238,8 @@ protected:
     int _filledVertex;
     int _filledIndex;
     
-    //for QuadCommand
-    V3F_C4B_T2F _quadVerts[VBO_SIZE];
-    GLushort _quadIndices[INDEX_VBO_SIZE];
-    GLuint _quadVAO;
-    GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
+    VertexStream _quadVerts;    // vertex layout is V3F_C4B_T2F
+    IndexBuffer *_quadIndices;  // index layout is unsigned short
     int _numberQuads;
     
     bool _glViewAssigned;
@@ -273,7 +267,7 @@ public:
 private:
     //track of currentGLProgram;
     GLProgram* currentGLProgram;
-    VertexStreams currentStreams;
+    std::vector<VertexStream> currentStreams;
 };
 
 NS_CC_END

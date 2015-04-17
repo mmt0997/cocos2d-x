@@ -230,13 +230,13 @@ CommandBufferScissor& CommandBufferScissor::setEnable(bool enable)
     return *this;
 }
 
-CommandBufferScissor& CommandBufferScissor::setBox(int x, int y, int width, int height)
+CommandBufferScissor& CommandBufferScissor::setBox(int x_, int y_, int width_, int height_)
 {
     this->flags.setBox = true;
-    this->x = (uint16_t)x;
-    this->y = (uint16_t)y;
-    this->width = (uint16_t)width;
-    this->height = (uint16_t)height;
+    this->x = (uint16_t)x_;
+    this->y = (uint16_t)y_;
+    this->width = (uint16_t)width_;
+    this->height = (uint16_t)height_;
     return *this;
 }
 
@@ -433,6 +433,37 @@ void UniformBuffer::build()
             textureUnitslot++;
         }
     }
+uint32_t VertexElementTypeSize(VertexElementType type)
+{
+    static uint32_t size[int(VertexElementType::TOTAL_COUNT)] =
+    {
+        4,  //FLOAT,
+        1,  //BYTE,
+        1,  //UBYTE,
+    };
+    return size[int(type)];
+}
+
+GLenum   VertexElementTypeToGLType(VertexElementType t)
+{
+    static GLenum type[int(VertexElementType::TOTAL_COUNT)] =
+    {
+        GL_FLOAT,           //FLOAT,
+        GL_BYTE,            //BYTE,
+        GL_UNSIGNED_BYTE,   //UBYTE,
+    };
+    return type[int(t)];
+}
+
+GLenum GeometryTypeToGLType(GeometryType t)
+{
+    static GLenum type[int(GeometryType::TOTAL_COUNT)] =
+    {
+        GL_POINTS,       // POINTS,
+        GL_LINES,        // LINES,
+        GL_TRIANGLES,   // TRIANGLES,
+    };
+    return type[int(t)];
 }
 
 NS_CC_END

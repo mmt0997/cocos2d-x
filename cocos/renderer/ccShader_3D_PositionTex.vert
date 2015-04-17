@@ -1,26 +1,17 @@
 
 const char* cc3D_PositionTex_vert = STRINGIFY(
 
-attribute vec4 a_position;
-attribute vec2 a_texCoord;
-
 varying vec2 TextureCoordOut;
 
 void main(void)
 {
     gl_Position = CC_MVPMatrix * a_position;
-    TextureCoordOut = a_texCoord;
+    TextureCoordOut = a_texCoord.xy;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
 }
 );
 
 const char* cc3D_SkinPositionTex_vert = STRINGIFY(
-attribute vec3 a_position;
-
-attribute vec4 a_blendWeight;
-attribute vec4 a_blendIndex;
-
-attribute vec2 a_texCoord;
 
 const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
@@ -67,7 +58,7 @@ vec4 getPosition()
     }
 
     vec4 _skinnedPosition;
-    vec4 postion = vec4(a_position, 1.0);
+    vec4 postion = vec4(a_position.xyz, 1.0);
     _skinnedPosition.x = dot(postion, matrixPalette1);
     _skinnedPosition.y = dot(postion, matrixPalette2);
     _skinnedPosition.z = dot(postion, matrixPalette3);
@@ -81,7 +72,7 @@ void main()
     vec4 position = getPosition();
     gl_Position = CC_MVPMatrix * position;
     
-    TextureCoordOut = a_texCoord;
+    TextureCoordOut = a_texCoord.xy;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
 }
 
