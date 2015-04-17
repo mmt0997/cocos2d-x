@@ -266,8 +266,8 @@ GLenum GeometryTypeToGLType(GeometryType t)
 {
     static GLenum type[int(GeometryType::TOTAL_COUNT)] =
     {
-        GL_POINT,       // POINTS,
-        GL_LINE,        // LINES,
+        GL_POINTS,       // POINTS,
+        GL_LINES,        // LINES,
         GL_TRIANGLES,   // TRIANGLES,
     };
     return type[int(t)];

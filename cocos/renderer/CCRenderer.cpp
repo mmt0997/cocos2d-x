@@ -245,7 +245,7 @@ void Renderer::setupBuffer()
     _quadVerts.buffer->retain();
     _quadVerts.stride = sizeof(V3F_C4B_T2F);
     _quadVerts.layout.push_back({VertexSemantic::POSIITON,  VertexElementType::FLOAT,   3, false,   (void*)offsetof( V3F_C4B_T2F, vertices)});
-    _quadVerts.layout.push_back({VertexSemantic::COLOR,     VertexElementType::BYTE,    4, true,    (void*)offsetof( V3F_C4B_T2F, colors)});
+    _quadVerts.layout.push_back({VertexSemantic::COLOR,     VertexElementType::UBYTE,    4, true,    (void*)offsetof( V3F_C4B_T2F, colors)});
     _quadVerts.layout.push_back({VertexSemantic::TEXCOORD0, VertexElementType::FLOAT,   2, false,   (void*)offsetof( V3F_C4B_T2F, texCoords)});
 
     _quadIndices = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, INDEX_VBO_SIZE);
@@ -261,8 +261,8 @@ void Renderer::setupBuffer()
         quadIndices[i*6+4] = (GLushort) (i*4+2);
         quadIndices[i*6+5] = (GLushort) (i*4+1);
     }
-    CC_SAFE_DELETE_ARRAY(quadIndices);
     _quadIndices->updateIndices(quadIndices, INDEX_VBO_SIZE, 0);
+    CC_SAFE_DELETE_ARRAY(quadIndices);
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -952,7 +952,6 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
             CHECK_GL_ERROR_DEBUG();
             
             // draw element
-            CCLOG("glDrawElements(0x%x, %d, 0x%x, %d)", GeometryTypeToGLType(cmd.type), (GLsizei) cmd.count, IndexTypeToGLType(cmd.indices->getType()), cmd.start);
             glDrawElements(GeometryTypeToGLType(cmd.type), (GLsizei) cmd.count, IndexTypeToGLType(cmd.indices->getType()), (GLvoid*)cmd.start);
             CHECK_GL_ERROR_DEBUG();
             
@@ -965,6 +964,8 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
                     CHECK_GL_ERROR_DEBUG();
                 }
             }
+            //this line is added for backward compatibility
+            GL::enableVertexAttribs(0);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             break;
