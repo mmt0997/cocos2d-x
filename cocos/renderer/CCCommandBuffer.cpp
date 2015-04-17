@@ -433,6 +433,8 @@ void UniformBuffer::build()
             textureUnitslot++;
         }
     }
+}
+
 uint32_t VertexElementTypeSize(VertexElementType type)
 {
     static uint32_t size[int(VertexElementType::TOTAL_COUNT)] =
