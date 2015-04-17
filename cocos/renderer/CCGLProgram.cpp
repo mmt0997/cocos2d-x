@@ -1015,7 +1015,10 @@ void GLProgram::parseUniformBuffer()
     GLint size(0);
     GLenum type(0);
     GLint location(-1);
-    memset(_builtInUniformBufferIndex, -1, UNIFORM_MAX);
+    for(int index = 0; index <UNIFORM_MAX; ++index)
+    {
+        _builtInUniformBufferIndex[index] = -1;
+    }
     for(int index = 0 ; index < numberUnifroms; ++index)
     {
         memset(buff, 0, 255);
@@ -1120,13 +1123,22 @@ UniformBuffer GLProgram::generateBuiltInUniformBuffer(const Mat4& matrixMV) cons
             // Cocos2D doesn't store a high precision time value, so this will have to do.
             // Getting Mach time per frame per shader using time could be extremely expensive.
             float time = _director->getTotalFrames() * _director->getAnimationInterval();
-            float timeArray[4] = {time/10, time, time*2, time*4};
-            result.data[_builtInUniformBufferIndex[UNIFORM_TIME]].update(timeArray, sizeof(float)* 4);
-            float timeArray2[4] = {time/8, time/4, time/2, sinf(time)};
-            result.data[_builtInUniformBufferIndex[UNIFORM_SIN_TIME]].update(timeArray2, sizeof(float)* 4);
-            float timeArray3[4] = {time/8, time/4, time/2, cosf(time)};
-            result.data[_builtInUniformBufferIndex[UNIFORM_COS_TIME]].update(timeArray3, sizeof(float)* 4);
-            
+            if(-1 != _builtInUniformBufferIndex[UNIFORM_TIME])
+            {
+                float timeArray[4] = {time/10, time, time*2, time*4};
+                result.data[_builtInUniformBufferIndex[UNIFORM_TIME]].update(timeArray, sizeof(float)* 4);
+            }
+            if(-1 != _builtInUniformBufferIndex[UNIFORM_SIN_TIME])
+            {
+                float timeArray2[4] = {time/8, time/4, time/2, sinf(time)};
+                result.data[_builtInUniformBufferIndex[UNIFORM_SIN_TIME]].update(timeArray2, sizeof(float)* 4);
+            }
+            if(-1 != _builtInUniformBufferIndex[UNIFORM_COS_TIME])
+            {
+                float timeArray3[4] = {time/8, time/4, time/2, cosf(time)};
+                result.data[_builtInUniformBufferIndex[UNIFORM_COS_TIME]].update(timeArray3, sizeof(float)* 4);
+            }
+
         }
         
         if(_flags.usesRandom)
