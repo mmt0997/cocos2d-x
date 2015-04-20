@@ -568,10 +568,10 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
     indices.resize(cmd->getIndexCount());
     for(int index = 0; index < cmd->getIndexCount(); ++index)
     {
-        indices[index] = cmd->getIndices()[index] + _filledIndex;
+        indices[index] = cmd->getIndices()[index] + _filledVertex;
     }
     
-    _verts.buffer->updateVertices(verts.data(), vertexCount, _filledIndex);
+    _verts.buffer->updateVertices(verts.data(), vertexCount, _filledVertex);
     _indices->updateIndices(&indices[0], int(cmd->getIndexCount()), _filledIndex);
     _filledVertex += cmd->getVertexCount();
     _filledIndex += cmd->getIndexCount();
