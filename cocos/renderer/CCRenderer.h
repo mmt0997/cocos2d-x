@@ -229,11 +229,8 @@ protected:
     std::vector<TrianglesCommand*> _batchedCommands;
     std::vector<QuadCommand*> _batchQuadCommands;
 
-    //for TrianglesCommand
-    V3F_C4B_T2F _verts[VBO_SIZE];
-    GLushort _indices[INDEX_VBO_SIZE];
-    GLuint _buffersVAO;
-    GLuint _buffersVBO[2]; //0: vertex  1: indices
+    VertexStream _verts;    // vertex layout is V3F_C4B_T2F
+    IndexBuffer *_indices;  // index layout is unsigned short
 
     int _filledVertex;
     int _filledIndex;
