@@ -114,6 +114,8 @@ bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacit
 SpriteBatchNode::SpriteBatchNode()
 : _textureAtlas(nullptr)
 {
+    _quadCommand.setSkipBatching(true);
+    _quadCommand.setNeedPremultiplyMVMatrix(false);
 }
 
 SpriteBatchNode::~SpriteBatchNode()
@@ -377,9 +379,15 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
 #endif
         child->updateTransform();
     }
-
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
-    renderer->addCommand(&_batchCommand);
+    _quadCommand.init(_globalZOrder,
+                      _textureAtlas->getTexture()->getName(),
+                      this->getGLProgramState(),
+                      _blendFunc,
+                      _textureAtlas->getQuads(),
+                      _textureAtlas->getTotalQuads(),
+                      transform,
+                      flags);
+    renderer->addCommand(&_quadCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity()

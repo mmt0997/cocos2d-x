@@ -40,6 +40,7 @@ QuadCommand::QuadCommand()
 ,_blendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
 ,_quadsCount(0)
+,_needPremultiplyMV(true)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
 }

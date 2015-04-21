@@ -584,13 +584,14 @@ void Renderer::fillQuads(const QuadCommand *cmd)
     std::vector<V3F_C4B_T2F> verts;
     verts.resize(quadVertsCount);
     memcpy(verts.data(), cmd->getQuads(), sizeof(V3F_C4B_T2F) * quadVertsCount);
-    
-    const Mat4& modelView = cmd->getModelView();
-    for (auto& vert : verts)
+    if (cmd->isNeedPremultiplyMVMatrix())
     {
-        modelView.transformPoint(&vert.vertices);
+        const Mat4& modelView = cmd->getModelView();
+        for (auto& vert : verts)
+        {
+            modelView.transformPoint(&vert.vertices);
+        }
     }
-    
     _quadVerts.buffer->updateVertices(verts.data(), quadVertsCount, _numberQuads * 4);
     _numberQuads += cmd->getQuadCount();
 }

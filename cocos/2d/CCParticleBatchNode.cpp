@@ -42,7 +42,8 @@ NS_CC_BEGIN
 ParticleBatchNode::ParticleBatchNode()
 : _textureAtlas(nullptr)
 {
-
+    _quadCommand.setNeedPremultiplyMVMatrix(false);
+    _quadCommand.setSkipBatching(true);
 }
 
 ParticleBatchNode::~ParticleBatchNode()
@@ -401,8 +402,15 @@ void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t
     {
         return;
     }
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
-    renderer->addCommand(&_batchCommand);
+    _quadCommand.init(_globalZOrder,
+                       _textureAtlas->getTexture()->getName(),
+                       this->getGLProgramState(),
+                       _blendFunc,
+                       _textureAtlas->getQuads(),
+                       _textureAtlas->getTotalQuads(),
+                       _modelViewTransform,
+                       flags);
+    renderer->addCommand(&_quadCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

@@ -79,7 +79,10 @@ public:
     inline BlendFunc getBlendType() const { return _blendType; }
     /**Get the model view matrix.*/
     inline const Mat4& getModelView() const { return _mv; }
-    
+    /**Check the command need premultiply model view matrix on indices or not.*/
+    inline const bool isNeedPremultiplyMVMatrix() const { return _needPremultiplyMV; }
+    /** Set the command need premultiply model view matrix on indices or not, default is true.*/
+    inline void setNeedPremultiplyMVMatrix(bool b) { _needPremultiplyMV = b; }
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
     void generateMaterialID();
@@ -98,6 +101,8 @@ protected:
     ssize_t _quadsCount;
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
+    /**Need premultiply mv matrix on vertices or not.*/
+    bool _needPremultiplyMV;
 };
 
 NS_CC_END
