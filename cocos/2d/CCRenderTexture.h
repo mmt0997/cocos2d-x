@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -325,11 +326,7 @@ protected:
     Rect         _fullRect;
     Rect         _fullviewPort;
     
-    GLuint       _FBO;
-    GLuint       _depthRenderBufffer;
-    GLint        _oldFBO;
-    Texture2D* _texture;
-    Texture2D* _textureCopy;    // a copy of _texture
+    RenderTarget _rt;
     Image*     _UITextureImage;
     Texture2D::PixelFormat _pixelFormat;
     

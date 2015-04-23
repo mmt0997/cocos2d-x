@@ -34,7 +34,7 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCCommandBuffer.h"
 #include "platform/CCGL.h"
-
+#include "renderer/CCTexture2D.h"
 
 /**
  * @addtogroup support
@@ -43,6 +43,7 @@
 
 NS_CC_BEGIN
 
+class Render;
 class EventListenerCustom;
 class QuadCommand;
 class TrianglesCommand;
@@ -116,6 +117,18 @@ struct RenderStackElement
 {
     int renderQueueID;
     ssize_t currentIndex;
+};
+
+struct RenderTarget
+{
+    uint8_t id;
+    enum class BufferType: char
+    {
+        COLOR0,
+        //DEPTH_STENCIL,
+    };
+    //bool bindTexture2D(Texture2D * texture, BufferType type = BufferType::COLOR0);
+    Texture2D * getTexture2D(BufferType type = BufferType::COLOR0);
 };
 
 class GroupCommandManager;
@@ -193,6 +206,15 @@ public:
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
 
+    /** Create a render target with specific format.
+     *
+     *@ param rtid: Input a render target id, if this id is not used, new render target will use this id.
+     *              If the priority id has been used by another render target, will auto alloc a greater id than it.
+     */
+    RenderTarget createRenderTarget(uint32_t width, uint32_t height, Texture2D::PixelFormat color0, uint32_t depthStencilFormat, uint8_t rtid = 0);
+    bool pushRenderTarget(RenderTarget rt);
+    bool popRenderTarget();
+    void deleteRenderTarget(RenderTarget &renderTarget);
 protected:
 
     //Setup VBO or VAO based on OpenGL extensions
@@ -265,6 +287,8 @@ private:
     //track of currentGLProgram;
     GLProgram* currentGLProgram;
     std::vector<VertexStream> currentStreams;
+    std::vector<RenderTarget> _rtStack;
+    RenderTarget _currentRT;
 };
 
 NS_CC_END

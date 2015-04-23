@@ -49,6 +49,9 @@ enum class CommandBufferType
     DRAWINDEXED,
     GPUPROGRAM,
     UNIFORM,
+    
+    READ_PIXEL,
+    FRAME_BUFFER,
 };
 
 class CommandBuffer
@@ -515,6 +518,29 @@ public:
     :CommandBuffer(CommandBufferType::UNIFORM), buffer(buff)
     {
     }
+};
+
+struct CommandBufferReadPixel : public CommandBuffer
+{
+    CommandBufferReadPixel(int x_, int y_, int w, int h, std::function<void(uint8_t*)>& dataCB, bool isPack = true, uint8_t packParam = 1)
+    : CommandBuffer(CommandBufferType::READ_PIXEL), packAlignment(isPack), alignmentParam(packParam)
+    , x(x_), y(y_), width(w), height(h), onReadPixel(dataCB)
+    {
+    }
+    
+    bool packAlignment;
+    uint8_t alignmentParam;
+    uint16_t x;
+    uint16_t y;
+    uint16_t width;
+    uint16_t height;
+    std::function<void (uint8_t*)> onReadPixel;
+};
+
+struct CommandBufferFrameBuffer : public CommandBuffer
+{
+    CommandBufferFrameBuffer(uint32_t fb):CommandBuffer(CommandBufferType::FRAME_BUFFER), fbo(fb){}
+    uint32_t fbo;
 };
 
 struct CommandBufferRenderTargetViewport : public CommandBuffer

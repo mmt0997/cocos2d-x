@@ -44,11 +44,6 @@ RenderTexture::RenderTexture()
 , _rtTextureRect(Rect::ZERO)
 , _fullRect(Rect::ZERO)
 , _fullviewPort(Rect::ZERO)
-, _FBO(0)
-, _depthRenderBufffer(0)
-, _oldFBO(0)
-, _texture(0)
-, _textureCopy(0)
 , _UITextureImage(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _clearFlags(0)
@@ -59,6 +54,7 @@ RenderTexture::RenderTexture()
 , _sprite(nullptr)
 , _saveFileCallback(nullptr)
 {
+    _rt.id = 0;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
     // Then it can be restored after coming to foreground on Android.
@@ -72,14 +68,7 @@ RenderTexture::RenderTexture()
 
 RenderTexture::~RenderTexture()
 {
-    CC_SAFE_RELEASE(_sprite);
-    CC_SAFE_RELEASE(_textureCopy);
-    
-    glDeleteFramebuffers(1, &_FBO);
-    if (_depthRenderBufffer)
-    {
-        glDeleteRenderbuffers(1, &_depthRenderBufffer);
-    }
+    Director::getInstance()->getRenderer()->deleteRenderTarget(_rt);
     CC_SAFE_DELETE(_UITextureImage);
 }
 
@@ -187,8 +176,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool ret = false;
-    void *data = nullptr;
-    do 
+    do
     {
         _fullRect = _rtTextureRect = Rect(0,0,w,h);
         //Size size = Director::getInstance()->getWinSizeInPixels();
@@ -197,92 +185,14 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         h = (int)(h * CC_CONTENT_SCALE_FACTOR());
         _fullviewPort = Rect(0,0,w,h);
         
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-
-        // textures must be power of two squared
-        int powW = 0;
-        int powH = 0;
-
-        if (Configuration::getInstance()->supportsNPOT())
-        {
-            powW = w;
-            powH = h;
-        }
-        else
-        {
-            powW = ccNextPOT(w);
-            powH = ccNextPOT(h);
-        }
-
-        auto dataLen = powW * powH * 4;
-        data = malloc(dataLen);
-        CC_BREAK_IF(! data);
-
-        memset(data, 0, dataLen);
-        _pixelFormat = format;
-
-        _texture = new (std::nothrow) Texture2D();
-        if (_texture)
-        {
-            _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
-        }
-        else
-        {
+        _rt = Director::getInstance()->getRenderer()->createRenderTarget(w, h, format, depthStencilFormat);
+        if (_rt.id == 0) {
             break;
         }
-        GLint oldRBO;
-        glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
-        
-        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
-        {
-            _textureCopy = new (std::nothrow) Texture2D();
-            if (_textureCopy)
-            {
-                _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        // generate FBO
-        glGenFramebuffers(1, &_FBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
-
-        // associate texture with FBO
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
-
-        if (depthStencilFormat != 0)
-        {
-            //create and attach depth buffer
-            glGenRenderbuffers(1, &_depthRenderBufffer);
-            glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
-            glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
-
-            // if depth format is the one with stencil part, bind same render buffer as stencil attachment
-            if (depthStencilFormat == GL_DEPTH24_STENCIL8)
-            {
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
-            }
-        }
-
-        // check if it worked (probably worth doing :) )
-        CCASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
-
-        _texture->setAliasTexParameters();
-
-        // retained
-        setSprite(Sprite::createWithTexture(_texture));
-
-        _texture->release();
+        _pixelFormat = format;
+        setSprite(Sprite::createWithTexture(_rt.getTexture2D()));
         _sprite->setFlippedY(true);
-
         _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
-
-        glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
         
         // Diabled by default.
         _autoDraw = false;
@@ -292,8 +202,6 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         
         ret = true;
     } while (0);
-    
-    CC_SAFE_FREE(data);
     
     return ret;
 }
@@ -465,12 +373,12 @@ Image* RenderTexture::newImage(bool fliimage)
 {
     CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
-    if (nullptr == _texture)
+    if (nullptr == _rt.getTexture2D())
     {
         return nullptr;
     }
 
-    const Size& s = _texture->getContentSizeInPixels();
+    const Size& s = _rt.getTexture2D()->getContentSizeInPixels();
 
     // to get the image size to save
     //        if the saving image domain exceeds the buffer texture domain,
@@ -478,62 +386,41 @@ Image* RenderTexture::newImage(bool fliimage)
     int savedBufferWidth = (int)s.width;
     int savedBufferHeight = (int)s.height;
 
-    GLubyte *buffer = nullptr;
-    GLubyte *tempData = nullptr;
     Image *image = new (std::nothrow) Image();
 
-    do
+    Director::getInstance()->getRenderer()->pushRenderTarget(_rt);
+    
+    std::function<void(uint8_t*)> onDataCB = [image, savedBufferWidth, savedBufferHeight, fliimage](uint8_t* buffer)
     {
-        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]));
-
-        if(! (tempData = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]))
+        GLubyte *tempData = nullptr;
+        do
         {
-            delete[] buffer;
-            buffer = nullptr;
-            break;
-        }
-
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
-
-        // TODO: move this to configration, so we don't check it every time
-        /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
-         */
-        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
-        {
-            // -- bind a temporary texture so we can clear the render buffer without losing our texture
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
-            CHECK_GL_ERROR_DEBUG();
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
-        }
-        glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
-        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-
-        if ( fliimage ) // -- flip is only required when saving image to file
-        {
+            CC_BREAK_IF(nullptr == buffer);
+            
+            if (false == fliimage)
+            {
+                image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+                break;
+            }
+            tempData = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4];
+            CC_BREAK_IF(tempData == nullptr);
+            
             // to get the actual texture data
             // #640 the image read from rendertexture is dirty
             for (int i = 0; i < savedBufferHeight; ++i)
             {
-                memcpy(&buffer[i * savedBufferWidth * 4],
-                       &tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
+                memcpy(&tempData[i * savedBufferWidth * 4],
+                       &buffer[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
                        savedBufferWidth * 4);
             }
-
-            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        }
-        else
-        {
+            
             image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        }
+        } while (false);
         
-    } while (0);
-
-    CC_SAFE_DELETE_ARRAY(buffer);
-    CC_SAFE_DELETE_ARRAY(tempData);
-
+        CC_SAFE_DELETE_ARRAY(tempData);
+    };
+    CommandBufferReadPixel(0,0,savedBufferWidth, savedBufferHeight,onDataCB).apply();
+    Director::getInstance()->getRenderer()->popRenderTarget();
     return image;
 }
 
@@ -558,7 +445,7 @@ void RenderTexture::onBegin()
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION,modifiedProjection);
 #endif
 
-        const Size& texSize = _texture->getContentSizeInPixels();
+        const Size& texSize = _rt.getTexture2D()->getContentSizeInPixels();
         
         // Calculate the adjustment ratios based on the old and new projections
         Size size = director->getWinSizeInPixels();
@@ -593,27 +480,14 @@ void RenderTexture::onBegin()
 
     // Adjust the orthographic projection and viewport
     
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
-
-    // TODO: move this to configration, so we don't check it every time
-    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
-     */
-    if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
-    {
-        // -- bind a temporary texture so we can clear the render buffer without losing our texture
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
-        CHECK_GL_ERROR_DEBUG();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
-    }
+    director->getRenderer()->pushRenderTarget(_rt);
 }
 
 void RenderTexture::onEnd()
 {
     Director *director = Director::getInstance();
 
-    glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+    director->getRenderer()->popRenderTarget();
 
     // restore viewport
     director->setViewport();
@@ -721,7 +595,7 @@ void RenderTexture::begin()
     {
         director->setProjection(director->getProjection());
         
-        const Size& texSize = _texture->getContentSizeInPixels();
+        const Size& texSize = _rt.getTexture2D()->getContentSizeInPixels();
         
         // Calculate the adjustment ratios based on the old and new projections
         Size size = director->getWinSizeInPixels();

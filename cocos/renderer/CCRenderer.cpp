@@ -43,6 +43,8 @@
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
 #include "2d/CCScene.h"
+#include "base/ccUtils.h"
+#include "platform/CCGL.h"
 
 NS_CC_BEGIN
 
@@ -156,8 +158,53 @@ void RenderQueue::restoreRenderState()
 //
 static const int DEFAULT_RENDER_QUEUE = 0;
 
-//
-// constructors, destructors, init
+/////////////////////////////////////////////////////////////////////////////////
+// render target
+class RenderTargetInfo
+{
+public:
+    RenderTargetInfo(): _texture(nullptr), _textureCopy(nullptr), _FBO(0), _depthStencilFormat(0), _depthRenderBufffer(0){}
+    ~RenderTargetInfo()
+    {
+        CC_SAFE_RELEASE_NULL(_texture);
+        CC_SAFE_RELEASE_NULL(_textureCopy);
+        if (_FBO) {
+            glDeleteFramebuffers(1, &_FBO);
+            _FBO = 0;
+        }
+        if (_depthRenderBufffer) {
+            glDeleteBuffers(1, &_depthRenderBufffer);
+            _depthRenderBufffer = 0;
+        }
+    }
+    
+    Texture2D * _texture;
+    Texture2D * _textureCopy;
+    uint32_t    _FBO;
+    uint32_t    _depthStencilFormat;
+    uint32_t    _depthRenderBufffer;
+};
+
+// offset 0 is the default framebuffer.
+static RenderTargetInfo* s_RTIs[256] = {new RenderTargetInfo(), nullptr};
+
+Texture2D *RenderTarget::getTexture2D(BufferType type)
+{
+    Texture2D *ret = nullptr;
+    do
+    {
+        CC_BREAK_IF(0 == id || nullptr == s_RTIs[id]);
+        if (RenderTarget::BufferType::COLOR0 == type) {
+            ret = s_RTIs[id]->_texture;
+            break;
+        }
+        CC_ASSERT(0); // reach here is invalid.
+    } while (false);
+    return ret;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Renderer constructors, destructors, init
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
@@ -187,6 +234,8 @@ Renderer::Renderer()
     _indices = nullptr;
     _quadVerts.buffer = nullptr;
     _quadIndices = nullptr;
+    
+    _currentRT.id = 0;
 }
 
 Renderer::~Renderer()
@@ -782,7 +831,196 @@ void Renderer::setClearColor(const Color4F &clearColor)
     glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 }
 
+RenderTarget Renderer::createRenderTarget(uint32_t w, uint32_t h, Texture2D::PixelFormat color0, uint32_t depthStencilFormat, uint8_t rtid)
+{
+    RenderTarget rt = {0};
+    do
+    {
+        // If rtid is valid, use it.
+        CC_BREAK_IF (! s_RTIs[rtid]); // s_RTIs[0] always been used
+        
+        // Check next id.
+        ++rtid;
+    } while (rtid); // if rtid > 255, it will be 0
+    
+    if (!rtid) {
+        CCLOG("Can't find a valid render target id!");
+        return rt;
+    }
+    
+    CCASSERT(color0 != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render target");
+    
+    void *data = nullptr;
+    RenderTargetInfo * rti = nullptr;
+    GLint oldFBO;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+    GLint oldRBO;
+    glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+    do
+    {
+        rti = new RenderTargetInfo;
+        if (nullptr == rti) {
+            break;
+        }
+        rti->_depthStencilFormat = depthStencilFormat;
+        
+        // textures must be power of two squared
+        int powW = 0;
+        int powH = 0;
+        
+        if (Configuration::getInstance()->supportsNPOT())
+        {
+            powW = w;
+            powH = h;
+        }
+        else
+        {
+            powW = ccNextPOT(w);
+            powH = ccNextPOT(h);
+        }
+        
+        if (Texture2D::PixelFormat::NONE != color0)
+        {
+            auto dataLen = powW * powH * 4;
+            data = malloc(dataLen);
+            CC_BREAK_IF(! data);
+            
+            memset(data, 0, dataLen);
+            
+            Texture2D *texture = new (std::nothrow) Texture2D();
+            if (texture)
+            {
+                texture->retain();
+                texture->initWithData(data, dataLen, color0, powW, powH, Size((float)w, (float)h));
+                texture->setAliasTexParameters();
+                rti->_texture = texture;
+                texture = nullptr;
+            }
+            else
+            {
+                break;
+            }
+            
+            if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+            {
+                texture = new (std::nothrow) Texture2D();
+                if (texture)
+                {
+                    texture->retain();
+                    texture->initWithData(data, dataLen, color0, powW, powH, Size((float)w, (float)h));
+                    texture->setAliasTexParameters();
+                    rti->_textureCopy = texture;
+                    texture = nullptr;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            //TODO: use RBO instead texture without texture format specified?
+        }
+        
+        // generate FBO
+        glGenFramebuffers(1, &rti->_FBO);
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, rti->_FBO);
+        
+        // associate texture with FBO
+        if (rti->_texture)
+        {
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rti->_texture->getName(), 0);
+        }
+        if (rti->_depthStencilFormat != 0)
+        {
+            //create and attach depth buffer
+            glGenRenderbuffers(1, &rti->_depthRenderBufffer);
+            glBindRenderbuffer(GL_RENDERBUFFER, rti->_depthRenderBufffer);
+            glRenderbufferStorage(GL_RENDERBUFFER, rti->_depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rti->_depthRenderBufffer);
+            
+            // if depth format is the one with stencil part, bind same render buffer as stencil attachment
+            if (rti->_depthStencilFormat == GL_DEPTH24_STENCIL8)
+            {
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rti->_depthRenderBufffer);
+            }
+        }
+        
+        // check if it worked (probably worth doing :) )
+        CCASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
+        
+        s_RTIs[rtid] = rti;
+        rt.id = rtid;
+        rti = nullptr;
+    } while (false);
+    glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+    CC_SAFE_FREE(data);
+    CC_SAFE_DELETE(rti);
+    
+    return rt;
+}
 
+bool Renderer::pushRenderTarget(RenderTarget rt)
+{
+    if (nullptr == s_RTIs[rt.id]) {
+        CCLOG("There's no render target named %d yet!.", rt.id);
+        return false;
+    }
+    _rtStack.push_back(_currentRT);
+    _currentRT = rt;
+    
+    RenderTargetInfo& rti = *s_RTIs[rt.id];
+    CommandBufferFrameBuffer(rti._FBO).apply();
+    
+    // TODO: move this to configration, so we don't check it every time
+    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+     */
+    if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+    {
+        // -- bind a temporary texture so we can clear the render buffer without losing our texture
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rti._textureCopy->getName(), 0);
+        CHECK_GL_ERROR_DEBUG();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rti._texture->getName(), 0);
+    }
+    return true;
+}
+
+bool Renderer::popRenderTarget()
+{
+    if (_rtStack.size() == 0) {
+        return false;
+    }
+    _currentRT = _rtStack.back();
+    
+    RenderTargetInfo& rti = *s_RTIs[_currentRT.id];
+    CommandBufferFrameBuffer(rti._FBO).apply();
+    
+    // TODO: move this to configration, so we don't check it every time
+    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+     */
+    if (rti._FBO && Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+    {
+        // -- bind a temporary texture so we can clear the render buffer without losing our texture
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rti._textureCopy->getName(), 0);
+        CHECK_GL_ERROR_DEBUG();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, rti._texture->getName(), 0);
+    }
+}
+
+void Renderer::deleteRenderTarget(RenderTarget &rt)
+{
+    if (rt.id) {
+        CC_SAFE_DELETE(s_RTIs[rt.id]);
+        rt.id = 0;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
 //begin CommandBuffer
 void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
 {
@@ -1056,7 +1294,35 @@ void Renderer::applyCommandBuffer(CommandBuffer *cmdBuf)
             }
             break;
         }
+        case CommandBufferType::READ_PIXEL:
+        {
+            CommandBufferReadPixel &cmd = *static_cast<CommandBufferReadPixel *>(cmdBuf);
+            GLubyte *buffer = nullptr;
+            uint32_t bufLen = cmd.width * cmd.height * 4;
+            do
+            {
+                CC_BREAK_IF(! bufLen);
+                buffer = (GLubyte *)malloc(bufLen);
+                CC_BREAK_IF(! buffer);
+                
+                glPixelStorei(cmd.packAlignment ? GL_PACK_ALIGNMENT : GL_UNPACK_ALIGNMENT, cmd.alignmentParam);
+                CHECK_GL_ERROR_DEBUG();
+                glReadPixels(cmd.x, cmd.y, cmd.width, cmd.height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+                CHECK_GL_ERROR_DEBUG();
+            } while (false);
+            cmd.onReadPixel(buffer);
+            CC_SAFE_FREE(buffer);
+            break;
+        }
+        case CommandBufferType::FRAME_BUFFER:
+        {
+            CommandBufferFrameBuffer &cmd = *static_cast<CommandBufferFrameBuffer *>(cmdBuf);
+            glBindFramebuffer(GL_FRAMEBUFFER, cmd.fbo);
+            CHECK_GL_ERROR_DEBUG();
+            break;
+        }
         default:
+            CC_ASSERT(0);
             break;
     }
 }
