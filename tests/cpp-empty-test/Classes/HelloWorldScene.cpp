@@ -73,6 +73,9 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite);
     
+    auto testSprite = Sprite3DScene::create(Size(100, 100));
+    testSprite->setPosition(visibleSize.width/2, visibleSize.height/2);
+    addChild(testSprite);
     return true;
 }
 

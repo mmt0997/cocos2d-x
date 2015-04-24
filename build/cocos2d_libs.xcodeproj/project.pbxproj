@@ -1805,6 +1805,10 @@
 		B230ED7219B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */; };
 		B230ED7319B417AE00364AA8 /* CCTrianglesCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */; };
 		B230ED7419B417AE00364AA8 /* CCTrianglesCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */; };
+		B236207D1AEA191300ACF6D6 /* CC3DSceneSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B236207B1AEA191300ACF6D6 /* CC3DSceneSprite.cpp */; };
+		B236207E1AEA191300ACF6D6 /* CC3DSceneSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B236207B1AEA191300ACF6D6 /* CC3DSceneSprite.cpp */; };
+		B236207F1AEA191300ACF6D6 /* CC3DSceneSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B236207C1AEA191300ACF6D6 /* CC3DSceneSprite.h */; };
+		B23620801AEA191300ACF6D6 /* CC3DSceneSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B236207C1AEA191300ACF6D6 /* CC3DSceneSprite.h */; };
 		B24AA985195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA982195A675C007B4522 /* CCFastTMXLayer.h */; };
@@ -3599,6 +3603,8 @@
 		B217704C1977ED8B009EE11B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTrianglesCommand.cpp; sourceTree = "<group>"; };
 		B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTrianglesCommand.h; sourceTree = "<group>"; };
+		B236207B1AEA191300ACF6D6 /* CC3DSceneSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CC3DSceneSprite.cpp; sourceTree = "<group>"; };
+		B236207C1AEA191300ACF6D6 /* CC3DSceneSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CC3DSceneSprite.h; sourceTree = "<group>"; };
 		B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXLayer.cpp; sourceTree = "<group>"; };
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
 		B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
@@ -4510,6 +4516,8 @@
 				1A57027B180BCC900088DEC7 /* CCSpriteFrame.h */,
 				1A57027C180BCC900088DEC7 /* CCSpriteFrameCache.cpp */,
 				1A57027D180BCC900088DEC7 /* CCSpriteFrameCache.h */,
+				B236207B1AEA191300ACF6D6 /* CC3DSceneSprite.cpp */,
+				B236207C1AEA191300ACF6D6 /* CC3DSceneSprite.h */,
 			);
 			name = "sprite-nodes";
 			sourceTree = "<group>";
@@ -6699,6 +6707,7 @@
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				15AE182A19AAD2F700C27E9E /* CCMeshSkin.h in Headers */,
 				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
+				B236207F1AEA191300ACF6D6 /* CC3DSceneSprite.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				15AE1A7F19AAD40300C27E9E /* b2DistanceJoint.h in Headers */,
 				B665E3301AA80A6500DDB1C5 /* CCPUOnCountObserverTranslator.h in Headers */,
@@ -7377,6 +7386,7 @@
 				B665E2051AA80A6500DDB1C5 /* CCPUAlignAffectorTranslator.h in Headers */,
 				1A570070180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				1A570074180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
+				B23620801AEA191300ACF6D6 /* CC3DSceneSprite.h in Headers */,
 				15AE194A19AAD35100C27E9E /* CCComController.h in Headers */,
 				382384161A259092002C4610 /* NodeReaderProtocol.h in Headers */,
 				5034CA46191D591100CE6051 /* ccShader_Label_outline.frag in Headers */,
@@ -8573,6 +8583,7 @@
 				15AE1C1119AAE2C600C27E9E /* CCPhysicsDebugNode.cpp in Sources */,
 				B665E2521AA80A6500DDB1C5 /* CCPUDoAffectorEventHandler.cpp in Sources */,
 				50ABC0151926664800A911A9 /* CCImage.cpp in Sources */,
+				B236207D1AEA191300ACF6D6 /* CC3DSceneSprite.cpp in Sources */,
 				50ABBE231925AB6F00A911A9 /* base64.cpp in Sources */,
 				B665E3AA1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
 				15AE1B5D19AADA9900C27E9E /* UITextBMFont.cpp in Sources */,
@@ -9191,6 +9202,7 @@
 				B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
 				50ABBE361925AB6F00A911A9 /* CCConsole.cpp in Sources */,
 				B29A7E1419EE1B7700872B35 /* Bone.c in Sources */,
+				B236207E1AEA191300ACF6D6 /* CC3DSceneSprite.cpp in Sources */,
 				B665E4371AA80A6600DDB1C5 /* CCPUVortexAffector.cpp in Sources */,
 				B665E2F31AA80A6500DDB1C5 /* CCPULineEmitterTranslator.cpp in Sources */,
 				B665E3731AA80A6500DDB1C5 /* CCPUParticleFollower.cpp in Sources */,
