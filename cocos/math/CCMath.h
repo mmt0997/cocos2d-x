@@ -1,10 +1,10 @@
 #ifndef __CC_MATH_H__
 #define __CC_MATH_H__
 
-#include "Vec2.h"
-#include "Vec3.h"
-#include "Vec4.h"
-#include "Mat4.h"
-#include "Quaternion.h"
+#include "CCVec2.h"
+#include "CCVec3.h"
+#include "CCVec4.h"
+#include "CCMat4.h"
+#include "CCQuaternion.h"
 
 #endif

@@ -81,12 +81,12 @@ THE SOFTWARE.
 // math
 #include "math/CCAffineTransform.h"
 #include "math/CCGeometry.h"
-#include "math/Vec2.h"
-#include "math/Vec3.h"
-#include "math/Vec4.h"
-#include "math/Mat4.h"
-#include "math/Quaternion.h"
-#include "math/MathUtil.h"
+#include "math/CCVec2.h"
+#include "math/CCVec3.h"
+#include "math/CCVec4.h"
+#include "math/CCMat4.h"
+#include "math/CCQuaternion.h"
+#include "math/CCMathUtil.h"
 #include "math/CCVertex.h"
 
 // actions

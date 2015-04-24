@@ -812,6 +812,10 @@
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 		A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
+		B2361F6A1AE8F7A100ACF6D6 /* libgameplay-deps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2361F691AE8F7A100ACF6D6 /* libgameplay-deps.a */; };
+		B2361F6D1AE8F7E800ACF6D6 /* RacerGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */; };
+		B2361F741AE8F92F00ACF6D6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2361F731AE8F92F00ACF6D6 /* GameKit.framework */; };
+		B2361F761AE90DC000ACF6D6 /* res in Resources */ = {isa = PBXBuildFile; fileRef = B2361F751AE90DC000ACF6D6 /* res */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B603F1AF1AC8EA4E00A9579C /* TerrainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1AD1AC8EA4E00A9579C /* TerrainTest.cpp */; };
@@ -1755,6 +1759,11 @@
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenURLTest.cpp; path = OpenURLTest/OpenURLTest.cpp; sourceTree = "<group>"; };
 		A5030C3419D059DA000E78E7 /* OpenURLTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenURLTest.h; path = OpenURLTest/OpenURLTest.h; sourceTree = "<group>"; };
+		B2361F691AE8F7A100ACF6D6 /* libgameplay-deps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgameplay-deps.a"; path = "../../../external/gameplay_deps/lib/macosx/x86_64/libgameplay-deps.a"; sourceTree = "<group>"; };
+		B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RacerGame.cpp; sourceTree = "<group>"; };
+		B2361F6C1AE8F7E800ACF6D6 /* RacerGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RacerGame.h; sourceTree = "<group>"; };
+		B2361F731AE8F92F00ACF6D6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		B2361F751AE90DC000ACF6D6 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../tests/cpp-empty-test/Resources/res"; sourceTree = "<group>"; };
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		B603F1AD1AC8EA4E00A9579C /* TerrainTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TerrainTest.cpp; path = TerrainTest/TerrainTest.cpp; sourceTree = "<group>"; };
 		B603F1AE1AC8EA4E00A9579C /* TerrainTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TerrainTest.h; path = TerrainTest/TerrainTest.h; sourceTree = "<group>"; };
@@ -1803,6 +1812,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2361F741AE8F92F00ACF6D6 /* GameKit.framework in Frameworks */,
 				1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */,
 				1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */,
 				1A0EE2A718CDF6DA004CD58F /* libz.dylib in Frameworks */,
@@ -1810,6 +1820,7 @@
 				1A0EE2A918CDF6DA004CD58F /* AudioToolbox.framework in Frameworks */,
 				1A0EE2AA18CDF6DA004CD58F /* ApplicationServices.framework in Frameworks */,
 				1A0EE2AB18CDF6DA004CD58F /* OpenAL.framework in Frameworks */,
+				B2361F6A1AE8F7A100ACF6D6 /* libgameplay-deps.a in Frameworks */,
 				1A0EE2AC18CDF6DA004CD58F /* QuartzCore.framework in Frameworks */,
 				1A0EE2AD18CDF6DA004CD58F /* OpenGL.framework in Frameworks */,
 				1A0EE2AE18CDF6DA004CD58F /* Cocoa.framework in Frameworks */,
@@ -2107,6 +2118,9 @@
 		1AC358BA18CEC1BF00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */,
+				B2361F6C1AE8F7E800ACF6D6 /* RacerGame.h */,
+				B2361F691AE8F7A100ACF6D6 /* libgameplay-deps.a */,
 				1AC358BB18CEC1BF00F37B72 /* AppDelegate.cpp */,
 				1AC358BC18CEC1BF00F37B72 /* AppDelegate.h */,
 				1AC358BD18CEC1BF00F37B72 /* AppMacros.h */,
@@ -2163,6 +2177,7 @@
 		1AC358FD18CEC1EF00F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B2361F751AE90DC000ACF6D6 /* res */,
 				1AC358FE18CEC1FB00F37B72 /* bang.png */,
 				1AC358FF18CEC1FB00F37B72 /* fonts */,
 				1AC3590018CEC1FB00F37B72 /* ipad */,
@@ -3714,6 +3729,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2361F731AE8F92F00ACF6D6 /* GameKit.framework */,
 				826294421AAF071500CB7CF7 /* Security.framework */,
 				52B47A331A534B2B004E4C60 /* Security.framework */,
 				15EE465A19A7200300AF29F1 /* libcurl.a */,
@@ -4300,6 +4316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2361F761AE90DC000ACF6D6 /* res in Resources */,
 				1AC3590918CEC1FB00F37B72 /* ipadhd in Resources */,
 				1AC358F518CEC1D400F37B72 /* InfoPlist.strings in Resources */,
 				1AC3590318CEC1FB00F37B72 /* bang.png in Resources */,
@@ -4724,6 +4741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AC358C218CEC1BF00F37B72 /* HelloWorldScene.cpp in Sources */,
+				B2361F6D1AE8F7E800ACF6D6 /* RacerGame.cpp in Sources */,
 				1AC358C018CEC1BF00F37B72 /* AppDelegate.cpp in Sources */,
 				1AC358F918CEC1D400F37B72 /* main.cpp in Sources */,
 			);
@@ -5448,9 +5466,14 @@
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/huabingxu/work/cocos2d-x/external/gameplay_deps/lib/macosx/x86_64",
+				);
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/gameplay/src $(SRCROOT)/../external/gameplay_deps/include";
 			};
 			name = Debug;
 		};
@@ -5462,9 +5485,14 @@
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/huabingxu/work/cocos2d-x/external/gameplay_deps/lib/macosx/x86_64",
+				);
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/gameplay/src $(SRCROOT)/../external/gameplay_deps/include";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

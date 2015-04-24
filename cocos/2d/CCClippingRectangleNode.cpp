@@ -2,7 +2,7 @@
 #include "CCClippingRectangleNode.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
-#include "math/Vec2.h"
+#include "math/CCVec2.h"
 #include "CCGLView.h"
 
 NS_CC_BEGIN

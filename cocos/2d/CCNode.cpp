@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "2d/CCComponentContainer.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
-#include "math/TransformUtils.h"
+#include "math/CCTransformUtils.h"
 
 #include "deprecated/CCString.h"
 
