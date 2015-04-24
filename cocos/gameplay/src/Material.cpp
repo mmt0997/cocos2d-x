@@ -48,7 +48,6 @@ Material* Material::create(const char* url, PassCallback callback, void* cookie)
 
 Material* Material::create(Properties* materialProperties)
 {
-    return nullptr;
     return create(materialProperties, (PassCallback)NULL, NULL);
 }
 
