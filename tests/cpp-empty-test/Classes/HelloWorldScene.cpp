@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
+#include "RacerGame.h"
 
 USING_NS_CC;
 
@@ -72,6 +73,9 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(sprite);
+    
+    auto game = gameplay::Game::getInstance();
+    game->run();
     
     return true;
 }

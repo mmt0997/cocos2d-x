@@ -59,6 +59,7 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
+#include "gameplay/src/gameplay.h"
 //#include "platform/CCGLViewImpl.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
@@ -318,7 +319,10 @@ void Director::drawScene()
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _totalFrames++;
-
+    if(gameplay::Game::getInstance())
+    {
+        gameplay::Game::getInstance()->frame();
+    }
     // swap buffers
     if (_openGLView)
     {

@@ -11401,7 +11401,7 @@
 					CC_KEYBOARD_SUPPORT,
 					_USRDLL,
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/gameplay_deps/include";
+				HEADER_SEARCH_PATHS = "";
 				LD_DYLIB_INSTALL_NAME = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -11417,7 +11417,7 @@
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/curl/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/gameplay_deps/include";
 			};
 			name = Debug;
 		};
@@ -11437,7 +11437,7 @@
 					CC_TARGET_OS_MAC,
 					_USRDLL,
 				);
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../external/gameplay_deps/include";
+				HEADER_SEARCH_PATHS = "";
 				LD_DYLIB_INSTALL_NAME = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -11453,7 +11453,7 @@
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/curl/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/gameplay_deps/include";
 			};
 			name = Release;
 		};

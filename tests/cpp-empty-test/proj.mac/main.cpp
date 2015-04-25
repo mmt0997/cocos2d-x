@@ -31,11 +31,7 @@ int main(int argc, char *argv[])
     AppDelegate app;
 
     //NSAutoreleasePool *p = [[NSAutoreleasePool alloc] init];
-    gameplay::Game* game = gameplay::Game::getInstance();
-    gameplay::Platform* platform = gameplay::Platform::create(game);
-    GP_ASSERT(platform);
-    int result = platform->enterMessagePump();
-    delete platform;
+
     
     return Application::getInstance()->run();
 }
