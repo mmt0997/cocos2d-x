@@ -77,6 +77,10 @@ bool HelloWorld::init()
     auto game = gameplay::Game::getInstance();
     game->run();
     
+    // auto testSprite = Sprite3DScene::create(Size(100, 100));
+    // testSprite->setPosition(visibleSize.width/2, visibleSize.height/2);
+    // addChild(testSprite);
+    
     return true;
 }
 
