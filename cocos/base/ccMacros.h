@@ -53,8 +53,6 @@ THE SOFTWARE.
     #define CCASSERT(cond, msg)
 #endif
 
-#define GP_ASSERT(cond) CCASSERT(cond, "")
-
 // FIXME:: Backward compatible
 #define CCAssert CCASSERT
 #endif  // CCASSERT
