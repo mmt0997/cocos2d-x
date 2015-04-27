@@ -2304,6 +2304,8 @@
 		B2361F5F1AE8EDAC00ACF6D6 /* lua_VertexFormatElement.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361E531AE8EDAC00ACF6D6 /* lua_VertexFormatElement.h */; };
 		B2361F601AE8EDAC00ACF6D6 /* lua_VerticalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361E541AE8EDAC00ACF6D6 /* lua_VerticalLayout.cpp */; };
 		B2361F611AE8EDAC00ACF6D6 /* lua_VerticalLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361E551AE8EDAC00ACF6D6 /* lua_VerticalLayout.h */; };
+		B23C17B61AED2238005B65C4 /* CC3DSceneSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23C17B41AED2238005B65C4 /* CC3DSceneSprite.cpp */; };
+		B23C17B71AED2238005B65C4 /* CC3DSceneSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = B23C17B51AED2238005B65C4 /* CC3DSceneSprite.h */; };
 		B24AA985195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA982195A675C007B4522 /* CCFastTMXLayer.h */; };
@@ -4621,6 +4623,8 @@
 		B2361E551AE8EDAC00ACF6D6 /* lua_VerticalLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_VerticalLayout.h; sourceTree = "<group>"; };
 		B2361F6E1AE8F8AD00ACF6D6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B2361F701AE8F8F300ACF6D6 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		B23C17B41AED2238005B65C4 /* CC3DSceneSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CC3DSceneSprite.cpp; sourceTree = "<group>"; };
+		B23C17B51AED2238005B65C4 /* CC3DSceneSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CC3DSceneSprite.h; sourceTree = "<group>"; };
 		B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXLayer.cpp; sourceTree = "<group>"; };
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
 		B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
@@ -5523,6 +5527,8 @@
 		1A570275180BCC840088DEC7 /* sprite-nodes */ = {
 			isa = PBXGroup;
 			children = (
+				B23C17B41AED2238005B65C4 /* CC3DSceneSprite.cpp */,
+				B23C17B51AED2238005B65C4 /* CC3DSceneSprite.h */,
 				1A57028E180BCCAB0088DEC7 /* CCAnimation.cpp */,
 				1A57028F180BCCAB0088DEC7 /* CCAnimation.h */,
 				1A570290180BCCAB0088DEC7 /* CCAnimationCache.cpp */,
@@ -9053,6 +9059,7 @@
 				D0FD03571A3B51AA00825BB5 /* CCAllocatorMutex.h in Headers */,
 				50ABBE771925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
 				5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
+				B23C17B71AED2238005B65C4 /* CC3DSceneSprite.h in Headers */,
 				B665E4341AA80A6600DDB1C5 /* CCPUVertexEmitter.h in Headers */,
 				B2361CD21AE8ED8800ACF6D6 /* Matrix.h in Headers */,
 				50ABC0171926664800A911A9 /* CCImage.h in Headers */,
@@ -10214,6 +10221,7 @@
 				1A1645B2191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
 				B665E3B21AA80A6500DDB1C5 /* CCPURendererTranslator.cpp in Sources */,
 				B2361CBC1AE8ED8800ACF6D6 /* PhysicsVehicleWheel.cpp in Sources */,
+				B23C17B61AED2238005B65C4 /* CC3DSceneSprite.cpp in Sources */,
 				B2361E7A1AE8EDAC00ACF6D6 /* lua_AudioSource.cpp in Sources */,
 				B2361C741AE8ED8800ACF6D6 /* Game.cpp in Sources */,
 				15AE1BC919AAE01E00C27E9E /* CCControl.cpp in Sources */,

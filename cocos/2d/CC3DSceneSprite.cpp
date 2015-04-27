@@ -24,6 +24,9 @@
 
 #include "CC3DSceneSprite.h"
 #include "renderer/CCRenderer.h"
+#include "gameplay/src/gameplay.h"
+#include "renderer/ccGLStateCache.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 //public:
@@ -147,7 +150,17 @@ bool Sprite3DScene::initWithSize(const Size &size)
     //init rt
     _rt = new Sprite3DScene::RenderToTexture(size,true);
     
-    std::function<void()> func = nullptr;
+    std::function<void()> func = [this]()
+    {
+        GL::bindVAO(0);
+        GL::useProgram(0);
+        glViewport(0, 0, _size.width, _size.height);
+        if(gameplay::Game::getInstance())
+        {
+            gameplay::Game::getInstance()->frame();
+        }
+        Director::getInstance()->setViewport();
+    };
     _rtDrawCommand.func = std::bind(&Sprite3DScene::RenderToTexture::DrawToFBO, _rt, func);
     return result;
 }

@@ -319,10 +319,6 @@ void Director::drawScene()
     popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     _totalFrames++;
-    if(gameplay::Game::getInstance())
-    {
-        gameplay::Game::getInstance()->frame();
-    }
     // swap buffers
     if (_openGLView)
     {
