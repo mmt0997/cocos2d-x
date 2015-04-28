@@ -487,7 +487,7 @@ void RacerGame::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int con
 bool RacerGame::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
 {
     bool consumed = false;
-
+#if 0
     switch (evt)
     {
     case Mouse::MOUSE_PRESS_LEFT_BUTTON:
@@ -503,7 +503,7 @@ bool RacerGame::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
         _keyFlags &= ~BRAKE_MOUSE;
         break;
     }
-
+#endif
     return consumed;
 }
 

@@ -800,6 +800,7 @@
 		5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
 		5EBEECB11995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
 		826294431AAF071500CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
+		A0586C081AEF390000E31418 /* libgameplay-deps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0586C071AEF390000E31418 /* libgameplay-deps.a */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -812,9 +813,11 @@
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 		A09E5B761AEA2F8F00EA99F1 /* game.config in Resources */ = {isa = PBXBuildFile; fileRef = A09E5B751AEA2F8F00EA99F1 /* game.config */; };
 		A09E5B771AEA2F8F00EA99F1 /* game.config in Resources */ = {isa = PBXBuildFile; fileRef = A09E5B751AEA2F8F00EA99F1 /* game.config */; };
+		A0B410541AEE1C160062E53B /* RacerGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */; };
+		A0B410551AEE1CF70062E53B /* res in Resources */ = {isa = PBXBuildFile; fileRef = B2361F751AE90DC000ACF6D6 /* res */; };
+		A0B4105A1AEE2A9F0062E53B /* libgameplay-deps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B410561AEE29AD0062E53B /* libgameplay-deps.a */; };
 		A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
-		B2361F6A1AE8F7A100ACF6D6 /* libgameplay-deps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2361F691AE8F7A100ACF6D6 /* libgameplay-deps.a */; };
 		B2361F6D1AE8F7E800ACF6D6 /* RacerGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */; };
 		B2361F741AE8F92F00ACF6D6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2361F731AE8F92F00ACF6D6 /* GameKit.framework */; };
 		B2361F761AE90DC000ACF6D6 /* res in Resources */ = {isa = PBXBuildFile; fileRef = B2361F751AE90DC000ACF6D6 /* res */; };
@@ -1754,15 +1757,18 @@
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
 		826294421AAF071500CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A0586C071AEF390000E31418 /* libgameplay-deps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgameplay-deps.a"; path = "../external/gameplay_deps/lib/macosx/x86_64/libgameplay-deps.a"; sourceTree = "<group>"; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		A09E5B751AEA2F8F00EA99F1 /* game.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = game.config; path = "../tests/cpp-empty-test/Resources/res/game.config"; sourceTree = "<group>"; };
+		A0B410561AEE29AD0062E53B /* libgameplay-deps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgameplay-deps.a"; path = "../external/gameplay_deps/lib/ios/arm/libgameplay-deps.a"; sourceTree = "<group>"; };
+		A0B410581AEE29FD0062E53B /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../external/gameplay_deps/lib/ios/liblua.a; sourceTree = "<group>"; };
+		A0D728A71AEE1AD400B26A09 /* libgameplay-deps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgameplay-deps.a"; path = "../external/gameplay_deps/lib/ios/x86/libgameplay-deps.a"; sourceTree = "<group>"; };
 		A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenURLTest.cpp; path = OpenURLTest/OpenURLTest.cpp; sourceTree = "<group>"; };
 		A5030C3419D059DA000E78E7 /* OpenURLTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenURLTest.h; path = OpenURLTest/OpenURLTest.h; sourceTree = "<group>"; };
-		B2361F691AE8F7A100ACF6D6 /* libgameplay-deps.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libgameplay-deps.a"; path = "../../../external/gameplay_deps/lib/macosx/x86_64/libgameplay-deps.a"; sourceTree = "<group>"; };
 		B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RacerGame.cpp; sourceTree = "<group>"; };
 		B2361F6C1AE8F7E800ACF6D6 /* RacerGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RacerGame.h; sourceTree = "<group>"; };
 		B2361F731AE8F92F00ACF6D6 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -1815,6 +1821,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0586C081AEF390000E31418 /* libgameplay-deps.a in Frameworks */,
 				B2361F741AE8F92F00ACF6D6 /* GameKit.framework in Frameworks */,
 				1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */,
 				1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */,
@@ -1823,7 +1830,6 @@
 				1A0EE2A918CDF6DA004CD58F /* AudioToolbox.framework in Frameworks */,
 				1A0EE2AA18CDF6DA004CD58F /* ApplicationServices.framework in Frameworks */,
 				1A0EE2AB18CDF6DA004CD58F /* OpenAL.framework in Frameworks */,
-				B2361F6A1AE8F7A100ACF6D6 /* libgameplay-deps.a in Frameworks */,
 				1A0EE2AC18CDF6DA004CD58F /* QuartzCore.framework in Frameworks */,
 				1A0EE2AD18CDF6DA004CD58F /* OpenGL.framework in Frameworks */,
 				1A0EE2AE18CDF6DA004CD58F /* Cocoa.framework in Frameworks */,
@@ -1852,6 +1858,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B4105A1AEE2A9F0062E53B /* libgameplay-deps.a in Frameworks */,
 				1A0EE40318CDF775004CD58F /* libcocos2d iOS.a in Frameworks */,
 				1A0EE40618CDF775004CD58F /* CoreMotion.framework in Frameworks */,
 				1A0EE40718CDF775004CD58F /* libz.dylib in Frameworks */,
@@ -2123,7 +2130,6 @@
 			children = (
 				B2361F6B1AE8F7E800ACF6D6 /* RacerGame.cpp */,
 				B2361F6C1AE8F7E800ACF6D6 /* RacerGame.h */,
-				B2361F691AE8F7A100ACF6D6 /* libgameplay-deps.a */,
 				1AC358BB18CEC1BF00F37B72 /* AppDelegate.cpp */,
 				1AC358BC18CEC1BF00F37B72 /* AppDelegate.h */,
 				1AC358BD18CEC1BF00F37B72 /* AppMacros.h */,
@@ -3733,6 +3739,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0586C071AEF390000E31418 /* libgameplay-deps.a */,
+				A0B410581AEE29FD0062E53B /* liblua.a */,
+				A0B410561AEE29AD0062E53B /* libgameplay-deps.a */,
+				A0D728A71AEE1AD400B26A09 /* libgameplay-deps.a */,
 				B2361F731AE8F92F00ACF6D6 /* GameKit.framework */,
 				826294421AAF071500CB7CF7 /* Security.framework */,
 				52B47A331A534B2B004E4C60 /* Security.framework */,
@@ -4227,6 +4237,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0600;
+				TargetAttributes = {
+					1A0EE31818CDF775004CD58F = {
+						DevelopmentTeam = 4KKLB6M32U;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_tests" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -4349,6 +4364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B410551AEE1CF70062E53B /* res in Resources */,
 				1AC358E118CEC1CB00F37B72 /* Icon-120.png in Resources */,
 				1AC358DD18CEC1CB00F37B72 /* Default@2x.png in Resources */,
 				1AC358E018CEC1CB00F37B72 /* Icon-114.png in Resources */,
@@ -4766,6 +4782,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0B410541AEE1C160062E53B /* RacerGame.cpp in Sources */,
 				1AC358DA18CEC1CB00F37B72 /* AppController.mm in Sources */,
 				1AC358EB18CEC1CB00F37B72 /* RootViewController.mm in Sources */,
 				1AC358C318CEC1BF00F37B72 /* HelloWorldScene.cpp in Sources */,
@@ -5478,6 +5495,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/gameplay_deps/lib/macosx/x86_64",
+					"/Users/wensheng/cocos/v3-cocos2d-x/external/gameplay_deps/lib/macosx/x86_64",
 				);
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/gameplay/src $(SRCROOT)/../external/gameplay_deps/include";
 			};
@@ -5497,6 +5515,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/gameplay_deps/lib/macosx/x86_64",
+					"/Users/wensheng/cocos/v3-cocos2d-x/external/gameplay_deps/lib/macosx/x86_64",
 				);
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/gameplay/src $(SRCROOT)/../external/gameplay_deps/include";
 				VALIDATE_PRODUCT = YES;
@@ -5546,15 +5565,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/wensheng/cocos/v3-cocos2d-x/external/gameplay_deps/lib/ios/arm",
+				);
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../cocos/gameplay/src $(SRCROOT)/../external/gameplay_deps/include";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -5563,15 +5588,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/wensheng/cocos/v3-cocos2d-x/external/gameplay_deps/lib/ios/arm",
+				);
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../cocos/gameplay/src $(SRCROOT)/../external/gameplay_deps/include";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};

@@ -114,6 +114,7 @@ public:
      */
     void update(float elapsedTime);
 
+    using Container::draw;
     /**
      * Draws this form.
      *
