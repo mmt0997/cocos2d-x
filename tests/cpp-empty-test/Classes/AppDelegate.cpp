@@ -40,7 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
 #else
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(1280, 720, ResolutionPolicy::NO_BORDER);
 #endif
 
 	Size frameSize = glview->getFrameSize();

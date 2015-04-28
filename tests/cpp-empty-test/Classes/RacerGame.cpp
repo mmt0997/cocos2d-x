@@ -140,7 +140,6 @@ void RacerGame::finalize()
 
 void RacerGame::update(float elapsedTime)
 {
-    return;
     // The "Start" button is mapped to MENU2.
     if (!__showMenu && !__menuFlag && _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_MENU2))
     {
