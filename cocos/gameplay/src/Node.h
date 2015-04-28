@@ -14,7 +14,6 @@
 #include "PhysicsRigidBody.h"
 #include "PhysicsCollisionObject.h"
 #include "BoundingBox.h"
-#include "AIAgent.h"
 
 namespace gameplay
 {
@@ -549,20 +548,6 @@ public:
      * @param url The URL pointing to the Properties object defining the physics collision object.
      */
     PhysicsCollisionObject* setCollisionObject(const char* url);
-
-    /**
-     * Gets the AI agent assigned to this node
-     *
-     * @return The AI agent for this node.
-     */
-    AIAgent* getAgent() const;
-
-    /**
-     * Sets the AI agent for this node.
-     *
-     * @param agent The AI agent to set.
-     */
-    void setAgent(AIAgent* agent);
 
     /**
      * Gets the user object assigned to this node.

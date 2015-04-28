@@ -64,7 +64,7 @@ Game::Game()
       _frameLastFPS(0), _frameCount(0), _frameRate(0), _width(0), _height(0),
       _clearDepth(1.0f), _clearStencil(0), _properties(NULL),
       _animationController(NULL), _audioController(NULL),
-      _physicsController(NULL), _aiController(NULL), _audioListener(NULL),
+      _physicsController(NULL), _audioListener(NULL),
       _timeEvents(NULL), _scriptController(NULL), _scriptTarget(NULL)
 {
     GP_ASSERT(__gameInstance == NULL);
@@ -173,9 +173,6 @@ bool Game::startup()
     _physicsController = new PhysicsController();
     _physicsController->initialize();
 
-    _aiController = new AIController();
-    _aiController->initialize();
-
     _scriptController = new ScriptController();
     _scriptController->initialize();
 
@@ -267,8 +264,6 @@ void Game::shutdown()
 
         _physicsController->finalize();
         SAFE_DELETE(_physicsController);
-        _aiController->finalize();
-        SAFE_DELETE(_aiController);
         
         ControlFactory::finalize();
 
@@ -301,7 +296,6 @@ void Game::pause()
         _animationController->pause();
         _audioController->pause();
         _physicsController->pause();
-        _aiController->pause();
     }
 
     ++_pausedCount;
@@ -324,7 +318,6 @@ void Game::resume()
             _animationController->resume();
             _audioController->resume();
             _physicsController->resume();
-            _aiController->resume();
         }
     }
 }
@@ -390,9 +383,6 @@ void Game::frame()
 
         // Update the physics.
         _physicsController->update(elapsedTime);
-
-        // Update AI.
-        _aiController->update(elapsedTime);
 
         // Update gamepads.
         Gamepad::updateInternal(elapsedTime);
@@ -472,7 +462,6 @@ void Game::updateOnce()
     // Update the internal controllers.
     _animationController->update(elapsedTime);
     _physicsController->update(elapsedTime);
-    _aiController->update(elapsedTime);
     _audioController->update(elapsedTime);
     if (_scriptTarget)
         _scriptTarget->fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(GameScriptTarget, update), elapsedTime);

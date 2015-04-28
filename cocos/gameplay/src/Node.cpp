@@ -50,7 +50,6 @@ Node::~Node()
     SAFE_DELETE(_collisionObject);
     SAFE_RELEASE(_userObject);
     SAFE_DELETE(_tags);
-    setAgent(NULL);
 }
 
 Node* Node::create(const char* id)
@@ -1156,43 +1155,6 @@ PhysicsCollisionObject* Node::setCollisionObject(Properties* properties)
     }
 
     return _collisionObject;
-}
-
-AIAgent* Node::getAgent() const
-{
-    // Lazily create a new Agent for this Node if we don't have one yet.
-    // Basically, all Nodes by default can have an Agent, we just won't
-    // waste the memory unless they request one.
-    if (!_agent)
-    {
-        _agent = AIAgent::create();
-        _agent->_node = const_cast<Node*>(this);
-        Game::getInstance()->getAIController()->addAgent(_agent);
-    }
-
-    return _agent;
-}
-
-void Node::setAgent(AIAgent* agent)
-{
-    if (agent == _agent)
-        return;
-
-    if (_agent)
-    {
-        Game::getInstance()->getAIController()->removeAgent(_agent);
-        _agent->setNode(NULL);
-        SAFE_RELEASE(_agent);
-    }
-
-    _agent = agent;
-
-    if (_agent)
-    {
-        _agent->addRef();
-        _agent->setNode(this);
-        Game::getInstance()->getAIController()->addAgent(_agent);
-    }
 }
 
 Ref* Node::getUserObject() const

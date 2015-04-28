@@ -1808,7 +1808,6 @@
 		A0AF75E31AEE156600F77847 /* ParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B7C1AE8ED8700ACF6D6 /* ParticleEmitter.cpp */; };
 		A0AF75E41AEE156600F77847 /* Pass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B7E1AE8ED8700ACF6D6 /* Pass.cpp */; };
 		A0AF75E51AEE156600F77847 /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B801AE8ED8700ACF6D6 /* MathUtil.cpp */; };
-		A0AF75E61AEE156700F77847 /* AIMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B851AE8ED8700ACF6D6 /* AIMessage.cpp */; };
 		A0AF75E71AEE156700F77847 /* AbsoluteLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B871AE8ED8700ACF6D6 /* AbsoluteLayout.cpp */; };
 		A0AF75E81AEE156700F77847 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B8A1AE8ED8700ACF6D6 /* Scene.cpp */; };
 		A0AF75E91AEE156700F77847 /* SceneLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B8C1AE8ED8700ACF6D6 /* SceneLoader.cpp */; };
@@ -1833,7 +1832,6 @@
 		A0AF75FC1AEE156C00F77847 /* MaterialParameter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BB61AE8ED8700ACF6D6 /* MaterialParameter.cpp */; };
 		A0AF75FD1AEE156C00F77847 /* MeshBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BB91AE8ED8700ACF6D6 /* MeshBatch.cpp */; };
 		A0AF75FE1AEE156C00F77847 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BBD1AE8ED8700ACF6D6 /* Quaternion.cpp */; };
-		A0AF75FF1AEE156C00F77847 /* AIStateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC01AE8ED8700ACF6D6 /* AIStateMachine.cpp */; };
 		A0AF76001AEE156D00F77847 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC21AE8ED8700ACF6D6 /* Animation.cpp */; };
 		A0AF76011AEE156D00F77847 /* PhysicsVehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC51AE8ED8700ACF6D6 /* PhysicsVehicle.cpp */; };
 		A0AF76021AEE156D00F77847 /* PhysicsVehicleWheel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC71AE8ED8700ACF6D6 /* PhysicsVehicleWheel.cpp */; };
@@ -1852,7 +1850,6 @@
 		A0AF760F1AEE157000F77847 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE51AE8ED8700ACF6D6 /* TextBox.cpp */; };
 		A0AF76101AEE157000F77847 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE71AE8ED8700ACF6D6 /* Texture.cpp */; };
 		A0AF76111AEE157100F77847 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */; };
-		A0AF76121AEE157100F77847 /* AIController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BED1AE8ED8700ACF6D6 /* AIController.cpp */; };
 		A0AF76131AEE157100F77847 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */; };
 		A0AF76141AEE157100F77847 /* FlowLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BF11AE8ED8700ACF6D6 /* FlowLayout.cpp */; };
 		A0AF76151AEE157100F77847 /* ScriptTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BF31AE8ED8700ACF6D6 /* ScriptTarget.cpp */; };
@@ -1862,7 +1859,6 @@
 		A0AF76191AEE157200F77847 /* AnimationController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BFD1AE8ED8700ACF6D6 /* AnimationController.cpp */; };
 		A0AF761A1AEE157300F77847 /* RadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BFE1AE8ED8700ACF6D6 /* RadioButton.cpp */; };
 		A0AF761B1AEE157300F77847 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C001AE8ED8700ACF6D6 /* Ray.cpp */; };
-		A0AF761C1AEE157300F77847 /* AIState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C021AE8ED8700ACF6D6 /* AIState.cpp */; };
 		A0AF761D1AEE157300F77847 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C041AE8ED8700ACF6D6 /* Joint.cpp */; };
 		A0AF761E1AEE157400F77847 /* JoystickControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C061AE8ED8700ACF6D6 /* JoystickControl.cpp */; };
 		A0AF761F1AEE157400F77847 /* AnimationClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C081AE8ED8700ACF6D6 /* AnimationClip.cpp */; };
@@ -1882,7 +1878,6 @@
 		A0AF762D1AEE157700F77847 /* Platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C2A1AE8ED8800ACF6D6 /* Platform.cpp */; };
 		A0AF762E1AEE157700F77847 /* HeightField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C2F1AE8ED8800ACF6D6 /* HeightField.cpp */; };
 		A0AF762F1AEE157700F77847 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C311AE8ED8800ACF6D6 /* Image.cpp */; };
-		A0AF76301AEE157800F77847 /* AIAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C321AE8ED8800ACF6D6 /* AIAgent.cpp */; };
 		A0AF76311AEE157800F77847 /* TileSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C341AE8ED8800ACF6D6 /* TileSet.cpp */; };
 		A0AF76321AEE157800F77847 /* PhysicsRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C381AE8ED8800ACF6D6 /* PhysicsRigidBody.cpp */; };
 		A0AF76331AEE157800F77847 /* Theme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C3C1AE8ED8800ACF6D6 /* Theme.cpp */; };
@@ -1943,9 +1938,6 @@
 		B2361C7A1AE8ED8800ACF6D6 /* Pass.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361B7F1AE8ED8700ACF6D6 /* Pass.h */; };
 		B2361C7B1AE8ED8800ACF6D6 /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B801AE8ED8700ACF6D6 /* MathUtil.cpp */; };
 		B2361C7C1AE8ED8800ACF6D6 /* MathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361B811AE8ED8700ACF6D6 /* MathUtil.h */; };
-		B2361C7D1AE8ED8800ACF6D6 /* AIController.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361B841AE8ED8700ACF6D6 /* AIController.h */; };
-		B2361C7E1AE8ED8800ACF6D6 /* AIMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B851AE8ED8700ACF6D6 /* AIMessage.cpp */; };
-		B2361C7F1AE8ED8800ACF6D6 /* AIMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361B861AE8ED8700ACF6D6 /* AIMessage.h */; };
 		B2361C801AE8ED8800ACF6D6 /* AbsoluteLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B871AE8ED8700ACF6D6 /* AbsoluteLayout.cpp */; };
 		B2361C811AE8ED8800ACF6D6 /* AbsoluteLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361B881AE8ED8700ACF6D6 /* AbsoluteLayout.h */; };
 		B2361C821AE8ED8800ACF6D6 /* RenderTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361B891AE8ED8700ACF6D6 /* RenderTarget.h */; };
@@ -2000,8 +1992,6 @@
 		B2361CB31AE8ED8800ACF6D6 /* Properties.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BBC1AE8ED8700ACF6D6 /* Properties.h */; };
 		B2361CB41AE8ED8800ACF6D6 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BBD1AE8ED8700ACF6D6 /* Quaternion.cpp */; };
 		B2361CB51AE8ED8800ACF6D6 /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BBE1AE8ED8700ACF6D6 /* Quaternion.h */; };
-		B2361CB61AE8ED8800ACF6D6 /* AIStateMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC01AE8ED8700ACF6D6 /* AIStateMachine.cpp */; };
-		B2361CB71AE8ED8800ACF6D6 /* AIStateMachine.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BC11AE8ED8700ACF6D6 /* AIStateMachine.h */; };
 		B2361CB81AE8ED8800ACF6D6 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC21AE8ED8700ACF6D6 /* Animation.cpp */; };
 		B2361CB91AE8ED8800ACF6D6 /* Animation.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BC31AE8ED8700ACF6D6 /* Animation.h */; };
 		B2361CBA1AE8ED8800ACF6D6 /* PhysicsVehicle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BC51AE8ED8700ACF6D6 /* PhysicsVehicle.cpp */; };
@@ -2038,8 +2028,6 @@
 		B2361CD91AE8ED8800ACF6D6 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */; };
 		B2361CDA1AE8ED8800ACF6D6 /* AudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEA1AE8ED8700ACF6D6 /* AudioSource.h */; };
 		B2361CDB1AE8ED8800ACF6D6 /* Base.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEB1AE8ED8700ACF6D6 /* Base.h */; };
-		B2361CDC1AE8ED8800ACF6D6 /* AIAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEC1AE8ED8700ACF6D6 /* AIAgent.h */; };
-		B2361CDD1AE8ED8800ACF6D6 /* AIController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BED1AE8ED8700ACF6D6 /* AIController.cpp */; };
 		B2361CDE1AE8ED8800ACF6D6 /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEE1AE8ED8700ACF6D6 /* Logger.h */; };
 		B2361CDF1AE8ED8800ACF6D6 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */; };
 		B2361CE01AE8ED8800ACF6D6 /* FileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BF01AE8ED8700ACF6D6 /* FileSystem.h */; };
@@ -2059,8 +2047,6 @@
 		B2361CEE1AE8ED8800ACF6D6 /* RadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BFF1AE8ED8700ACF6D6 /* RadioButton.h */; };
 		B2361CEF1AE8ED8800ACF6D6 /* Ray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C001AE8ED8700ACF6D6 /* Ray.cpp */; };
 		B2361CF01AE8ED8800ACF6D6 /* Ray.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C011AE8ED8700ACF6D6 /* Ray.h */; };
-		B2361CF11AE8ED8800ACF6D6 /* AIState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C021AE8ED8700ACF6D6 /* AIState.cpp */; };
-		B2361CF21AE8ED8800ACF6D6 /* AIState.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C031AE8ED8700ACF6D6 /* AIState.h */; };
 		B2361CF31AE8ED8800ACF6D6 /* Joint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C041AE8ED8700ACF6D6 /* Joint.cpp */; };
 		B2361CF41AE8ED8800ACF6D6 /* Joint.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C051AE8ED8700ACF6D6 /* Joint.h */; };
 		B2361CF51AE8ED8800ACF6D6 /* JoystickControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C061AE8ED8700ACF6D6 /* JoystickControl.cpp */; };
@@ -2104,7 +2090,6 @@
 		B2361D1C1AE8ED8800ACF6D6 /* HeightField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C2F1AE8ED8800ACF6D6 /* HeightField.cpp */; };
 		B2361D1D1AE8ED8800ACF6D6 /* HeightField.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C301AE8ED8800ACF6D6 /* HeightField.h */; };
 		B2361D1E1AE8ED8800ACF6D6 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C311AE8ED8800ACF6D6 /* Image.cpp */; };
-		B2361D1F1AE8ED8800ACF6D6 /* AIAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C321AE8ED8800ACF6D6 /* AIAgent.cpp */; };
 		B2361D201AE8ED8800ACF6D6 /* ThemeStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C331AE8ED8800ACF6D6 /* ThemeStyle.h */; };
 		B2361D211AE8ED8800ACF6D6 /* TileSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C341AE8ED8800ACF6D6 /* TileSet.cpp */; };
 		B2361D221AE8ED8800ACF6D6 /* TileSet.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C351AE8ED8800ACF6D6 /* TileSet.h */; };
@@ -3974,9 +3959,6 @@
 		B2361B811AE8ED8700ACF6D6 /* MathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathUtil.h; path = ../cocos/gameplay/src/MathUtil.h; sourceTree = "<group>"; };
 		B2361B821AE8ED8700ACF6D6 /* MathUtil.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MathUtil.inl; path = ../cocos/gameplay/src/MathUtil.inl; sourceTree = "<group>"; };
 		B2361B831AE8ED8700ACF6D6 /* MathUtilNeon.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MathUtilNeon.inl; path = ../cocos/gameplay/src/MathUtilNeon.inl; sourceTree = "<group>"; };
-		B2361B841AE8ED8700ACF6D6 /* AIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIController.h; path = ../cocos/gameplay/src/AIController.h; sourceTree = "<group>"; };
-		B2361B851AE8ED8700ACF6D6 /* AIMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIMessage.cpp; path = ../cocos/gameplay/src/AIMessage.cpp; sourceTree = "<group>"; };
-		B2361B861AE8ED8700ACF6D6 /* AIMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIMessage.h; path = ../cocos/gameplay/src/AIMessage.h; sourceTree = "<group>"; };
 		B2361B871AE8ED8700ACF6D6 /* AbsoluteLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbsoluteLayout.cpp; path = ../cocos/gameplay/src/AbsoluteLayout.cpp; sourceTree = "<group>"; };
 		B2361B881AE8ED8700ACF6D6 /* AbsoluteLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbsoluteLayout.h; path = ../cocos/gameplay/src/AbsoluteLayout.h; sourceTree = "<group>"; };
 		B2361B891AE8ED8700ACF6D6 /* RenderTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTarget.h; path = ../cocos/gameplay/src/RenderTarget.h; sourceTree = "<group>"; };
@@ -4034,8 +4016,6 @@
 		B2361BBD1AE8ED8700ACF6D6 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Quaternion.cpp; path = ../cocos/gameplay/src/Quaternion.cpp; sourceTree = "<group>"; };
 		B2361BBE1AE8ED8700ACF6D6 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Quaternion.h; path = ../cocos/gameplay/src/Quaternion.h; sourceTree = "<group>"; };
 		B2361BBF1AE8ED8700ACF6D6 /* Quaternion.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Quaternion.inl; path = ../cocos/gameplay/src/Quaternion.inl; sourceTree = "<group>"; };
-		B2361BC01AE8ED8700ACF6D6 /* AIStateMachine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIStateMachine.cpp; path = ../cocos/gameplay/src/AIStateMachine.cpp; sourceTree = "<group>"; };
-		B2361BC11AE8ED8700ACF6D6 /* AIStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIStateMachine.h; path = ../cocos/gameplay/src/AIStateMachine.h; sourceTree = "<group>"; };
 		B2361BC21AE8ED8700ACF6D6 /* Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Animation.cpp; path = ../cocos/gameplay/src/Animation.cpp; sourceTree = "<group>"; };
 		B2361BC31AE8ED8700ACF6D6 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Animation.h; path = ../cocos/gameplay/src/Animation.h; sourceTree = "<group>"; };
 		B2361BC41AE8ED8700ACF6D6 /* PhysicsSpringConstraint.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PhysicsSpringConstraint.inl; path = ../cocos/gameplay/src/PhysicsSpringConstraint.inl; sourceTree = "<group>"; };
@@ -4078,8 +4058,6 @@
 		B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioSource.cpp; path = ../cocos/gameplay/src/AudioSource.cpp; sourceTree = "<group>"; };
 		B2361BEA1AE8ED8700ACF6D6 /* AudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSource.h; path = ../cocos/gameplay/src/AudioSource.h; sourceTree = "<group>"; };
 		B2361BEB1AE8ED8700ACF6D6 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base.h; path = ../cocos/gameplay/src/Base.h; sourceTree = "<group>"; };
-		B2361BEC1AE8ED8700ACF6D6 /* AIAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIAgent.h; path = ../cocos/gameplay/src/AIAgent.h; sourceTree = "<group>"; };
-		B2361BED1AE8ED8700ACF6D6 /* AIController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIController.cpp; path = ../cocos/gameplay/src/AIController.cpp; sourceTree = "<group>"; };
 		B2361BEE1AE8ED8700ACF6D6 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = ../cocos/gameplay/src/Logger.h; sourceTree = "<group>"; };
 		B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileSystem.cpp; path = ../cocos/gameplay/src/FileSystem.cpp; sourceTree = "<group>"; };
 		B2361BF01AE8ED8700ACF6D6 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileSystem.h; path = ../cocos/gameplay/src/FileSystem.h; sourceTree = "<group>"; };
@@ -4100,8 +4078,6 @@
 		B2361BFF1AE8ED8700ACF6D6 /* RadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RadioButton.h; path = ../cocos/gameplay/src/RadioButton.h; sourceTree = "<group>"; };
 		B2361C001AE8ED8700ACF6D6 /* Ray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ray.cpp; path = ../cocos/gameplay/src/Ray.cpp; sourceTree = "<group>"; };
 		B2361C011AE8ED8700ACF6D6 /* Ray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ray.h; path = ../cocos/gameplay/src/Ray.h; sourceTree = "<group>"; };
-		B2361C021AE8ED8700ACF6D6 /* AIState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIState.cpp; path = ../cocos/gameplay/src/AIState.cpp; sourceTree = "<group>"; };
-		B2361C031AE8ED8700ACF6D6 /* AIState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIState.h; path = ../cocos/gameplay/src/AIState.h; sourceTree = "<group>"; };
 		B2361C041AE8ED8700ACF6D6 /* Joint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Joint.cpp; path = ../cocos/gameplay/src/Joint.cpp; sourceTree = "<group>"; };
 		B2361C051AE8ED8700ACF6D6 /* Joint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joint.h; path = ../cocos/gameplay/src/Joint.h; sourceTree = "<group>"; };
 		B2361C061AE8ED8700ACF6D6 /* JoystickControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JoystickControl.cpp; path = ../cocos/gameplay/src/JoystickControl.cpp; sourceTree = "<group>"; };
@@ -4148,7 +4124,6 @@
 		B2361C2F1AE8ED8800ACF6D6 /* HeightField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HeightField.cpp; path = ../cocos/gameplay/src/HeightField.cpp; sourceTree = "<group>"; };
 		B2361C301AE8ED8800ACF6D6 /* HeightField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeightField.h; path = ../cocos/gameplay/src/HeightField.h; sourceTree = "<group>"; };
 		B2361C311AE8ED8800ACF6D6 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../cocos/gameplay/src/Image.cpp; sourceTree = "<group>"; };
-		B2361C321AE8ED8800ACF6D6 /* AIAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AIAgent.cpp; path = ../cocos/gameplay/src/AIAgent.cpp; sourceTree = "<group>"; };
 		B2361C331AE8ED8800ACF6D6 /* ThemeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThemeStyle.h; path = ../cocos/gameplay/src/ThemeStyle.h; sourceTree = "<group>"; };
 		B2361C341AE8ED8800ACF6D6 /* TileSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TileSet.cpp; path = ../cocos/gameplay/src/TileSet.cpp; sourceTree = "<group>"; };
 		B2361C351AE8ED8800ACF6D6 /* TileSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileSet.h; path = ../cocos/gameplay/src/TileSet.h; sourceTree = "<group>"; };
@@ -6824,9 +6799,6 @@
 				B2361B811AE8ED8700ACF6D6 /* MathUtil.h */,
 				B2361B821AE8ED8700ACF6D6 /* MathUtil.inl */,
 				B2361B831AE8ED8700ACF6D6 /* MathUtilNeon.inl */,
-				B2361B841AE8ED8700ACF6D6 /* AIController.h */,
-				B2361B851AE8ED8700ACF6D6 /* AIMessage.cpp */,
-				B2361B861AE8ED8700ACF6D6 /* AIMessage.h */,
 				B2361B871AE8ED8700ACF6D6 /* AbsoluteLayout.cpp */,
 				B2361B881AE8ED8700ACF6D6 /* AbsoluteLayout.h */,
 				B2361B891AE8ED8700ACF6D6 /* RenderTarget.h */,
@@ -6884,8 +6856,6 @@
 				B2361BBD1AE8ED8700ACF6D6 /* Quaternion.cpp */,
 				B2361BBE1AE8ED8700ACF6D6 /* Quaternion.h */,
 				B2361BBF1AE8ED8700ACF6D6 /* Quaternion.inl */,
-				B2361BC01AE8ED8700ACF6D6 /* AIStateMachine.cpp */,
-				B2361BC11AE8ED8700ACF6D6 /* AIStateMachine.h */,
 				B2361BC21AE8ED8700ACF6D6 /* Animation.cpp */,
 				B2361BC31AE8ED8700ACF6D6 /* Animation.h */,
 				B2361BC41AE8ED8700ACF6D6 /* PhysicsSpringConstraint.inl */,
@@ -6928,8 +6898,6 @@
 				B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */,
 				B2361BEA1AE8ED8700ACF6D6 /* AudioSource.h */,
 				B2361BEB1AE8ED8700ACF6D6 /* Base.h */,
-				B2361BEC1AE8ED8700ACF6D6 /* AIAgent.h */,
-				B2361BED1AE8ED8700ACF6D6 /* AIController.cpp */,
 				B2361BEE1AE8ED8700ACF6D6 /* Logger.h */,
 				B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */,
 				B2361BF01AE8ED8700ACF6D6 /* FileSystem.h */,
@@ -6950,8 +6918,6 @@
 				B2361BFF1AE8ED8700ACF6D6 /* RadioButton.h */,
 				B2361C001AE8ED8700ACF6D6 /* Ray.cpp */,
 				B2361C011AE8ED8700ACF6D6 /* Ray.h */,
-				B2361C021AE8ED8700ACF6D6 /* AIState.cpp */,
-				B2361C031AE8ED8700ACF6D6 /* AIState.h */,
 				B2361C041AE8ED8700ACF6D6 /* Joint.cpp */,
 				B2361C051AE8ED8700ACF6D6 /* Joint.h */,
 				B2361C061AE8ED8700ACF6D6 /* JoystickControl.cpp */,
@@ -6998,7 +6964,6 @@
 				B2361C2F1AE8ED8800ACF6D6 /* HeightField.cpp */,
 				B2361C301AE8ED8800ACF6D6 /* HeightField.h */,
 				B2361C311AE8ED8800ACF6D6 /* Image.cpp */,
-				B2361C321AE8ED8800ACF6D6 /* AIAgent.cpp */,
 				B2361C331AE8ED8800ACF6D6 /* ThemeStyle.h */,
 				B2361C341AE8ED8800ACF6D6 /* TileSet.cpp */,
 				B2361C351AE8ED8800ACF6D6 /* TileSet.h */,
@@ -7456,7 +7421,6 @@
 				B665E25C1AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.h in Headers */,
 				38B8E2E319E671D2002D7CE7 /* UILayoutComponent.h in Headers */,
 				B6D38B8C1AC3AFAC00043997 /* CCSkybox.h in Headers */,
-				B2361C7F1AE8ED8800ACF6D6 /* AIMessage.h in Headers */,
 				5034CA39191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */,
@@ -7524,7 +7488,6 @@
 				15AE1A2219AAD3D500C27E9E /* Box2D.h in Headers */,
 				15AE191419AAD35000C27E9E /* CCSGUIReader.h in Headers */,
 				B29A7E0119EE1B7700872B35 /* extension.h in Headers */,
-				B2361CB71AE8ED8800ACF6D6 /* AIStateMachine.h in Headers */,
 				15AE196D19AAD35700C27E9E /* CCActionTimeline.h in Headers */,
 				B2361CA81AE8ED8800ACF6D6 /* PhysicsGenericConstraint.h in Headers */,
 				15AE1A6D19AAD40300C27E9E /* b2ChainAndPolygonContact.h in Headers */,
@@ -7561,7 +7524,6 @@
 				B665E2A81AA80A6500DDB1C5 /* CCPUEventHandlerTranslator.h in Headers */,
 				4D76BE3C1A4AAF0A00102962 /* CCActionTimelineNode.h in Headers */,
 				B665E27C1AA80A6500DDB1C5 /* CCPUDoScaleEventHandler.h in Headers */,
-				B2361C7D1AE8ED8800ACF6D6 /* AIController.h in Headers */,
 				B2361CE81AE8ED8800ACF6D6 /* Bundle.h in Headers */,
 				1A57006F180BC5A10088DEC7 /* CCActionEase.h in Headers */,
 				B665E29C1AA80A6500DDB1C5 /* CCPUEmitterTranslator.h in Headers */,
@@ -7765,7 +7727,6 @@
 				B29A7E1F19EE1B7700872B35 /* BoneData.h in Headers */,
 				15AE1A9319AAD40300C27E9E /* b2WheelJoint.h in Headers */,
 				ED74D7691A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */,
-				B2361CDC1AE8ED8800ACF6D6 /* AIAgent.h in Headers */,
 				B665E3F01AA80A6600DDB1C5 /* CCPUSlaveBehaviourTranslator.h in Headers */,
 				15AE1A3119AAD3D500C27E9E /* b2ChainShape.h in Headers */,
 				1A5701FD180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
@@ -7882,7 +7843,6 @@
 				B665E3AC1AA80A6500DDB1C5 /* CCPURandomiserTranslator.h in Headers */,
 				B665E2CC1AA80A6500DDB1C5 /* CCPUGravityAffectorTranslator.h in Headers */,
 				15AE189519AAD33D00C27E9E /* CCLayerLoader.h in Headers */,
-				B2361CF21AE8ED8800ACF6D6 /* AIState.h in Headers */,
 				1A57028C180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				B665E3041AA80A6500DDB1C5 /* CCPUMeshSurfaceEmitter.h in Headers */,
@@ -8999,7 +8959,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15AE1A9019AAD40300C27E9E /* b2WeldJoint.cpp in Sources */,
-				B2361CDD1AE8ED8800ACF6D6 /* AIController.cpp in Sources */,
 				50ABBE2B1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				382383F41A258FA7002C4610 /* idl_gen_cpp.cpp in Sources */,
 				B29A7E3B19EE1B7700872B35 /* Animation.c in Sources */,
@@ -9109,7 +9068,6 @@
 				50ABBEAB1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
 				B665E3AE1AA80A6500DDB1C5 /* CCPURender.cpp in Sources */,
 				B2361CD11AE8ED8800ACF6D6 /* Matrix.cpp in Sources */,
-				B2361D1F1AE8ED8800ACF6D6 /* AIAgent.cpp in Sources */,
 				15AE18A219AAD33D00C27E9E /* CCParticleSystemQuadLoader.cpp in Sources */,
 				B2361D101AE8ED8800ACF6D6 /* gameplay-main-android.cpp in Sources */,
 				15AE188C19AAD33D00C27E9E /* CCLabelBMFontLoader.cpp in Sources */,
@@ -9129,7 +9087,6 @@
 				B665E20E1AA80A6500DDB1C5 /* CCPUBaseForceAffector.cpp in Sources */,
 				15AE1A8219AAD40300C27E9E /* b2GearJoint.cpp in Sources */,
 				1A570071180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
-				B2361CB61AE8ED8800ACF6D6 /* AIStateMachine.cpp in Sources */,
 				50CB247F19D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				50ABBFFF1926664800A911A9 /* CCFileUtils-apple.mm in Sources */,
 				1A570075180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
@@ -9234,7 +9191,6 @@
 				15AE18EE19AAD35000C27E9E /* CCArmature.cpp in Sources */,
 				15AE1BCD19AAE01E00C27E9E /* CCControlColourPicker.cpp in Sources */,
 				1A5701B1180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
-				B2361C7E1AE8ED8800ACF6D6 /* AIMessage.cpp in Sources */,
 				15AE181619AAD2F700C27E9E /* CCAttachNode.cpp in Sources */,
 				B2361C861AE8ED8800ACF6D6 /* PhysicsCollisionShape.cpp in Sources */,
 				B29A7DED19EE1B7700872B35 /* IkConstraint.c in Sources */,
@@ -9657,7 +9613,6 @@
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				15AE1A6819AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
 				B665E2D21AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.cpp in Sources */,
-				B2361CF11AE8ED8800ACF6D6 /* AIState.cpp in Sources */,
 				50ABBE9F1925AB6F00A911A9 /* CCScheduler.cpp in Sources */,
 				B2361CE91AE8ED8800ACF6D6 /* Button.cpp in Sources */,
 				15AE1C1119AAE2C600C27E9E /* CCPhysicsDebugNode.cpp in Sources */,
@@ -10361,7 +10316,6 @@
 				A0AF75E31AEE156600F77847 /* ParticleEmitter.cpp in Sources */,
 				A0AF75E41AEE156600F77847 /* Pass.cpp in Sources */,
 				A0AF75E51AEE156600F77847 /* MathUtil.cpp in Sources */,
-				A0AF75E61AEE156700F77847 /* AIMessage.cpp in Sources */,
 				A0AF75E71AEE156700F77847 /* AbsoluteLayout.cpp in Sources */,
 				A0AF75E81AEE156700F77847 /* Scene.cpp in Sources */,
 				A0AF75E91AEE156700F77847 /* SceneLoader.cpp in Sources */,
@@ -10386,7 +10340,6 @@
 				A0AF75FC1AEE156C00F77847 /* MaterialParameter.cpp in Sources */,
 				A0AF75FD1AEE156C00F77847 /* MeshBatch.cpp in Sources */,
 				A0AF75FE1AEE156C00F77847 /* Quaternion.cpp in Sources */,
-				A0AF75FF1AEE156C00F77847 /* AIStateMachine.cpp in Sources */,
 				A0AF76001AEE156D00F77847 /* Animation.cpp in Sources */,
 				A0AF76011AEE156D00F77847 /* PhysicsVehicle.cpp in Sources */,
 				A0AF76021AEE156D00F77847 /* PhysicsVehicleWheel.cpp in Sources */,
@@ -10405,7 +10358,6 @@
 				A0AF760F1AEE157000F77847 /* TextBox.cpp in Sources */,
 				A0AF76101AEE157000F77847 /* Texture.cpp in Sources */,
 				A0AF76111AEE157100F77847 /* AudioSource.cpp in Sources */,
-				A0AF76121AEE157100F77847 /* AIController.cpp in Sources */,
 				A0AF76131AEE157100F77847 /* FileSystem.cpp in Sources */,
 				A0AF76141AEE157100F77847 /* FlowLayout.cpp in Sources */,
 				A0AF76151AEE157100F77847 /* ScriptTarget.cpp in Sources */,
@@ -10415,7 +10367,6 @@
 				A0AF76191AEE157200F77847 /* AnimationController.cpp in Sources */,
 				A0AF761A1AEE157300F77847 /* RadioButton.cpp in Sources */,
 				A0AF761B1AEE157300F77847 /* Ray.cpp in Sources */,
-				A0AF761C1AEE157300F77847 /* AIState.cpp in Sources */,
 				A0AF761D1AEE157300F77847 /* Joint.cpp in Sources */,
 				A0AF761E1AEE157400F77847 /* JoystickControl.cpp in Sources */,
 				A0AF761F1AEE157400F77847 /* AnimationClip.cpp in Sources */,
@@ -10435,7 +10386,6 @@
 				A0AF762D1AEE157700F77847 /* Platform.cpp in Sources */,
 				A0AF762E1AEE157700F77847 /* HeightField.cpp in Sources */,
 				A0AF762F1AEE157700F77847 /* Image.cpp in Sources */,
-				A0AF76301AEE157800F77847 /* AIAgent.cpp in Sources */,
 				A0AF76311AEE157800F77847 /* TileSet.cpp in Sources */,
 				A0AF76321AEE157800F77847 /* PhysicsRigidBody.cpp in Sources */,
 				A0AF76331AEE157800F77847 /* Theme.cpp in Sources */,

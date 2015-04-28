@@ -58,10 +58,6 @@ inline ScriptController* Game::getScriptController() const
 {
     return _scriptController;
 }
-inline AIController* Game::getAIController() const
-{
-    return _aiController;
-}
 
 template <class T>
 void Game::renderOnce(T* instance, void (T::*method)(void*), void* cookie)
