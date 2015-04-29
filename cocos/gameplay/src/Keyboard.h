@@ -23,7 +23,13 @@ public:
         KEY_RELEASE,
         KEY_CHAR
     };
-
+#ifdef KEY_PRINT
+#undef KEY_PRINT
+#undef KEY_BREAK
+#undef KEY_BACKSPACE
+#undef KEY_HOME
+#undef KEY_END
+#endif
     /**
      * The key (code).
      */

@@ -5,9 +5,6 @@
 #include "FileSystem.h"
 #include "FrameBuffer.h"
 #include "SceneLoader.h"
-#include "ControlFactory.h"
-#include "Theme.h"
-#include "Form.h"
 
 /** @script{ignore} */
 GLenum __gl_error_code = GL_NO_ERROR;
@@ -264,10 +261,6 @@ void Game::shutdown()
 
         _physicsController->finalize();
         SAFE_DELETE(_physicsController);
-        
-        ControlFactory::finalize();
-
-        Theme::finalize();
 
         // Note: we do not clean up the script controller here
         // because users can call Game::exit() from a script.
@@ -390,9 +383,6 @@ void Game::frame()
         // Application Update.
         update(elapsedTime);
 
-        // Update forms.
-        Form::updateInternal(elapsedTime);
-
         // Run script update.
         if (_scriptTarget)
             _scriptTarget->fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(GameScriptTarget, update), elapsedTime);
@@ -423,9 +413,6 @@ void Game::frame()
 
         // Application Update.
         update(0);
-
-        // Update forms.
-        Form::updateInternal(0);
 
         // Script update.
         if (_scriptTarget)

@@ -12,8 +12,6 @@ bool __viewFrustumCulling = true;
 bool __flythruCamera = false;
 bool __drawDebug = false;
 bool __useAccelerometer = false;
-bool __showMenu = false;
-bool __menuFlag = false;
 
 // Declare our game instance
 
@@ -30,8 +28,7 @@ bool __menuFlag = false;
 #define STEERING_RESPONSE (7.0f)
 
 RacerGame::RacerGame()
-    : _scene(NULL), _font(NULL), _menu(NULL), _overlay(NULL), _keyFlags(0), _mouseFlags(0), _steering(0),
-    _gamepad(NULL), _physicalGamepad(NULL), _virtualGamepad(NULL), _virtualGamepadClip(NULL),
+    : _scene(NULL), _font(NULL), _keyFlags(0), _mouseFlags(0), _steering(0),
     _carVehicle(NULL), _upsetTimer(0),
     _backgroundMusic(NULL), _engineSound(NULL), _brakingSound(NULL)
 {
@@ -45,23 +42,6 @@ void RacerGame::initialize()
 
     // Display the gameplay splash screen during loading, for at least 1 second.
     //gameplay::displayScreen(this, &RacerGame::drawSplash, NULL, 1000L);
-
-    // Create the menu and start listening to its controls.
-    _menu = gameplay::Form::create("res/common/menu.form");
-    _menu->setEnabled(false);
-    static_cast<gameplay::Button*>(_menu->getControl("newGameButton"))->addListener(this, Listener::CLICK);
-    static_cast<gameplay::Button*>(_menu->getControl("quitGameButton"))->addListener(this, Listener::CLICK);
-    static_cast<gameplay::RadioButton*>(_menu->getControl("useGamepad"))->addListener(this, Listener::VALUE_CHANGED);
-    static_cast<gameplay::RadioButton*>(_menu->getControl("useTilt"))->addListener(this, Listener::VALUE_CHANGED);
-    if (!canExit())
-    {
-        // Prevent a programmatic exit on platforms that don't allow it.
-        _menu->removeControl("quitGameButton");
-    }
-
-    // Create a pause button to display the menu
-    _overlay = gameplay::Form::create("res/common/overlay.form");
-    static_cast<gameplay::Button*>(_overlay->getControl("menuButton"))->addListener(this, Listener::CLICK);
 
     // Load the scene
     _scene = gameplay::Scene::load("res/common/racer.scene");
@@ -104,7 +84,6 @@ void RacerGame::initialize()
     _brakingSound->setLooped(false);
     _brakingSound->setGain(0.5f);
 
-    _gamepad = getGamepad(0);
 }
 
 bool RacerGame::initializeScene(gameplay::Node* node)
@@ -134,30 +113,10 @@ void RacerGame::finalize()
     SAFE_RELEASE(_brakingSound);
     SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
-    SAFE_RELEASE(_menu);
-    SAFE_RELEASE(_overlay);
 }
 
 void RacerGame::update(float elapsedTime)
 {
-    // The "Start" button is mapped to MENU2.
-    if (!__showMenu && !__menuFlag && _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_MENU2))
-    {
-        __menuFlag = true;
-        menuEvent();
-    }
-
-    if (__menuFlag && !_gamepad->isButtonDown(gameplay::Gamepad::BUTTON_MENU2))
-    {
-        __menuFlag = false;
-    }
-
-    if (__showMenu && !__menuFlag && _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_MENU2))
-    {
-        __menuFlag = true;
-        menuEvent();
-    }
-
     gameplay::Node* cameraNode;
     if (_scene->getActiveCamera() && (cameraNode = _scene->getActiveCamera()->getNode()))
     {
@@ -168,25 +127,11 @@ void RacerGame::update(float elapsedTime)
         if (_carVehicle)
         {
             float v = _carVehicle->getSpeedKph();
-            bool isVirt = _gamepad->isVirtual();
 
             if (!__flythruCamera)
             {
                 // Vehicle Control (Normal Mode)
                 gameplay::Vector2 direction;
-                if (_gamepad->getJoystickCount())
-                {
-                    _gamepad->getJoystickValues(0, &direction);
-                }
-                
-                if (_gamepad->isButtonDown(gameplay::Gamepad::BUTTON_LEFT))
-                {
-                    direction.set(-1.0f, 0.0f);
-                }
-                else if (_gamepad->isButtonDown(gameplay::Gamepad::BUTTON_RIGHT))
-                {
-                    direction.set(1.0f, 0.0f);
-                }
 
                 // Allow keys to control steering
                 if (_keyFlags & STEER_LEFT)
@@ -210,18 +155,6 @@ void RacerGame::update(float elapsedTime)
                 }
                 _steering = max(-1.0f, min(_steering, 1.0f));
 
-                if (_gamepad->getTriggerCount() > 1)
-                {
-                    driving = _gamepad->getTriggerValue(1);
-                    _engineSound->setGain(0.8f + (driving * 0.2f));
-                }
-                
-                if (!driving && ((_keyFlags & ACCELERATOR) || (_keyFlags & ACCELERATOR_MOUSE) || _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_A)))
-                {
-                    driving = 1;
-                    _engineSound->setGain(1.0f);
-                }
-                else
                 {
                     _engineSound->setGain(0.8f);
                 }
@@ -229,14 +162,12 @@ void RacerGame::update(float elapsedTime)
                 _engineSound->setPitch(max(0.2f, min(s, 2.0f)));
 
                 // Reverse only below a reasonable speed
-                bool isReverseCommanded = (_keyFlags & REVERSE) ||
-                                          (!isVirt && _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_X)) ||
-                                          (direction.y < -0.1 && _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_A));
+                bool isReverseCommanded = (_keyFlags & REVERSE);
                 if (isReverseCommanded && v < 30.0f)
                 {
                     driving = -0.6f;
                 }
-                if ((_keyFlags & BRAKE) || (_keyFlags & BRAKE_MOUSE) || _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_B) || (_gamepad->getTriggerCount() > 0 && _gamepad->getTriggerValue(0) > 0.5f))
+                if ((_keyFlags & BRAKE) || (_keyFlags & BRAKE_MOUSE))
                 {
                     braking = 1;
                     if (_brakingSound && (_brakingSound->getState() != gameplay::AudioSource::PLAYING) && (v > 30.0f))
@@ -261,7 +192,7 @@ void RacerGame::update(float elapsedTime)
             }
 
             // Slightly different steering gain based on gamepad type.
-            _carVehicle->setSteerdown( (isVirt ? 94.0f : 87.0f), (isVirt ? 0.15f : 0.22f) );
+            _carVehicle->setSteerdown( (87.0f), (0.22f) );
             _carVehicle->update(elapsedTime, _steering, braking, driving);
 
             // Auto-detect an upset car
@@ -280,7 +211,6 @@ void RacerGame::update(float elapsedTime)
                 resetInPlace();
             }
             else if ( (_keyFlags & UPRIGHT) ||
-                 (!isVirt && _gamepad->isButtonDown(gameplay::Gamepad::BUTTON_Y)) ||
                  (_carVehicle->getNode()->getTranslationY() < -300.0f) )
             {
                 resetToStart();
@@ -300,6 +230,7 @@ void RacerGame::render(float elapsedTime)
 {
     // Clear the color and depth buffers
     clear(CLEAR_COLOR_DEPTH, gameplay::Vector4::zero(), 1.0f, 0);
+    
 
     // Visit all the nodes in the scene to build our render queues
     for (unsigned int i = 0; i < QUEUE_COUNT; ++i)
@@ -313,18 +244,8 @@ void RacerGame::render(float elapsedTime)
     {
         Game::getInstance()->getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());
     }
-
-    // Draw the gamepad
-    if (_gamepad && _gamepad->isVirtual())
-        _gamepad->draw();
-
-    // Draw the menu
-    if (__showMenu)
-    {
-        _menu->draw();
-    }
     
-    _overlay->draw();
+    clear(Game::CLEAR_DEPTH, Vector4::zero(), 1, 0);
         
     // Draw FPS and speed
     int carSpeed = _carVehicle ? (int)_carVehicle->getSpeedKph() : 0;
@@ -511,78 +432,14 @@ void RacerGame::gamepadEvent(Gamepad::GamepadEvent evt, Gamepad* gamepad)
     // Prioritise physical gamepads over the virtual one.
     switch(evt)
     {
-    case Gamepad::CONNECTED_EVENT:
-        if (gamepad->isVirtual())
-        {
-            float from = 0.0f;
-            float to = getHeight();
-            Animation* virtualGamepadAnimation = gamepad->getForm()->createAnimationFromTo("gamepad_transition", Form::ANIMATE_POSITION_Y, &from, &to, Curve::LINEAR, 2000L);
-            _virtualGamepadClip = virtualGamepadAnimation->getClip();
-
-            _virtualGamepad = gamepad;
-        }
-        else
-        {
-            if (!_physicalGamepad)
-                _physicalGamepad = gamepad;
-        }
-
-        if (_physicalGamepad)
-        {
-            if (_virtualGamepadClip && _gamepad == _virtualGamepad)
-            {
-                _virtualGamepadClip->setSpeed(1.0f);
-                _virtualGamepadClip->play();
-            }
-            _gamepad = _physicalGamepad;
-            if (_virtualGamepad)
-            {
-                _virtualGamepad->getForm()->setEnabled(false);
-            }
-        }
-        else if (_virtualGamepad)
-        {
-            if (_gamepad == _physicalGamepad)
-            {
-                _virtualGamepadClip->setSpeed(-1.0f);
-                _virtualGamepadClip->play();
-            }
-            _gamepad = _virtualGamepad;
-            _virtualGamepad->getForm()->setEnabled(true);
-        }
-
-        break;
-    case Gamepad::DISCONNECTED_EVENT:
-        if (gamepad == _physicalGamepad)
-        {
-            _gamepad = _virtualGamepad;
-            _physicalGamepad = NULL;
-
-            _virtualGamepadClip->setSpeed(-1.0f);
-            _virtualGamepadClip->play();
-            _virtualGamepad->getForm()->setEnabled(true);
-        }
-        break;
+        default:
+            break;
     }
 }
 
 void RacerGame::menuEvent()
 {
-    __showMenu = !__showMenu;
 
-    if (__showMenu)
-    {
-        static_cast<Button*>(_overlay->getControl("menuButton"))->setText("Resume");
-        pause();
-        _menu->setEnabled(true);
-        //_menu->setState(Control::FOCUS);
-    }
-    else
-    {
-        static_cast<Button*>(_overlay->getControl("menuButton"))->setText("Menu");
-        resume();
-        _menu->setEnabled(false);
-    }
 }
 
 void RacerGame::resetToStart()
@@ -622,30 +479,4 @@ void RacerGame::reset(const Vector3& pos, const Quaternion& rot)
     carNode->setRotation(rot);
     _carVehicle->reset();
     _carVehicle->setEnabled(true);
-}
-
-void RacerGame::controlEvent(Control* control, EventType evt)
-{
-    if (strcmp(control->getId(), "newGameButton") == 0)
-    {
-        resetToStart();
-        // Close the menu and resume the game.
-        menuEvent();
-    }
-    else if (strcmp(control->getId(), "quitGameButton") == 0)
-    {
-        exit();
-    }
-    else if (strcmp(control->getId(), "useGamepad") == 0)
-    {
-        __useAccelerometer = false;
-    }
-    else if (strcmp(control->getId(), "useTilt") == 0)
-    {
-        __useAccelerometer = true;
-    }
-    else if (strcmp(control->getId(), "menuButton") == 0)
-    {
-        menuEvent();
-    }
 }

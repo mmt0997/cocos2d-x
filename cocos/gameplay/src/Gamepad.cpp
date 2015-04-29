@@ -1,10 +1,7 @@
 #include "Base.h"
 #include "Gamepad.h"
 #include "Game.h"
-#include "Button.h"
 #include "Platform.h"
-#include "Form.h"
-#include "JoystickControl.h"
 
 namespace gameplay
 {
@@ -12,31 +9,20 @@ namespace gameplay
 static std::vector<Gamepad*> __gamepads;
 
 Gamepad::Gamepad(const char* formPath)
-    : _handle((GamepadHandle)INT_MAX), _buttonCount(0), _joystickCount(0), _triggerCount(0), _form(NULL), _buttons(0)
+    : _handle((GamepadHandle)INT_MAX), _buttonCount(0), _joystickCount(0), _triggerCount(0), _buttons(0)
 {
-    GP_ASSERT(formPath);
-    _form = Form::create(formPath);
-    GP_ASSERT(_form);
-    _form->setConsumeInputEvents(false);
     _name = "Virtual";
-
-    for (int i = 0; i < 2; ++i)
-    {
-        _uiJoysticks[i] = NULL;
-        _triggers[i] = 0.0f;
-    }
 
     for (int i = 0; i < 20; ++i)
     {
         _uiButtons[i] = NULL;
     }
 
-    bindGamepadControls(_form);
 }
 
 Gamepad::Gamepad(GamepadHandle handle, unsigned int buttonCount, unsigned int joystickCount, unsigned int triggerCount, const char* name)
     : _handle(handle), _buttonCount(buttonCount), _joystickCount(joystickCount), _triggerCount(triggerCount),
-      _form(NULL), _buttons(0)
+      _buttons(0)
 {
     if (name)
     {
@@ -51,7 +37,6 @@ Gamepad::Gamepad(GamepadHandle handle, unsigned int buttonCount, unsigned int jo
 
 Gamepad::~Gamepad()
 {
-    SAFE_RELEASE(_form);
 }
 
 Gamepad* Gamepad::add(GamepadHandle handle, unsigned int buttonCount, unsigned int joystickCount, unsigned int triggerCount, const char* name)
@@ -112,6 +97,7 @@ void Gamepad::remove(Gamepad* gamepad)
 
 void Gamepad::bindGamepadControls(Container* container)
 {
+#if 0
     std::vector<Control*> controls = container->getControls();
     std::vector<Control*>::iterator itr = controls.begin();
 
@@ -140,6 +126,7 @@ void Gamepad::bindGamepadControls(Container* container)
             _buttonCount++;
         }
     }
+#endif
 }
 
 unsigned int Gamepad::getGamepadCount()
@@ -240,7 +227,6 @@ const char* Gamepad::getName() const
 
 void Gamepad::update(float elapsedTime)
 {
-    if (!_form)
     {
         Platform::pollGamepadState(this);
     }
@@ -257,10 +243,6 @@ void Gamepad::updateInternal(float elapsedTime)
 
 void Gamepad::draw()
 {
-    if (_form && _form->isEnabled())
-    {
-        _form->draw();
-    }
 }
 
 unsigned int Gamepad::getButtonCount() const
@@ -270,19 +252,7 @@ unsigned int Gamepad::getButtonCount() const
 
 bool Gamepad::isButtonDown(ButtonMapping mapping) const
 {
-    if (_form)
-    {
-        Button* button = _uiButtons[mapping];
-        if (button)
-        {
-            return (button->getState() == Control::ACTIVE);
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else if (_buttons & (1 << mapping))
+    if (_buttons & (1 << mapping))
     {
         return true;
     }
@@ -300,20 +270,6 @@ void Gamepad::getJoystickValues(unsigned int joystickId, Vector2* outValue) cons
     if (joystickId >= _joystickCount)
         return;
 
-    if (_form)
-    {
-        JoystickControl* joystick = _uiJoysticks[joystickId];
-        if (joystick)
-        {
-            const Vector2& value = joystick->getValue();
-            outValue->set(value.x, value.y);
-        }
-        else
-        {
-            outValue->set(0.0f, 0.0f);
-        }
-    }
-    else
     {
         outValue->set(_joysticks[joystickId]);
     }
@@ -329,12 +285,6 @@ float Gamepad::getTriggerValue(unsigned int triggerId) const
     if (triggerId >= _triggerCount)
         return 0.0f;
 
-    if (_form)
-    {
-        // Triggers are not part of the virtual gamepad defintion
-        return 0.0f;
-    }
-    else
     {
         return _triggers[triggerId];
     }
@@ -342,12 +292,12 @@ float Gamepad::getTriggerValue(unsigned int triggerId) const
 
 bool Gamepad::isVirtual() const
 {
-    return _form;
+    return false;
 }
 
 Form* Gamepad::getForm() const
 {
-    return _form;
+    return nullptr;
 }
 
 void Gamepad::setButtons(unsigned int buttons)
@@ -355,7 +305,6 @@ void Gamepad::setButtons(unsigned int buttons)
     if (buttons != _buttons)
     {
         _buttons = buttons;
-        Form::gamepadButtonEventInternal(this);
     }
 }
 
@@ -364,7 +313,6 @@ void Gamepad::setJoystickValue(unsigned int index, float x, float y)
     if (_joysticks[index].x != x || _joysticks[index].y != y)
     {
         _joysticks[index].set(x, y);
-        Form::gamepadJoystickEventInternal(this, index);
     }
 }
 
@@ -373,7 +321,6 @@ void Gamepad::setTriggerValue(unsigned int index, float value)
     if (_triggers[index] != value)
     {
         _triggers[index] = value;
-        Form::gamepadTriggerEventInternal(this, index);
     }
 }
 

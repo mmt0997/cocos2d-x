@@ -8,7 +8,7 @@
 /**
  * Main game class.
  */
-class RacerGame: public gameplay::Game, gameplay::Control::Listener
+class RacerGame: public gameplay::Game
 {
 public:
 
@@ -42,10 +42,6 @@ public:
      */
     void menuEvent();
 
-    /**
-     * @see Control::controlEvent
-     */
-    void controlEvent(gameplay::Control* control, gameplay::Control::Listener::EventType evt);
     
 protected:
 
@@ -116,16 +112,10 @@ private:
 
     gameplay::Scene* _scene;
     gameplay::Font* _font;
-    gameplay::Form* _menu;
-    gameplay::Form* _overlay;
     std::vector<gameplay::Node*> _renderQueues[2];
     unsigned int _keyFlags;
     unsigned int _mouseFlags;
     float _steering;
-    gameplay::Gamepad* _gamepad;
-    gameplay::Gamepad* _physicalGamepad;
-    gameplay::Gamepad* _virtualGamepad;
-    gameplay::AnimationClip* _virtualGamepadClip;
     gameplay::PhysicsVehicle* _carVehicle;
     float _upsetTimer;
 

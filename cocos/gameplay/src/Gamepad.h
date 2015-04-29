@@ -205,8 +205,6 @@ private:
     unsigned int _joystickCount;
     unsigned int _triggerCount;
     std::string _name;
-    Form* _form;
-    JoystickControl* _uiJoysticks[2];
     Button* _uiButtons[20];
     unsigned int _buttons;
     Vector2 _joysticks[2];

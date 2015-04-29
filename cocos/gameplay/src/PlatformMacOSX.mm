@@ -1154,7 +1154,13 @@ bool getMousePointForEvent(NSPoint& point, NSEvent* event)
 {
     return YES;
 }
-
+#ifdef KEY_PRINT
+#undef KEY_PRINT
+#undef KEY_BREAK
+#undef KEY_BACKSPACE
+#undef KEY_HOME
+#undef KEY_END
+#endif
 int getKey(unsigned short keyCode, unsigned int modifierFlags)
 {
     __shiftDown = (modifierFlags & NSShiftKeyMask);

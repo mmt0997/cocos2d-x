@@ -11,7 +11,6 @@
 #include "Terrain.h"
 #include "Game.h"
 #include "Drawable.h"
-#include "Form.h"
 #include "Ref.h"
 
 // Node dirty flags
@@ -707,15 +706,6 @@ Animation* Node::getAnimation(const char* id) const
                     return animation;
             }
         }
-    }
-
-    // look through form for animations.
-    Form* form = dynamic_cast<Form*>(_drawable);
-    if (form)
-    {
-        animation = form->getAnimation(id);
-        if (animation)
-            return animation;
     }
 
     // Look through this node's children for an animation with the specified ID.
