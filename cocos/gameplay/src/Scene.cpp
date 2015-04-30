@@ -1,5 +1,4 @@
 #include "Base.h"
-#include "AudioListener.h"
 #include "Scene.h"
 #include "SceneLoader.h"
 #include "MeshSkin.h"
@@ -71,12 +70,6 @@ Scene::~Scene()
     // Unbind our active camera from the audio listener
     if (_activeCamera)
     {
-        AudioListener* audioListener = AudioListener::getInstance();
-        if (audioListener && (audioListener->getCamera() == _activeCamera))
-        {
-            audioListener->setCamera(NULL);
-        }
-
         SAFE_RELEASE(_activeCamera);
     }
 
@@ -335,16 +328,8 @@ void Scene::setActiveCamera(Camera* camera)
     // Make sure we don't release the camera if the same camera is set twice.
     if (_activeCamera != camera)
     {
-        AudioListener* audioListener = AudioListener::getInstance();
-
         if (_activeCamera)
         {
-            // Unbind the active camera from the audio listener
-            if (audioListener && (audioListener->getCamera() == _activeCamera))
-            {
-                audioListener->setCamera(NULL);
-            }
-
             SAFE_RELEASE(_activeCamera);
         }
 
@@ -353,11 +338,6 @@ void Scene::setActiveCamera(Camera* camera)
         if (_activeCamera)
         {
             _activeCamera->addRef();
-
-            if (audioListener && _bindAudioListenerToCamera)
-            {
-                audioListener->setCamera(_activeCamera);
-            }
         }
     }
 }
@@ -367,11 +347,6 @@ void Scene::bindAudioListenerToCamera(bool bind)
     if (_bindAudioListenerToCamera != bind)
     {
         _bindAudioListenerToCamera = bind;
-
-        if (AudioListener::getInstance())
-        {
-            AudioListener::getInstance()->setCamera(bind ? _activeCamera : NULL);
-        }
     }
 }
 

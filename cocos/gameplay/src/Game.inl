@@ -44,11 +44,6 @@ inline AnimationController* Game::getAnimationController() const
     return _animationController;
 }
 
-inline AudioController* Game::getAudioController() const
-{
-    return _audioController;
-}
-
 inline ScriptController* Game::getScriptController() const
 {
     return _scriptController;

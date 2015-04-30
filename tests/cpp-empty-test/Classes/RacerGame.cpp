@@ -55,28 +55,6 @@ void RacerGame::initialize()
     // Load and initialize game script
     getScriptController()->loadScript("res/common/racer.lua");
     getScriptController()->executeFunction<void>("setScene", "<Scene>", _scene);
-
-    // Create audio tracks
-    _backgroundMusic = gameplay::AudioSource::create("res/common/background_track.ogg", true);
-    if (_backgroundMusic)
-    {
-        _backgroundMusic->setLooped(true);
-        _backgroundMusic->play();
-        _backgroundMusic->setGain(0.3f);
-    }
-
-    _engineSound = gameplay::AudioSource::create("res/common/engine_loop.ogg");
-    if (_engineSound)
-    {
-        _engineSound->setLooped(true);
-        _engineSound->play();
-        _engineSound->setGain(0.7f);
-    }
-
-    _brakingSound = gameplay::AudioSource::create("res/common/braking.wav", true);
-    _brakingSound->setLooped(false);
-    _brakingSound->setGain(0.5f);
-
 }
 
 bool RacerGame::initializeScene(gameplay::Node* node)
@@ -101,9 +79,6 @@ bool RacerGame::initializeScene(gameplay::Node* node)
 
 void RacerGame::finalize()
 {
-    SAFE_RELEASE(_backgroundMusic);
-    SAFE_RELEASE(_engineSound);
-    SAFE_RELEASE(_brakingSound);
     SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
 }

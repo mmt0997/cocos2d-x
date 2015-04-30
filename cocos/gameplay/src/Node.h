@@ -463,23 +463,6 @@ public:
     void setLight(Light* light);
 
     /**
-     * Gets the audio source attached to this node.
-     *
-     * @return The audio source attached to this node.
-     */
-    AudioSource* getAudioSource() const;
-
-    /**
-     * Attaches an audio source to this node.
-     *
-     * This will increase the reference count of the new audio source and decrease
-     * the reference count of the old audio source.
-     *
-     * @param audio The new audio source. May be NULL.
-     */
-    void setAudioSource(AudioSource* audio);
-
-    /**
      * Gets the user object assigned to this node.
      *
      * @return The user object assigned object to this node.
@@ -618,8 +601,6 @@ protected:
     Camera* _camera;
     /** The light component attached to this node. */
     Light* _light;
-    /** The audio source component attached to this node. */
-    AudioSource* _audioSource;
     /** The AI agent component attached to this node. */
     mutable AIAgent* _agent;
     /** The user object component attached to this node. */

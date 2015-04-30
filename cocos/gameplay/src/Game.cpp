@@ -60,8 +60,7 @@ Game::Game()
     : _initialized(false), _state(UNINITIALIZED), _pausedCount(0),
       _frameLastFPS(0), _frameCount(0), _frameRate(0), _width(0), _height(0),
       _clearDepth(1.0f), _clearStencil(0), _properties(NULL),
-      _animationController(NULL), _audioController(NULL),
-      _audioListener(NULL),
+      _animationController(NULL),
       _timeEvents(NULL), _scriptController(NULL), _scriptTarget(NULL)
 {
     GP_ASSERT(__gameInstance == NULL);
@@ -164,9 +163,6 @@ bool Game::startup()
     _animationController = new AnimationController();
     _animationController->initialize();
 
-    _audioController = new AudioController();
-    _audioController->initialize();
-
     _scriptController = new ScriptController();
     _scriptController->initialize();
 
@@ -253,13 +249,9 @@ void Game::shutdown()
         _animationController->finalize();
         SAFE_DELETE(_animationController);
 
-        _audioController->finalize();
-        SAFE_DELETE(_audioController);
-
         // Note: we do not clean up the script controller here
         // because users can call Game::exit() from a script.
 
-        SAFE_DELETE(_audioListener);
 
         FrameBuffer::finalize();
         RenderState::finalize();
@@ -281,7 +273,6 @@ void Game::pause()
         _state = PAUSED;
         _pausedTimeLast = Platform::getAbsoluteTime();
         _animationController->pause();
-        _audioController->pause();
     }
 
     ++_pausedCount;
@@ -302,7 +293,6 @@ void Game::resume()
             _state = RUNNING;
             _pausedTimeTotal += Platform::getAbsoluteTime() - _pausedTimeLast;
             _animationController->resume();
-            _audioController->resume();
         }
     }
 }
@@ -376,9 +366,6 @@ void Game::frame()
         if (_scriptTarget)
             _scriptTarget->fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(GameScriptTarget, update), elapsedTime);
 
-        // Audio Rendering.
-        _audioController->update(elapsedTime);
-
         // Graphics Rendering.
         render(elapsedTime);
 
@@ -437,7 +424,6 @@ void Game::updateOnce()
 
     // Update the internal controllers.
     _animationController->update(elapsedTime);
-    _audioController->update(elapsedTime);
     if (_scriptTarget)
         _scriptTarget->fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(GameScriptTarget, update), elapsedTime);
 }
@@ -494,15 +480,6 @@ void Game::clear(ClearFlags flags, const Vector4& clearColor, float clearDepth, 
 void Game::clear(ClearFlags flags, float red, float green, float blue, float alpha, float clearDepth, int clearStencil)
 {
     clear(flags, Vector4(red, green, blue, alpha), clearDepth, clearStencil);
-}
-
-AudioListener* Game::getAudioListener()
-{
-    if (_audioListener == NULL)
-    {
-        _audioListener = new AudioListener();
-    }
-    return _audioListener;
 }
 
 void Game::keyEvent(Keyboard::KeyEvent evt, int key)

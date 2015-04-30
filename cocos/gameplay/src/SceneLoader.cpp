@@ -1,5 +1,4 @@
 #include "Base.h"
-#include "AudioSource.h"
 #include "Game.h"
 #include "Bundle.h"
 #include "SceneLoader.h"
@@ -272,13 +271,6 @@ void SceneLoader::applyNodeProperty(SceneNode& sceneNode, Node* node, const Prop
 
         switch (snp._type)
         {
-        case SceneNodeProperty::AUDIO:
-        {
-            AudioSource* audioSource = AudioSource::create(p);
-            node->setAudioSource(audioSource);
-            SAFE_RELEASE(audioSource);
-            break;
-        }
         case SceneNodeProperty::MATERIAL:
         {
             Model* model = dynamic_cast<Model*>(node->getDrawable());

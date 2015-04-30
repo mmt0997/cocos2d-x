@@ -1,6 +1,5 @@
 #include "Base.h"
 #include "Node.h"
-#include "AudioSource.h"
 #include "Scene.h"
 #include "Joint.h"
 #include "Terrain.h"
@@ -19,7 +18,7 @@ namespace gameplay
 
 Node::Node(const char* id)
     : _scene(NULL), _firstChild(NULL), _nextSibling(NULL), _prevSibling(NULL), _parent(NULL), _childCount(0), _enabled(true), _tags(NULL),
-    _drawable(NULL), _camera(NULL), _light(NULL), _audioSource(NULL), _agent(NULL), _userObject(NULL),
+    _drawable(NULL), _camera(NULL), _light(NULL), _agent(NULL), _userObject(NULL),
       _dirtyBits(NODE_DIRTY_ALL)
 {
     GP_REGISTER_SCRIPT_EVENTS();
@@ -34,13 +33,10 @@ Node::~Node()
     removeAllChildren();
     if (_drawable)
         _drawable->setNode(NULL);
-    if (_audioSource)
-        _audioSource->setNode(NULL);
     Ref* ref = dynamic_cast<Ref*>(_drawable);
     SAFE_RELEASE(ref);
     SAFE_RELEASE(_camera);
     SAFE_RELEASE(_light);
-    SAFE_RELEASE(_audioSource);
     SAFE_RELEASE(_userObject);
     SAFE_DELETE(_tags);
 }
@@ -963,14 +959,6 @@ void Node::cloneInto(Node* node, NodeCloneContext& context) const
         if (ref)
             ref->release();
     }
-    if (AudioSource* audio = getAudioSource())
-    {
-        AudioSource* clone = audio->clone(context);
-        node->setAudioSource(clone);
-        Ref* ref = dynamic_cast<Ref*>(clone);
-        if (ref)
-            ref->release();
-    }
     if (_tags)
     {
         node->_tags = new std::map<std::string, std::string>(_tags->begin(), _tags->end());
@@ -980,31 +968,6 @@ void Node::cloneInto(Node* node, NodeCloneContext& context) const
     node->_bounds = _bounds;
 
     // TODO: Clone the rest of the node data.
-}
-
-AudioSource* Node::getAudioSource() const
-{
-    return _audioSource;
-}
-
-void Node::setAudioSource(AudioSource* audio)
-{
-    if (_audioSource == audio)
-        return;
-
-    if (_audioSource)
-    {
-        _audioSource->setNode(NULL);
-        SAFE_RELEASE(_audioSource);
-    }
-        
-    _audioSource = audio;
-
-    if (_audioSource)
-    {
-        _audioSource->addRef();
-        _audioSource->setNode(this);
-    }
 }
 
 Ref* Node::getUserObject() const

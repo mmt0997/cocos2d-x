@@ -6,9 +6,7 @@
 #include "Touch.h"
 #include "Gesture.h"
 #include "Gamepad.h"
-#include "AudioController.h"
 #include "AnimationController.h"
-#include "AudioListener.h"
 #include "Rectangle.h"
 #include "Vector4.h"
 #include "TimeListener.h"
@@ -228,14 +226,6 @@ public:
     void clear(ClearFlags flags, float red, float green, float blue, float alpha, float clearDepth, int clearStencil);
 
     /**
-     * Gets the audio controller for managing control of audio
-     * associated with the game.
-     *
-     * @return The audio controller for this game.
-     */
-    inline AudioController* getAudioController() const;
-
-    /**
      * Gets the animation controller for managing control of animations
      * associated with the game.
      * 
@@ -250,13 +240,6 @@ public:
      * @return The script controller for this game.
      */
     inline ScriptController* getScriptController() const;
-
-    /**
-     * Gets the audio listener for 3D audio.
-     * 
-     * @return The audio listener for this game.
-     */
-    AudioListener* getAudioListener();
     
     /**
      * Shows or hides the virtual keyboard (if supported).
@@ -741,8 +724,6 @@ private:
     int _clearStencil;                          // The clear stencil value last used for clearing the stencil buffer.
     Properties* _properties;                    // Game configuration properties object.
     AnimationController* _animationController;  // Controls the scheduling and running of animations.
-    AudioController* _audioController;          // Controls audio sources that are playing in the game.
-    AudioListener* _audioListener;              // The audio listener in 3D space.
     std::priority_queue<TimeEvent, std::vector<TimeEvent>, std::less<TimeEvent> >* _timeEvents;     // Contains the scheduled time events.
     ScriptController* _scriptController;            // Controls the scripting engine.
     ScriptTarget* _scriptTarget;                // Script target for the game

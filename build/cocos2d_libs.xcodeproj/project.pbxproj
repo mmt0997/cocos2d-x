@@ -1816,7 +1816,6 @@
 		A0AF75F21AEE156900F77847 /* RenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361B9E1AE8ED8700ACF6D6 /* RenderState.cpp */; };
 		A0AF75F31AEE156A00F77847 /* RenderTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BA01AE8ED8700ACF6D6 /* RenderTarget.cpp */; };
 		A0AF75F61AEE156A00F77847 /* AnimationValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BA61AE8ED8700ACF6D6 /* AnimationValue.cpp */; };
-		A0AF75F71AEE156B00F77847 /* AudioBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BA81AE8ED8700ACF6D6 /* AudioBuffer.cpp */; };
 		A0AF75F81AEE156B00F77847 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BAA1AE8ED8700ACF6D6 /* Light.cpp */; };
 		A0AF75F91AEE156B00F77847 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BAC1AE8ED8700ACF6D6 /* Logger.cpp */; };
 		A0AF75FB1AEE156B00F77847 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BB41AE8ED8700ACF6D6 /* Material.cpp */; };
@@ -1830,12 +1829,9 @@
 		A0AF76061AEE156E00F77847 /* MeshSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BCE1AE8ED8700ACF6D6 /* MeshSkin.cpp */; };
 		A0AF76071AEE156E00F77847 /* ScriptController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BD11AE8ED8700ACF6D6 /* ScriptController.cpp */; };
 		A0AF760A1AEE156F00F77847 /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BD91AE8ED8700ACF6D6 /* Vector4.cpp */; };
-		A0AF760B1AEE156F00F77847 /* AudioController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BDD1AE8ED8700ACF6D6 /* AudioController.cpp */; };
-		A0AF760C1AEE156F00F77847 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BDF1AE8ED8700ACF6D6 /* AudioListener.cpp */; };
 		A0AF760D1AEE157000F77847 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE01AE8ED8700ACF6D6 /* Matrix.cpp */; };
 		A0AF760E1AEE157000F77847 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE31AE8ED8700ACF6D6 /* Mesh.cpp */; };
 		A0AF76101AEE157000F77847 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE71AE8ED8700ACF6D6 /* Texture.cpp */; };
-		A0AF76111AEE157100F77847 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */; };
 		A0AF76131AEE157100F77847 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */; };
 		A0AF76151AEE157100F77847 /* ScriptTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BF31AE8ED8700ACF6D6 /* ScriptTarget.cpp */; };
 		A0AF76171AEE157200F77847 /* Bundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BF71AE8ED8700ACF6D6 /* Bundle.cpp */; };
@@ -1923,7 +1919,6 @@
 		B2361C9E1AE8ED8800ACF6D6 /* AnimationTarget.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BA51AE8ED8700ACF6D6 /* AnimationTarget.h */; };
 		B2361C9F1AE8ED8800ACF6D6 /* AnimationValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BA61AE8ED8700ACF6D6 /* AnimationValue.cpp */; };
 		B2361CA01AE8ED8800ACF6D6 /* AnimationValue.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BA71AE8ED8700ACF6D6 /* AnimationValue.h */; };
-		B2361CA11AE8ED8800ACF6D6 /* AudioBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BA81AE8ED8700ACF6D6 /* AudioBuffer.cpp */; };
 		B2361CA31AE8ED8800ACF6D6 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BAA1AE8ED8700ACF6D6 /* Light.cpp */; };
 		B2361CA41AE8ED8800ACF6D6 /* Light.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BAB1AE8ED8700ACF6D6 /* Light.h */; };
 		B2361CA51AE8ED8800ACF6D6 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BAC1AE8ED8700ACF6D6 /* Logger.cpp */; };
@@ -1955,18 +1950,11 @@
 		B2361CC71AE8ED8800ACF6D6 /* ScriptController.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BD21AE8ED8700ACF6D6 /* ScriptController.h */; };
 		B2361CCB1AE8ED8800ACF6D6 /* Vector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BD91AE8ED8700ACF6D6 /* Vector4.cpp */; };
 		B2361CCC1AE8ED8800ACF6D6 /* Vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BDA1AE8ED8700ACF6D6 /* Vector4.h */; };
-		B2361CCD1AE8ED8800ACF6D6 /* AudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BDC1AE8ED8700ACF6D6 /* AudioBuffer.h */; };
-		B2361CCE1AE8ED8800ACF6D6 /* AudioController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BDD1AE8ED8700ACF6D6 /* AudioController.cpp */; };
-		B2361CCF1AE8ED8800ACF6D6 /* AudioController.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BDE1AE8ED8700ACF6D6 /* AudioController.h */; };
-		B2361CD01AE8ED8800ACF6D6 /* AudioListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BDF1AE8ED8700ACF6D6 /* AudioListener.cpp */; };
 		B2361CD11AE8ED8800ACF6D6 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE01AE8ED8700ACF6D6 /* Matrix.cpp */; };
 		B2361CD21AE8ED8800ACF6D6 /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BE11AE8ED8700ACF6D6 /* Matrix.h */; };
 		B2361CD31AE8ED8800ACF6D6 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE31AE8ED8700ACF6D6 /* Mesh.cpp */; };
 		B2361CD41AE8ED8800ACF6D6 /* Text.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BE41AE8ED8700ACF6D6 /* Text.h */; };
 		B2361CD71AE8ED8800ACF6D6 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE71AE8ED8700ACF6D6 /* Texture.cpp */; };
-		B2361CD81AE8ED8800ACF6D6 /* AudioListener.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BE81AE8ED8700ACF6D6 /* AudioListener.h */; };
-		B2361CD91AE8ED8800ACF6D6 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */; };
-		B2361CDA1AE8ED8800ACF6D6 /* AudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEA1AE8ED8700ACF6D6 /* AudioSource.h */; };
 		B2361CDB1AE8ED8800ACF6D6 /* Base.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEB1AE8ED8700ACF6D6 /* Base.h */; };
 		B2361CDE1AE8ED8800ACF6D6 /* Logger.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361BEE1AE8ED8700ACF6D6 /* Logger.h */; };
 		B2361CDF1AE8ED8800ACF6D6 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */; };
@@ -3880,7 +3868,6 @@
 		B2361BA51AE8ED8700ACF6D6 /* AnimationTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationTarget.h; path = ../cocos/gameplay/src/AnimationTarget.h; sourceTree = "<group>"; };
 		B2361BA61AE8ED8700ACF6D6 /* AnimationValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationValue.cpp; path = ../cocos/gameplay/src/AnimationValue.cpp; sourceTree = "<group>"; };
 		B2361BA71AE8ED8700ACF6D6 /* AnimationValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationValue.h; path = ../cocos/gameplay/src/AnimationValue.h; sourceTree = "<group>"; };
-		B2361BA81AE8ED8700ACF6D6 /* AudioBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioBuffer.cpp; path = ../cocos/gameplay/src/AudioBuffer.cpp; sourceTree = "<group>"; };
 		B2361BAA1AE8ED8700ACF6D6 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../cocos/gameplay/src/Light.cpp; sourceTree = "<group>"; };
 		B2361BAB1AE8ED8700ACF6D6 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Light.h; path = ../cocos/gameplay/src/Light.h; sourceTree = "<group>"; };
 		B2361BAC1AE8ED8700ACF6D6 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = ../cocos/gameplay/src/Logger.cpp; sourceTree = "<group>"; };
@@ -3917,19 +3904,12 @@
 		B2361BD91AE8ED8700ACF6D6 /* Vector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vector4.cpp; path = ../cocos/gameplay/src/Vector4.cpp; sourceTree = "<group>"; };
 		B2361BDA1AE8ED8700ACF6D6 /* Vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector4.h; path = ../cocos/gameplay/src/Vector4.h; sourceTree = "<group>"; };
 		B2361BDB1AE8ED8700ACF6D6 /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Vector4.inl; path = ../cocos/gameplay/src/Vector4.inl; sourceTree = "<group>"; };
-		B2361BDC1AE8ED8700ACF6D6 /* AudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioBuffer.h; path = ../cocos/gameplay/src/AudioBuffer.h; sourceTree = "<group>"; };
-		B2361BDD1AE8ED8700ACF6D6 /* AudioController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioController.cpp; path = ../cocos/gameplay/src/AudioController.cpp; sourceTree = "<group>"; };
-		B2361BDE1AE8ED8700ACF6D6 /* AudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioController.h; path = ../cocos/gameplay/src/AudioController.h; sourceTree = "<group>"; };
-		B2361BDF1AE8ED8700ACF6D6 /* AudioListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioListener.cpp; path = ../cocos/gameplay/src/AudioListener.cpp; sourceTree = "<group>"; };
 		B2361BE01AE8ED8700ACF6D6 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Matrix.cpp; path = ../cocos/gameplay/src/Matrix.cpp; sourceTree = "<group>"; };
 		B2361BE11AE8ED8700ACF6D6 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Matrix.h; path = ../cocos/gameplay/src/Matrix.h; sourceTree = "<group>"; };
 		B2361BE21AE8ED8700ACF6D6 /* Matrix.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Matrix.inl; path = ../cocos/gameplay/src/Matrix.inl; sourceTree = "<group>"; };
 		B2361BE31AE8ED8700ACF6D6 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../cocos/gameplay/src/Mesh.cpp; sourceTree = "<group>"; };
 		B2361BE41AE8ED8700ACF6D6 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = ../cocos/gameplay/src/Text.h; sourceTree = "<group>"; };
 		B2361BE71AE8ED8700ACF6D6 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = ../cocos/gameplay/src/Texture.cpp; sourceTree = "<group>"; };
-		B2361BE81AE8ED8700ACF6D6 /* AudioListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioListener.h; path = ../cocos/gameplay/src/AudioListener.h; sourceTree = "<group>"; };
-		B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioSource.cpp; path = ../cocos/gameplay/src/AudioSource.cpp; sourceTree = "<group>"; };
-		B2361BEA1AE8ED8700ACF6D6 /* AudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioSource.h; path = ../cocos/gameplay/src/AudioSource.h; sourceTree = "<group>"; };
 		B2361BEB1AE8ED8700ACF6D6 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Base.h; path = ../cocos/gameplay/src/Base.h; sourceTree = "<group>"; };
 		B2361BEE1AE8ED8700ACF6D6 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = ../cocos/gameplay/src/Logger.h; sourceTree = "<group>"; };
 		B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileSystem.cpp; path = ../cocos/gameplay/src/FileSystem.cpp; sourceTree = "<group>"; };
@@ -6651,7 +6631,6 @@
 				B2361BA51AE8ED8700ACF6D6 /* AnimationTarget.h */,
 				B2361BA61AE8ED8700ACF6D6 /* AnimationValue.cpp */,
 				B2361BA71AE8ED8700ACF6D6 /* AnimationValue.h */,
-				B2361BA81AE8ED8700ACF6D6 /* AudioBuffer.cpp */,
 				B2361BAA1AE8ED8700ACF6D6 /* Light.cpp */,
 				B2361BAB1AE8ED8700ACF6D6 /* Light.h */,
 				B2361BAC1AE8ED8700ACF6D6 /* Logger.cpp */,
@@ -6688,19 +6667,12 @@
 				B2361BD91AE8ED8700ACF6D6 /* Vector4.cpp */,
 				B2361BDA1AE8ED8700ACF6D6 /* Vector4.h */,
 				B2361BDB1AE8ED8700ACF6D6 /* Vector4.inl */,
-				B2361BDC1AE8ED8700ACF6D6 /* AudioBuffer.h */,
-				B2361BDD1AE8ED8700ACF6D6 /* AudioController.cpp */,
-				B2361BDE1AE8ED8700ACF6D6 /* AudioController.h */,
-				B2361BDF1AE8ED8700ACF6D6 /* AudioListener.cpp */,
 				B2361BE01AE8ED8700ACF6D6 /* Matrix.cpp */,
 				B2361BE11AE8ED8700ACF6D6 /* Matrix.h */,
 				B2361BE21AE8ED8700ACF6D6 /* Matrix.inl */,
 				B2361BE31AE8ED8700ACF6D6 /* Mesh.cpp */,
 				B2361BE41AE8ED8700ACF6D6 /* Text.h */,
 				B2361BE71AE8ED8700ACF6D6 /* Texture.cpp */,
-				B2361BE81AE8ED8700ACF6D6 /* AudioListener.h */,
-				B2361BE91AE8ED8700ACF6D6 /* AudioSource.cpp */,
-				B2361BEA1AE8ED8700ACF6D6 /* AudioSource.h */,
 				B2361BEB1AE8ED8700ACF6D6 /* Base.h */,
 				B2361BEE1AE8ED8700ACF6D6 /* Logger.h */,
 				B2361BEF1AE8ED8700ACF6D6 /* FileSystem.cpp */,
@@ -7502,11 +7474,9 @@
 				B665E3A81AA80A6500DDB1C5 /* CCPURandomiser.h in Headers */,
 				1A57020A180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				1A570212180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
-				B2361CCF1AE8ED8800ACF6D6 /* AudioController.h in Headers */,
 				1A570216180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A01C69618F57BE800EFE3A6 /* CCInteger.h in Headers */,
 				B665E3F41AA80A6600DDB1C5 /* CCPUSlaveEmitter.h in Headers */,
-				B2361CDA1AE8ED8800ACF6D6 /* AudioSource.h in Headers */,
 				15AE1B6919AADA9900C27E9E /* UIDeprecated.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
 				15AE1A8319AAD40300C27E9E /* b2GearJoint.h in Headers */,
@@ -7529,7 +7499,6 @@
 				15AE19A719AAD39600C27E9E /* TextReader.h in Headers */,
 				B2361CF91AE8ED8800ACF6D6 /* AnimationController.h in Headers */,
 				1A570227180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
-				B2361CCD1AE8ED8800ACF6D6 /* AudioBuffer.h in Headers */,
 				B2361CBE1AE8ED8800ACF6D6 /* VertexAttributeBinding.h in Headers */,
 				1A57022B180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				15AE190E19AAD35000C27E9E /* CCDisplayManager.h in Headers */,
@@ -7564,7 +7533,6 @@
 				5034CA49191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				292DB14119B4574100A80320 /* UIEditBoxImpl.h in Headers */,
 				B29A7DD919EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
-				B2361CD81AE8ED8800ACF6D6 /* AudioListener.h in Headers */,
 				50CB247919D9C5A100687767 /* AudioEngine-inl.h in Headers */,
 				1A01C68C18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
 				50ABBD561925AB0000A911A9 /* CCTransformUtils.h in Headers */,
@@ -8932,7 +8900,6 @@
 				182C5CB21A95964700C30D34 /* Node3DReader.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
 				B665E28E1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.cpp in Sources */,
-				B2361CCE1AE8ED8800ACF6D6 /* AudioController.cpp in Sources */,
 				3823843D1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
 				B2361CCB1AE8ED8800ACF6D6 /* Vector4.cpp in Sources */,
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
@@ -9299,7 +9266,6 @@
 				50ABBDBD1925AB4100A911A9 /* CCTextureCache.cpp in Sources */,
 				15AE188619AAD33D00C27E9E /* CCBSequenceProperty.cpp in Sources */,
 				B2361C761AE8ED8800ACF6D6 /* Gamepad.cpp in Sources */,
-				B2361CA11AE8ED8800ACF6D6 /* AudioBuffer.cpp in Sources */,
 				B665E43A1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.cpp in Sources */,
 				B665E1F21AA80A6500DDB1C5 /* CCPUAffector.cpp in Sources */,
 				15AE1B4F19AADA9900C27E9E /* UILoadingBar.cpp in Sources */,
@@ -9321,7 +9287,6 @@
 				15AE1C1119AAE2C600C27E9E /* CCPhysicsDebugNode.cpp in Sources */,
 				B665E2521AA80A6500DDB1C5 /* CCPUDoAffectorEventHandler.cpp in Sources */,
 				50ABC0151926664800A911A9 /* CCImage.cpp in Sources */,
-				B2361CD91AE8ED8800ACF6D6 /* AudioSource.cpp in Sources */,
 				50ABBE231925AB6F00A911A9 /* base64.cpp in Sources */,
 				B665E3AA1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
 				15AE1B5D19AADA9900C27E9E /* UITextBMFont.cpp in Sources */,
@@ -9335,7 +9300,6 @@
 				B665E3321AA80A6500DDB1C5 /* CCPUOnEmissionObserver.cpp in Sources */,
 				B2361D2C1AE8ED8800ACF6D6 /* TerrainPatch.cpp in Sources */,
 				50ABBE5D1925AB6F00A911A9 /* CCEventListener.cpp in Sources */,
-				B2361CD01AE8ED8800ACF6D6 /* AudioListener.cpp in Sources */,
 				B29A7E2D19EE1B7700872B35 /* Slot.c in Sources */,
 				B2361C8F1AE8ED8800ACF6D6 /* Technique.cpp in Sources */,
 				15AE182819AAD2F700C27E9E /* CCMeshSkin.cpp in Sources */,
@@ -10026,7 +9990,6 @@
 				A0AF75F21AEE156900F77847 /* RenderState.cpp in Sources */,
 				A0AF75F31AEE156A00F77847 /* RenderTarget.cpp in Sources */,
 				A0AF75F61AEE156A00F77847 /* AnimationValue.cpp in Sources */,
-				A0AF75F71AEE156B00F77847 /* AudioBuffer.cpp in Sources */,
 				A0AF75F81AEE156B00F77847 /* Light.cpp in Sources */,
 				A0AF75F91AEE156B00F77847 /* Logger.cpp in Sources */,
 				A0AF75FB1AEE156B00F77847 /* Material.cpp in Sources */,
@@ -10040,12 +10003,9 @@
 				A0AF76061AEE156E00F77847 /* MeshSkin.cpp in Sources */,
 				A0AF76071AEE156E00F77847 /* ScriptController.cpp in Sources */,
 				A0AF760A1AEE156F00F77847 /* Vector4.cpp in Sources */,
-				A0AF760B1AEE156F00F77847 /* AudioController.cpp in Sources */,
-				A0AF760C1AEE156F00F77847 /* AudioListener.cpp in Sources */,
 				A0AF760D1AEE157000F77847 /* Matrix.cpp in Sources */,
 				A0AF760E1AEE157000F77847 /* Mesh.cpp in Sources */,
 				A0AF76101AEE157000F77847 /* Texture.cpp in Sources */,
-				A0AF76111AEE157100F77847 /* AudioSource.cpp in Sources */,
 				A0AF76131AEE157100F77847 /* FileSystem.cpp in Sources */,
 				A0AF76151AEE157100F77847 /* ScriptTarget.cpp in Sources */,
 				A0AF76171AEE157200F77847 /* Bundle.cpp in Sources */,
