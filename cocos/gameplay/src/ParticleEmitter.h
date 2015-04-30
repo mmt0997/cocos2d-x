@@ -3,7 +3,7 @@
 
 #include "Transform.h"
 #include "Mesh.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 #include "Vector4.h"
 #include "Texture.h"
 #include "Rectangle.h"

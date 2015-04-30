@@ -165,14 +165,14 @@ public:
      *
      * @param anchor The anchor which is a origin ratio of the sprite width and height from [0.0,1.0].
      */
-    void setAnchor(const Vector2& anchor);
+    void setAnchor(const cocos2d::Vec2& anchor);
 
     /**
      * Gets the anchor which is a origin ratio of the sprite width and height from [0.0,1.0].
      *
      * @return The anchor which is a origin ratio of the sprite width and height from [0.0,1.0].
      */
-    const Vector2& getAnchor() const;
+   const cocos2d::Vec2& getAnchor() const;
     
     /**
      * Sets the flip flags used for rendering the sprite.
@@ -363,7 +363,7 @@ private:
     float _width;
     float _height;
     Offset _offset;
-    Vector2 _anchor;
+   cocos2d::Vec2 _anchor;
     int _flipFlags;
     Rectangle* _frames;
     unsigned int _frameCount;

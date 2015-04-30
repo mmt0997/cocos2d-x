@@ -1637,7 +1637,7 @@ void Platform::pollGamepadState(Gamepad* gamepad)
 
                                 if(!not_js_axis)
                                 {
-                                    Vector2 jsVals;
+                                   cocos2d::Vec2 jsVals;
                                     gamepad->getJoystickValues(jsInfo->joystickIndex,&jsVals);
                                     if(jsInfo->flags & GP_AXIS_IS_XAXIS)
                                         jsVals.x = val;

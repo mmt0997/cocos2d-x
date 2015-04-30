@@ -1,7 +1,7 @@
 #ifndef PLATFORM_H_
 #define PLATFORM_H_
 
-#include "CCMath.h"
+#include "math/CCMath.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Touch.h"

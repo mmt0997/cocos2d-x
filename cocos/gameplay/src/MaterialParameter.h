@@ -1,7 +1,7 @@
 #ifndef MATERIALPARAMETER_H_
 #define MATERIALPARAMETER_H_
 
-#include "CCMath.h"
+#include "math/CCMath.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Matrix.h"
@@ -80,14 +80,14 @@ public:
     void setValue(const int* values, unsigned int count = 1);
 
     /**
-     * Stores a copy of the specified Vector2 value in this parameter.
+     * Stores a copy of the specifiedcocos2d::Vec2 value in this parameter.
      */
-    void setValue(const Vector2& value);
+    void setValue(const cocos2d::Vec2& value);
 
     /**
-     * Stores a pointer/array of Vector2 values in this parameter.
+     * Stores a pointer/array ofcocos2d::Vec2 values in this parameter.
      */
-    void setValue(const Vector2* values, unsigned int count = 1);
+    void setValue(const cocos2d::Vec2* values, unsigned int count = 1);
 
     /**
      * Stores a copy of the specified Vector3 value in this parameter.
@@ -172,14 +172,14 @@ public:
     void setIntArray(const int* values, unsigned int count, bool copy = false);
 
     /**
-     * Stores a Vector2 value in this parameter.
+     * Stores acocos2d::Vec2 value in this parameter.
      *
      * @param value The value to set.
      */
-    void setVector2(const Vector2& value);
+    void setVector2(const cocos2d::Vec2& value);
 
     /**
-     * Stores an array of Vector2 values in this parameter.
+     * Stores an array ofcocos2d::Vec2 values in this parameter.
      *
      * @param values The array of values.
      * @param count The number of values in the array.
@@ -187,7 +187,7 @@ public:
      *      to point to the passed in array/pointer (which must be valid for the lifetime
      *      of the MaterialParameter).
      */
-    void setVector2Array(const Vector2* values, unsigned int count, bool copy = false);
+    void setVector2Array(const cocos2d::Vec2* values, unsigned int count, bool copy = false);
 
     /**
      * Stores a Vector3 value in this parameter.

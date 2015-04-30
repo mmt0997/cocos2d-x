@@ -391,7 +391,7 @@ void Material::loadRenderState(RenderState* renderState, Properties* properties)
             break;
         case Properties::VECTOR2:
             {
-                Vector2 vector2;
+                cocos2d::Vec2 vector2;
                 if (properties->getVector2(NULL, &vector2))
                 {
                     GP_ASSERT(renderState->getParameter(name));

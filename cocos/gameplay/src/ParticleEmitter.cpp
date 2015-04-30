@@ -1000,7 +1000,7 @@ unsigned int ParticleEmitter::draw(bool wireframe)
         _spriteBatch->start();
 
         // 2D Rotation.
-        static const Vector2 pivot(0.5f, 0.5f);
+        static const cocos2d::Vec2 pivot(0.5f, 0.5f);
 
         // 3D Rotation so that particles always face the camera.
         GP_ASSERT(_node && _node->getScene() && _node->getScene()->getActiveCamera() && _node->getScene()->getActiveCamera()->getNode());

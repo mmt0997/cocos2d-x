@@ -566,13 +566,13 @@ void Effect::setValue(Uniform* uniform, const Matrix* values, unsigned int count
     GL_ASSERT( glUniformMatrix4fv(uniform->_location, count, GL_FALSE, (GLfloat*)values) );
 }
 
-void Effect::setValue(Uniform* uniform, const Vector2& value)
+void Effect::setValue(Uniform* uniform,const cocos2d::Vec2& value)
 {
     GP_ASSERT(uniform);
     GL_ASSERT( glUniform2f(uniform->_location, value.x, value.y) );
 }
 
-void Effect::setValue(Uniform* uniform, const Vector2* values, unsigned int count)
+void Effect::setValue(Uniform* uniform,const cocos2d::Vec2* values, unsigned int count)
 {
     GP_ASSERT(uniform);
     GP_ASSERT(values);

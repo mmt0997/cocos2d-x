@@ -1855,8 +1855,6 @@
 		A0AF76401AEE157B00F77847 /* SpriteBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C591AE8ED8800ACF6D6 /* SpriteBatch.cpp */; };
 		A0AF76421AEE15F100F77847 /* gameplay-main-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2361C241AE8ED8800ACF6D6 /* gameplay-main-ios.mm */; };
 		A0AF76431AEE15F100F77847 /* PlatformiOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2361C2D1AE8ED8800ACF6D6 /* PlatformiOS.mm */; };
-		A0BD499F1AF211A20046CCE3 /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD499E1AF211A20046CCE3 /* CCMath.h */; };
-		A0BD49A01AF211A20046CCE3 /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD499E1AF211A20046CCE3 /* CCMath.h */; };
 		A0D728A91AEE1B1700B26A09 /* CC3DSceneSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23C17B41AED2238005B65C4 /* CC3DSceneSprite.cpp */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -2886,7 +2884,7 @@
 		15B3707719EE414C00ABE682 /* Manifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manifest.h; sourceTree = "<group>"; };
 		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
 		15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
-		182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSParse3DBinary_generated.h; sourceTree = "<group>"; };
+		182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CSParse3DBinary_generated.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		182C5CB01A95964700C30D34 /* Node3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node3DReader.cpp; path = Node3DReader/Node3DReader.cpp; sourceTree = "<group>"; };
 		182C5CB11A95964700C30D34 /* Node3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node3DReader.h; path = Node3DReader/Node3DReader.h; sourceTree = "<group>"; };
 		182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DReader.cpp; path = Sprite3DReader/Sprite3DReader.cpp; sourceTree = "<group>"; };
@@ -3050,7 +3048,7 @@
 		1A5703BA180BD2800088DEC7 /* libwebp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebp.a; sourceTree = "<group>"; };
 		1A57052A180BD31F0088DEC7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
 		1A57052D180BD3280088DEC7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
-		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; };
+		1A57FFF7180BC5160088DEC7 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; lineEnding = 0; name = CHANGELOG; path = ../CHANGELOG; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = "<none>"; };
 		1A8C5948180E930E00EF57C3 /* CCActionFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrame.cpp; sourceTree = "<group>"; };
 		1A8C5949180E930E00EF57C3 /* CCActionFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionFrame.h; sourceTree = "<group>"; };
 		1A8C594A180E930E00EF57C3 /* CCActionFrameEasing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionFrameEasing.cpp; sourceTree = "<group>"; };
@@ -3791,7 +3789,6 @@
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0BD499E1AF211A20046CCE3 /* CCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMath.h; path = ../cocos/gameplay/src/CCMath.h; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -3804,8 +3801,8 @@
 		B217704C1977ED8B009EE11B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTrianglesCommand.cpp; sourceTree = "<group>"; };
 		B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTrianglesCommand.h; sourceTree = "<group>"; };
-		B2361B641AE8ED8700ACF6D6 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Font.cpp; path = ../cocos/gameplay/src/Font.cpp; sourceTree = "<group>"; };
-		B2361B651AE8ED8700ACF6D6 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Font.h; path = ../cocos/gameplay/src/Font.h; sourceTree = "<group>"; };
+		B2361B641AE8ED8700ACF6D6 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Font.cpp; path = ../cocos/gameplay/src/Font.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		B2361B651AE8ED8700ACF6D6 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Font.h; path = ../cocos/gameplay/src/Font.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2361B681AE8ED8700ACF6D6 /* Ray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Ray.inl; path = ../cocos/gameplay/src/Ray.inl; sourceTree = "<group>"; };
 		B2361B691AE8ED8700ACF6D6 /* Rectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rectangle.cpp; path = ../cocos/gameplay/src/Rectangle.cpp; sourceTree = "<group>"; };
 		B2361B6A1AE8ED8700ACF6D6 /* Rectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rectangle.h; path = ../cocos/gameplay/src/Rectangle.h; sourceTree = "<group>"; };
@@ -3825,7 +3822,7 @@
 		B2361B781AE8ED8700ACF6D6 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../cocos/gameplay/src/Game.cpp; sourceTree = "<group>"; };
 		B2361B791AE8ED8700ACF6D6 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../cocos/gameplay/src/Game.h; sourceTree = "<group>"; };
 		B2361B7A1AE8ED8700ACF6D6 /* Game.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Game.inl; path = ../cocos/gameplay/src/Game.inl; sourceTree = "<group>"; };
-		B2361B7B1AE8ED8700ACF6D6 /* Gamepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gamepad.cpp; path = ../cocos/gameplay/src/Gamepad.cpp; sourceTree = "<group>"; };
+		B2361B7B1AE8ED8700ACF6D6 /* Gamepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Gamepad.cpp; path = ../cocos/gameplay/src/Gamepad.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B2361B7C1AE8ED8700ACF6D6 /* ParticleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticleEmitter.cpp; path = ../cocos/gameplay/src/ParticleEmitter.cpp; sourceTree = "<group>"; };
 		B2361B7D1AE8ED8700ACF6D6 /* ParticleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticleEmitter.h; path = ../cocos/gameplay/src/ParticleEmitter.h; sourceTree = "<group>"; };
 		B2361B7E1AE8ED8700ACF6D6 /* Pass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pass.cpp; path = ../cocos/gameplay/src/Pass.cpp; sourceTree = "<group>"; };
@@ -3856,10 +3853,10 @@
 		B2361BB11AE8ED8700ACF6D6 /* gameplay-main-macosx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "gameplay-main-macosx.mm"; path = "../cocos/gameplay/src/gameplay-main-macosx.mm"; sourceTree = "<group>"; };
 		B2361BB21AE8ED8700ACF6D6 /* gameplay-main-windows.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gameplay-main-windows.cpp"; path = "../cocos/gameplay/src/gameplay-main-windows.cpp"; sourceTree = "<group>"; };
 		B2361BB31AE8ED8700ACF6D6 /* gameplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameplay.h; path = ../cocos/gameplay/src/gameplay.h; sourceTree = "<group>"; };
-		B2361BB41AE8ED8700ACF6D6 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../cocos/gameplay/src/Material.cpp; sourceTree = "<group>"; };
+		B2361BB41AE8ED8700ACF6D6 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Material.cpp; path = ../cocos/gameplay/src/Material.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B2361BB51AE8ED8700ACF6D6 /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../cocos/gameplay/src/Material.h; sourceTree = "<group>"; };
-		B2361BB61AE8ED8700ACF6D6 /* MaterialParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaterialParameter.cpp; path = ../cocos/gameplay/src/MaterialParameter.cpp; sourceTree = "<group>"; };
-		B2361BB71AE8ED8700ACF6D6 /* MaterialParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialParameter.h; path = ../cocos/gameplay/src/MaterialParameter.h; sourceTree = "<group>"; };
+		B2361BB61AE8ED8700ACF6D6 /* MaterialParameter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = MaterialParameter.cpp; path = ../cocos/gameplay/src/MaterialParameter.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		B2361BB71AE8ED8700ACF6D6 /* MaterialParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MaterialParameter.h; path = ../cocos/gameplay/src/MaterialParameter.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2361BB81AE8ED8700ACF6D6 /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mesh.h; path = ../cocos/gameplay/src/Mesh.h; sourceTree = "<group>"; };
 		B2361BB91AE8ED8700ACF6D6 /* MeshBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshBatch.cpp; path = ../cocos/gameplay/src/MeshBatch.cpp; sourceTree = "<group>"; };
 		B2361BBA1AE8ED8700ACF6D6 /* MeshBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeshBatch.h; path = ../cocos/gameplay/src/MeshBatch.h; sourceTree = "<group>"; };
@@ -3907,15 +3904,15 @@
 		B2361C0E1AE8ED8800ACF6D6 /* Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Keyboard.h; path = ../cocos/gameplay/src/Keyboard.h; sourceTree = "<group>"; };
 		B2361C121AE8ED8800ACF6D6 /* Drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Drawable.cpp; path = ../cocos/gameplay/src/Drawable.cpp; sourceTree = "<group>"; };
 		B2361C131AE8ED8800ACF6D6 /* Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Drawable.h; path = ../cocos/gameplay/src/Drawable.h; sourceTree = "<group>"; };
-		B2361C141AE8ED8800ACF6D6 /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Effect.cpp; path = ../cocos/gameplay/src/Effect.cpp; sourceTree = "<group>"; };
-		B2361C151AE8ED8800ACF6D6 /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Effect.h; path = ../cocos/gameplay/src/Effect.h; sourceTree = "<group>"; };
+		B2361C141AE8ED8800ACF6D6 /* Effect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Effect.cpp; path = ../cocos/gameplay/src/Effect.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		B2361C151AE8ED8800ACF6D6 /* Effect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Effect.h; path = ../cocos/gameplay/src/Effect.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2361C161AE8ED8800ACF6D6 /* BoundingBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BoundingBox.cpp; path = ../cocos/gameplay/src/BoundingBox.cpp; sourceTree = "<group>"; };
 		B2361C171AE8ED8800ACF6D6 /* BoundingSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BoundingSphere.cpp; path = ../cocos/gameplay/src/BoundingSphere.cpp; sourceTree = "<group>"; };
 		B2361C181AE8ED8800ACF6D6 /* BoundingSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoundingSphere.h; path = ../cocos/gameplay/src/BoundingSphere.h; sourceTree = "<group>"; };
 		B2361C191AE8ED8800ACF6D6 /* BoundingSphere.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BoundingSphere.inl; path = ../cocos/gameplay/src/BoundingSphere.inl; sourceTree = "<group>"; };
-		B2361C1A1AE8ED8800ACF6D6 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = ../cocos/gameplay/src/Camera.cpp; sourceTree = "<group>"; };
-		B2361C1B1AE8ED8800ACF6D6 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = ../cocos/gameplay/src/Camera.h; sourceTree = "<group>"; };
-		B2361C221AE8ED8800ACF6D6 /* Gamepad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gamepad.h; path = ../cocos/gameplay/src/Gamepad.h; sourceTree = "<group>"; };
+		B2361C1A1AE8ED8800ACF6D6 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Camera.cpp; path = ../cocos/gameplay/src/Camera.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		B2361C1B1AE8ED8800ACF6D6 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Camera.h; path = ../cocos/gameplay/src/Camera.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		B2361C221AE8ED8800ACF6D6 /* Gamepad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Gamepad.h; path = ../cocos/gameplay/src/Gamepad.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B2361C231AE8ED8800ACF6D6 /* gameplay-main-android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gameplay-main-android.cpp"; path = "../cocos/gameplay/src/gameplay-main-android.cpp"; sourceTree = "<group>"; };
 		B2361C241AE8ED8800ACF6D6 /* gameplay-main-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "gameplay-main-ios.mm"; path = "../cocos/gameplay/src/gameplay-main-ios.mm"; sourceTree = "<group>"; };
 		B2361C251AE8ED8800ACF6D6 /* gameplay-main-linux.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gameplay-main-linux.cpp"; path = "../cocos/gameplay/src/gameplay-main-linux.cpp"; sourceTree = "<group>"; };
@@ -4127,7 +4124,7 @@
 		B665E1171AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandlerTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUDoStopSystemEventHandlerTranslator.h; path = Particle3D/PU/CCPUDoStopSystemEventHandlerTranslator.h; sourceTree = "<group>"; };
 		B665E1181AA80A6500DDB1C5 /* CCPUDynamicAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUDynamicAttribute.cpp; path = Particle3D/PU/CCPUDynamicAttribute.cpp; sourceTree = "<group>"; };
 		B665E1191AA80A6500DDB1C5 /* CCPUDynamicAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUDynamicAttribute.h; path = Particle3D/PU/CCPUDynamicAttribute.h; sourceTree = "<group>"; };
-		B665E11A1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUDynamicAttributeTranslator.cpp; path = Particle3D/PU/CCPUDynamicAttributeTranslator.cpp; sourceTree = "<group>"; };
+		B665E11A1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = CCPUDynamicAttributeTranslator.cpp; path = Particle3D/PU/CCPUDynamicAttributeTranslator.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B665E11B1AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUDynamicAttributeTranslator.h; path = Particle3D/PU/CCPUDynamicAttributeTranslator.h; sourceTree = "<group>"; };
 		B665E11C1AA80A6500DDB1C5 /* CCPUEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUEmitter.cpp; path = Particle3D/PU/CCPUEmitter.cpp; sourceTree = "<group>"; };
 		B665E11D1AA80A6500DDB1C5 /* CCPUEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUEmitter.h; path = Particle3D/PU/CCPUEmitter.h; sourceTree = "<group>"; };
@@ -4247,7 +4244,7 @@
 		B665E18F1AA80A6500DDB1C5 /* CCPUParticleFollowerTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticleFollowerTranslator.h; path = Particle3D/PU/CCPUParticleFollowerTranslator.h; sourceTree = "<group>"; };
 		B665E1901AA80A6500DDB1C5 /* CCPUParticleSystem3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticleSystem3D.cpp; path = Particle3D/PU/CCPUParticleSystem3D.cpp; sourceTree = "<group>"; };
 		B665E1911AA80A6500DDB1C5 /* CCPUParticleSystem3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticleSystem3D.h; path = Particle3D/PU/CCPUParticleSystem3D.h; sourceTree = "<group>"; };
-		B665E1921AA80A6500DDB1C5 /* CCPUParticleSystem3DTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticleSystem3DTranslator.cpp; path = Particle3D/PU/CCPUParticleSystem3DTranslator.cpp; sourceTree = "<group>"; };
+		B665E1921AA80A6500DDB1C5 /* CCPUParticleSystem3DTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = CCPUParticleSystem3DTranslator.cpp; path = Particle3D/PU/CCPUParticleSystem3DTranslator.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B665E1931AA80A6500DDB1C5 /* CCPUParticleSystem3DTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticleSystem3DTranslator.h; path = Particle3D/PU/CCPUParticleSystem3DTranslator.h; sourceTree = "<group>"; };
 		B665E1941AA80A6500DDB1C5 /* CCPUPathFollower.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUPathFollower.cpp; path = Particle3D/PU/CCPUPathFollower.cpp; sourceTree = "<group>"; };
 		B665E1951AA80A6500DDB1C5 /* CCPUPathFollower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUPathFollower.h; path = Particle3D/PU/CCPUPathFollower.h; sourceTree = "<group>"; };
@@ -4293,8 +4290,8 @@
 		B665E1BD1AA80A6500DDB1C5 /* CCPUScriptLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUScriptLexer.h; path = Particle3D/PU/CCPUScriptLexer.h; sourceTree = "<group>"; };
 		B665E1BE1AA80A6500DDB1C5 /* CCPUScriptParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUScriptParser.cpp; path = Particle3D/PU/CCPUScriptParser.cpp; sourceTree = "<group>"; };
 		B665E1BF1AA80A6500DDB1C5 /* CCPUScriptParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUScriptParser.h; path = Particle3D/PU/CCPUScriptParser.h; sourceTree = "<group>"; };
-		B665E1C01AA80A6500DDB1C5 /* CCPUScriptTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUScriptTranslator.cpp; path = Particle3D/PU/CCPUScriptTranslator.cpp; sourceTree = "<group>"; };
-		B665E1C11AA80A6500DDB1C5 /* CCPUScriptTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUScriptTranslator.h; path = Particle3D/PU/CCPUScriptTranslator.h; sourceTree = "<group>"; };
+		B665E1C01AA80A6500DDB1C5 /* CCPUScriptTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = CCPUScriptTranslator.cpp; path = Particle3D/PU/CCPUScriptTranslator.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		B665E1C11AA80A6500DDB1C5 /* CCPUScriptTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CCPUScriptTranslator.h; path = Particle3D/PU/CCPUScriptTranslator.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B665E1C21AA80A6500DDB1C5 /* CCPUSimpleSpline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUSimpleSpline.cpp; path = Particle3D/PU/CCPUSimpleSpline.cpp; sourceTree = "<group>"; };
 		B665E1C31AA80A6500DDB1C5 /* CCPUSimpleSpline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUSimpleSpline.h; path = Particle3D/PU/CCPUSimpleSpline.h; sourceTree = "<group>"; };
 		B665E1C41AA80A6500DDB1C5 /* CCPUSineForceAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUSineForceAffector.cpp; path = Particle3D/PU/CCPUSineForceAffector.cpp; sourceTree = "<group>"; };
@@ -6707,7 +6704,6 @@
 				B2361C5C1AE8ED8800ACF6D6 /* Image.inl */,
 				B2361C5F1AE8ED8800ACF6D6 /* Node.h */,
 				B2361C601AE8ED8800ACF6D6 /* gameplay.dox */,
-				A0BD499E1AF211A20046CCE3 /* CCMath.h */,
 			);
 			name = gameplay;
 			sourceTree = "<group>";
@@ -7125,7 +7121,6 @@
 				B2361C951AE8ED8800ACF6D6 /* DepthStencilTarget.h in Headers */,
 				B665E2901AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h in Headers */,
 				50ABBE891925AB6F00A911A9 /* CCMap.h in Headers */,
-				A0BD499F1AF211A20046CCE3 /* CCMath.h in Headers */,
 				50ABBE8D1925AB6F00A911A9 /* CCNS.h in Headers */,
 				B29A7DFD19EE1B7700872B35 /* IkConstraintData.h in Headers */,
 				50ABBEA51925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
@@ -8235,7 +8230,6 @@
 				15AE1AB919AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
 				15AE1B7319AADA9A00C27E9E /* UIListView.h in Headers */,
 				15AE192A19AAD35100C27E9E /* TriggerMng.h in Headers */,
-				A0BD49A01AF211A20046CCE3 /* CCMath.h in Headers */,
 				5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
 				50ABBE981925AB6F00A911A9 /* CCProtocols.h in Headers */,
 				50CB247A19D9C5A100687767 /* AudioEngine-inl.h in Headers */,

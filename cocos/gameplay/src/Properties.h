@@ -3,7 +3,7 @@
 
 #include "Base.h"
 #include "Matrix.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 #include "Stream.h"
 
 namespace gameplay
@@ -320,17 +320,17 @@ public:
     bool getMatrix(const char* name, Matrix* out) const;
 
     /**
-     * Interpret the value of the given property as a Vector2.
-     * If the property does not exist, out will be set to Vector2(0.0f, 0.0f).
+     * Interpret the value of the given property as acocos2d::Vec2.
+     * If the property does not exist, out will be set tococos2d::Vec2(0.0f, 0.0f).
      * If the property exists but could not be scanned, an error will be logged and out will be set
-     * to Vector2(0.0f, 0.0f).
+     * tococos2d::Vec2(0.0f, 0.0f).
      *
      * @param name The name of the property to interpret, or NULL to return the current property's value.
      * @param out The vector to set to this property's interpreted value.
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getVector2(const char* name, Vector2* out) const;
+    bool getVector2(const char* name,cocos2d::Vec2* out) const;
 
     /**
      * Interpret the value of the given property as a Vector3.
@@ -435,16 +435,16 @@ public:
     void setVariable(const char* name, const char* value);
 
     /**
-     * Attempts to parse the specified string as a Vector2 value.
+     * Attempts to parse the specified string as acocos2d::Vec2 value.
      *
      * On error, false is returned and the output is set to all zero values.
      *
      * @param str The string to parse.
      * @param out The value to populate if successful.
      *
-     * @return True if a valid Vector2 was parsed, false otherwise.
+     * @return True if a validcocos2d::Vec2 was parsed, false otherwise.
      */
-    static bool parseVector2(const char* str, Vector2* out);
+    static bool parseVector2(const char* str,cocos2d::Vec2* out);
 
     /**
      * Attempts to parse the specified string as a Vector3 value.

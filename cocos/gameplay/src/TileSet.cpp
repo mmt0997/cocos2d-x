@@ -40,7 +40,7 @@ TileSet* TileSet::create(const char* imagePath,
     
     TileSet* tileset = new TileSet();
     tileset->_batch = batch;
-    tileset->_tiles = new Vector2[rowCount * columnCount];
+    tileset->_tiles = new cocos2d::Vec2[rowCount * columnCount];
     memset(tileset->_tiles, -1, sizeof(float) * rowCount * columnCount * 2);
     tileset->_tileWidth = tileWidth;
     tileset->_tileHeight = tileHeight;
@@ -133,8 +133,8 @@ TileSet* TileSet::create(Properties* properties)
     {
         if (strcmp(tileProperties->getNamespace(), "tile") == 0)
         {
-            Vector2 cell;
-            Vector2 source;
+           cocos2d::Vec2 cell;
+           cocos2d::Vec2 source;
             if (tileProperties->getVector2("cell", &cell) && tileProperties->getVector2("source", &source) &&
                 (cell.x >= 0 && cell.y >= 0 && cell.x < set->_columnCount && cell.y < set->_rowCount))
             {
@@ -146,7 +146,7 @@ TileSet* TileSet::create(Properties* properties)
     return set;
 }
 
-void TileSet::setTileSource(unsigned int column, unsigned int row, const Vector2& source)
+void TileSet::setTileSource(unsigned int column, unsigned int row,const cocos2d::Vec2& source)
 {
     GP_ASSERT(column < _columnCount);
     GP_ASSERT(row < _rowCount);
@@ -154,7 +154,7 @@ void TileSet::setTileSource(unsigned int column, unsigned int row, const Vector2
     _tiles[row * _columnCount + column] = source;
 }
 
-void TileSet::getTileSource(unsigned int column, unsigned int row, Vector2* source)
+void TileSet::getTileSource(unsigned int column, unsigned int row,cocos2d::Vec2* source)
 {
     GP_ASSERT(column < _columnCount);
     GP_ASSERT(row < _rowCount);
@@ -251,7 +251,7 @@ unsigned int TileSet::draw(bool wireframe)
     {
         for (unsigned int col = 0; col < _columnCount; col++)
         {
-            Vector2 scale = Vector2(_tileWidth, _tileHeight);
+           cocos2d::Vec2 scale =cocos2d::Vec2(_tileWidth, _tileHeight);
             
             // Negative values are skipped to allow blank tiles
             if (_tiles[row * _columnCount + col].x >= 0 &&
@@ -260,7 +260,7 @@ unsigned int TileSet::draw(bool wireframe)
                 Rectangle source = Rectangle(_tiles[row * _columnCount + col].x,
                                              _tiles[row * _columnCount + col].y, _tileWidth, _tileHeight);
                 _batch->draw(position, source, scale, Vector4(_color.x, _color.y, _color.z, _color.w * _opacity),
-                             Vector2(0.5f, 0.5f), 0);
+                            cocos2d::Vec2(0.5f, 0.5f), 0);
             }
             
             position.x += _tileWidth;
@@ -277,9 +277,9 @@ Drawable* TileSet::clone(NodeCloneContext& context)
     TileSet* tilesetClone = new TileSet();
 
     // Clone properties
-    tilesetClone->_tiles = new Vector2[tilesetClone->_rowCount * tilesetClone->_columnCount];
+    tilesetClone->_tiles = new cocos2d::Vec2[tilesetClone->_rowCount * tilesetClone->_columnCount];
     memset(tilesetClone->_tiles, -1, sizeof(float) * tilesetClone->_rowCount * tilesetClone->_columnCount * 2);
-    memcpy(tilesetClone->_tiles, _tiles, sizeof(Vector2) * tilesetClone->_rowCount * tilesetClone->_columnCount);
+    memcpy(tilesetClone->_tiles, _tiles, sizeof(cocos2d::Vec2) * tilesetClone->_rowCount * tilesetClone->_columnCount);
     tilesetClone->_tileWidth = _tileWidth;
     tilesetClone->_tileHeight = _tileHeight;
     tilesetClone->_rowCount = _rowCount;

@@ -123,7 +123,7 @@ void MaterialParameter::setValue(const int* values, unsigned int count)
     _type = MaterialParameter::INT_ARRAY;
 }
 
-void MaterialParameter::setValue(const Vector2& value)
+void MaterialParameter::setValue(const cocos2d::Vec2& value)
 {
     clearValue();
 
@@ -137,7 +137,7 @@ void MaterialParameter::setValue(const Vector2& value)
     _type = MaterialParameter::VECTOR2;
 }
 
-void MaterialParameter::setValue(const Vector2* values, unsigned int count)
+void MaterialParameter::setValue(const cocos2d::Vec2* values, unsigned int count)
 {
     GP_ASSERT(values);
     clearValue();
@@ -311,12 +311,12 @@ void MaterialParameter::setIntArray(const int* values, unsigned int count, bool 
     _type = MaterialParameter::INT_ARRAY;
 }
 
-void MaterialParameter::setVector2(const Vector2& value)
+void MaterialParameter::setVector2(const cocos2d::Vec2& value)
 {
     setValue(value);
 }
 
-void MaterialParameter::setVector2Array(const Vector2* values, unsigned int count, bool copy)
+void MaterialParameter::setVector2Array(const cocos2d::Vec2* values, unsigned int count, bool copy)
 {
     GP_ASSERT(values);
     clearValue();
@@ -483,7 +483,7 @@ void MaterialParameter::bind(Effect* effect)
         effect->setValue(_uniform, _value.intPtrValue, _count);
         break;
     case MaterialParameter::VECTOR2:
-        effect->setValue(_uniform, reinterpret_cast<Vector2*>(_value.floatPtrValue), _count);
+        effect->setValue(_uniform, reinterpret_cast<cocos2d::Vec2*>(_value.floatPtrValue), _count);
         break;
     case MaterialParameter::VECTOR3:
         effect->setValue(_uniform, reinterpret_cast<Vector3*>(_value.floatPtrValue), _count);
@@ -667,7 +667,7 @@ void MaterialParameter::cloneInto(MaterialParameter* materialParameter) const
         break;
     case VECTOR2:
     {
-        Vector2* value = reinterpret_cast<Vector2*>(_value.floatPtrValue);
+        cocos2d::Vec2* value = reinterpret_cast<cocos2d::Vec2*>(_value.floatPtrValue);
         if (_count == 1)
         {
             GP_ASSERT(value);

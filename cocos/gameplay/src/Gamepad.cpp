@@ -265,7 +265,7 @@ unsigned int Gamepad::getJoystickCount() const
     return _joystickCount;
 }
 
-void Gamepad::getJoystickValues(unsigned int joystickId, Vector2* outValue) const
+void Gamepad::getJoystickValues(unsigned int joystickId,cocos2d::Vec2* outValue) const
 {
     if (joystickId >= _joystickCount)
         return;

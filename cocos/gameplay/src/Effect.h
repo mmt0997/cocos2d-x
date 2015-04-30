@@ -2,7 +2,7 @@
 #define EFFECT_H_
 
 #include "Ref.h"
-#include "CCMath.h"
+#include "math/CCMath.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Matrix.h"
@@ -146,7 +146,7 @@ public:
      * @param uniform The uniform to set.
      * @param value The value to set.
      */
-    void setValue(Uniform* uniform, const Vector2& value);
+    void setValue(Uniform* uniform,const cocos2d::Vec2& value);
 
     /**
      * Sets a vector array uniform value.
@@ -155,7 +155,7 @@ public:
      * @param values The array to set.
      * @param count The number of elements in the array.
      */
-    void setValue(Uniform* uniform, const Vector2* values, unsigned int count = 1);
+    void setValue(Uniform* uniform,const cocos2d::Vec2* values, unsigned int count = 1);
 
     /**
      * Sets a vector uniform value.

@@ -366,7 +366,7 @@ void Font::drawText(const char* text, int x, int y, const Vector4& color, unsign
                         if (_cutoffParam == NULL)
                             _cutoffParam = _batch->getMaterial()->getParameter("u_cutoff");
                         // TODO: Fix me so that smaller font are much smoother
-                        _cutoffParam->setVector2(Vector2(1.0, 1.0));
+                        _cutoffParam->setVector2(cocos2d::Vec2(1.0, 1.0));
                     }
                     _batch->draw(xPos + (int)(g.bearingX * scale), yPos, g.width * scale, size, g.uvs[0], g.uvs[1], g.uvs[2], g.uvs[3], color);
                     xPos += floor(g.advance * scale + spacing);
@@ -530,7 +530,7 @@ void Font::drawText(const char* text, const Rectangle& area, const Vector4& colo
                             if (_cutoffParam == NULL)
                                 _cutoffParam = _batch->getMaterial()->getParameter("u_cutoff");
                             // TODO: Fix me so that smaller font are much smoother
-                            _cutoffParam->setVector2(Vector2(1.0, 1.0));
+                            _cutoffParam->setVector2(cocos2d::Vec2(1.0, 1.0));
                         }
                         if (clip != Rectangle(0, 0, 0, 0))
                         {
@@ -708,7 +708,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
 
     const char* token = text;
     std::vector<bool> emptyLines;
-    std::vector<Vector2> lines;
+    std::vector<cocos2d::Vec2> lines;
 
     unsigned int lineWidth = 0;
     int yPos = clip.y + size;
@@ -754,13 +754,13 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
 
                             // Record this line's size.
                             emptyLines.push_back(false);
-                            lines.push_back(Vector2(xPos, lineWidth));
+                            lines.push_back(cocos2d::Vec2(xPos, lineWidth));
                         }
                         else
                         {
                             // Record the existence of an empty line.
                             emptyLines.push_back(true);
-                            lines.push_back(Vector2(FLT_MAX, 0));
+                            lines.push_back(cocos2d::Vec2(FLT_MAX, 0));
                         }
 
                         lineWidth = 0;
@@ -812,7 +812,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
 
                 // Record this line's size.
                 emptyLines.push_back(false);
-                lines.push_back(Vector2(xPos, lineWidth));
+                lines.push_back(cocos2d::Vec2(xPos, lineWidth));
                 lineWidth = 0;
             }
             else
@@ -848,7 +848,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
                     // Record the existence of an empty line.
                     ++emptyLinesCount;
                     emptyLines.push_back(true);
-                    lines.push_back(Vector2(FLT_MAX, 0));
+                    lines.push_back(cocos2d::Vec2(FLT_MAX, 0));
                 }
 
                 token++;
@@ -871,7 +871,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
             }
 
             // Record this line's size.
-            lines.push_back(Vector2(xPos, lineWidth));
+            lines.push_back(cocos2d::Vec2(xPos, lineWidth));
 
             token += tokenLength;
         }
@@ -893,7 +893,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
             xPos += hWhitespace;
         }
 
-        lines.push_back(Vector2(xPos, lineWidth));
+        lines.push_back(cocos2d::Vec2(xPos, lineWidth));
     }
 
     int x = INT_MAX;
@@ -1209,19 +1209,19 @@ void Font::setCharacterSpacing(float spacing)
     _spacing = spacing;
 }
 
-int Font::getIndexAtLocation(const char* text, const Rectangle& area, unsigned int size, const Vector2& inLocation, Vector2* outLocation,
+int Font::getIndexAtLocation(const char* text, const Rectangle& area, unsigned int size,const cocos2d::Vec2& inLocation,cocos2d::Vec2* outLocation,
                                       Justify justify, bool wrap, bool rightToLeft)
 {
     return getIndexOrLocation(text, area, size, inLocation, outLocation, -1, justify, wrap, rightToLeft);
 }
 
-void Font::getLocationAtIndex(const char* text, const Rectangle& clip, unsigned int size, Vector2* outLocation, const unsigned int destIndex,
+void Font::getLocationAtIndex(const char* text, const Rectangle& clip, unsigned int size,cocos2d::Vec2* outLocation, const unsigned int destIndex,
                               Justify justify, bool wrap, bool rightToLeft)
 {
     getIndexOrLocation(text, clip, size, *outLocation, outLocation, (const int)destIndex, justify, wrap, rightToLeft);
 }
 
-int Font::getIndexOrLocation(const char* text, const Rectangle& area, unsigned int size, const Vector2& inLocation, Vector2* outLocation,
+int Font::getIndexOrLocation(const char* text, const Rectangle& area, unsigned int size,const cocos2d::Vec2& inLocation,cocos2d::Vec2* outLocation,
                                       const int destIndex, Justify justify, bool wrap, bool rightToLeft)
 {
     GP_ASSERT(_size);
@@ -1529,7 +1529,7 @@ unsigned int Font::getReversedTokenLength(const char* token, const char* bufStar
 
 int Font::handleDelimiters(const char** token, const unsigned int size, const int iteration, const int areaX, int* xPos, int* yPos, unsigned int* lineLength,
                           std::vector<int>::const_iterator* xPositionsIt, std::vector<int>::const_iterator xPositionsEnd, unsigned int* charIndex,
-                          const Vector2* stopAtPosition, const int currentIndex, const int destIndex)
+                         const cocos2d::Vec2* stopAtPosition, const int currentIndex, const int destIndex)
 {
     GP_ASSERT(token);
     GP_ASSERT(*token);

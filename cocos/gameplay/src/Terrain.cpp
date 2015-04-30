@@ -110,7 +110,7 @@ Terrain* Terrain::create(const char* path, Properties* properties)
         else if (ext == ".RAW" || ext == ".R16")
         {
             // Require additional properties to be specified for RAW files
-            Vector2 imageSize;
+           cocos2d::Vec2 imageSize;
             if (!pHeightmap->getVector2("size", &imageSize))
             {
                 GP_WARN("Invalid or missing 'size' attribute in heightmap defintion of terrain definition: %s", path);
@@ -315,7 +315,7 @@ Terrain* Terrain::create(HeightField* heightfield, const Vector3& scale,
                 const char* textureMapPtr = NULL;
                 std::string blendMap;
                 const char* blendMapPtr = NULL;
-                Vector2 textureRepeat;
+               cocos2d::Vec2 textureRepeat;
                 int blendChannel = 0;
                 int row = -1, column = -1;
                 Vector4 temp;
@@ -424,7 +424,7 @@ const Matrix& Terrain::getInverseWorldMatrix() const
     return _inverseWorldMatrix;
 }
 
-bool Terrain::setLayer(int index, const char* texturePath, const Vector2& textureRepeat, const char* blendPath, int blendChannel, int row, int column)
+bool Terrain::setLayer(int index, const char* texturePath,const cocos2d::Vec2& textureRepeat, const char* blendPath, int blendChannel, int row, int column)
 {
     if (!texturePath)
         return false;

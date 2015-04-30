@@ -6,7 +6,7 @@ namespace gameplay
 {
 
 Sprite::Sprite() : Drawable(),
-    _width(0), _height(0), _offset(OFFSET_BOTTOM_LEFT), _anchor(Vector2(0.5f, 0.5f)), _flipFlags(FLIP_NONE),
+    _width(0), _height(0), _offset(OFFSET_BOTTOM_LEFT), _anchor(cocos2d::Vec2(0.5f, 0.5f)), _flipFlags(FLIP_NONE),
     _frames(NULL), _frameCount(1), _frameStride(0), _framePadding(1), _frameIndex(0),
     _opacity(1.0f), _color(Vector4::one()), _blendMode(BLEND_ALPHA), _batch(NULL)
 {
@@ -313,9 +313,9 @@ Sprite* Sprite::create(Properties* properties)
 
     // Get anchor
     Vector4 vect;
-    if (properties->getVector2("anchor", (Vector2*)&vect))
+    if (properties->getVector2("anchor", (cocos2d::Vec2*)&vect))
     {
-        sprite->setAnchor(*((Vector2*)&vect));
+        sprite->setAnchor(*((cocos2d::Vec2*)&vect));
     }
 
     // Get color
@@ -388,12 +388,12 @@ Sprite::Offset Sprite::getOffset() const
     return _offset;
 }
     
-void Sprite::setAnchor(const Vector2& anchor)
+void Sprite::setAnchor(const cocos2d::Vec2& anchor)
 {
     _anchor = anchor;
 }
 
-const Vector2& Sprite::getAnchor() const
+const cocos2d::Vec2& Sprite::getAnchor() const
 {
     return _anchor;
 }
@@ -609,7 +609,7 @@ unsigned int Sprite::draw(bool wireframe)
     
     // Apply node scale and rotation
     float rotationAngle = 0.0f;
-    Vector2 scale = Vector2(_width, _height);
+   cocos2d::Vec2 scale =cocos2d::Vec2(_width, _height);
     if (_node)
     {
         // Apply node rotation

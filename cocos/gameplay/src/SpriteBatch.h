@@ -121,7 +121,7 @@ public:
      * @param scale The X and Y scale.
      * @param color The color to tint the sprite. Use white for no tint.
      */
-    void draw(const Vector3& dst, const Rectangle& src, const Vector2& scale, const Vector4& color = Vector4::one());
+    void draw(const Vector3& dst, const Rectangle& src,const cocos2d::Vec2& scale, const Vector4& color = Vector4::one());
 
     /**
      * Draws a single sprite, rotated around rotationPoint by rotationAngle.
@@ -131,11 +131,11 @@ public:
      * @param scale The X and Y scale.
      * @param color The color to tint the sprite. Use white for no tint.
      * @param rotationPoint The point to rotate around, relative to dst's x and y values.
-     *                      (e.g. Use Vector2(0.5f, 0.5f) to rotate around the quad's center.)
+     *                      (e.g. Usecocos2d::Vec2(0.5f, 0.5f) to rotate around the quad's center.)
      * @param rotationAngle The rotation angle in radians.
      */
-    void draw(const Vector3& dst, const Rectangle& src, const Vector2& scale, const Vector4& color,
-              const Vector2& rotationPoint, float rotationAngle);
+    void draw(const Vector3& dst, const Rectangle& src,const cocos2d::Vec2& scale, const Vector4& color,
+             const cocos2d::Vec2& rotationPoint, float rotationAngle);
 
     /**
      * Draws a single sprite, rotated around rotationPoint by rotationAngle.
@@ -149,12 +149,12 @@ public:
      * @param v2 Texture coordinate.
      * @param color The color to tint the sprite. Use white for no tint.
      * @param rotationPoint The point to rotate around, relative to dst's x and y values.
-     *                      (e.g. Use Vector2(0.5f, 0.5f) to rotate around the quad's center.)
+     *                      (e.g. Usecocos2d::Vec2(0.5f, 0.5f) to rotate around the quad's center.)
      * @param rotationAngle The rotation angle in radians.
      * @param positionIsCenter Specified whether the given destination is to be the center of the sprite or not (if not, it is treated as the bottom-left).
      */
     void draw(const Vector3& dst, float width, float height, float u1, float v1, float u2, float v2, const Vector4& color,
-              const Vector2& rotationPoint, float rotationAngle, bool positionIsCenter = false);
+             const cocos2d::Vec2& rotationPoint, float rotationAngle, bool positionIsCenter = false);
     
     /**
      * Draws a single sprite, rotated around rotationPoint by rotationAngle.
@@ -170,12 +170,12 @@ public:
      * @param v2 Texture coordinate.
      * @param color The color to tint the sprite. Use white for no tint.
      * @param rotationPoint The point to rotate around, relative to dst's x and y values.
-     *                      (e.g. Use Vector2(0.5f, 0.5f) to rotate around the quad's center.)
+     *                      (e.g. Usecocos2d::Vec2(0.5f, 0.5f) to rotate around the quad's center.)
      * @param rotationAngle The rotation angle in radians.
      * @param positionIsCenter Specified whether the given destination is to be the center of the sprite or not (if not, it is treated as the bottom-left).
      */
     void draw(float x, float y, float z, float width, float height, float u1, float v1, float u2, float v2, const Vector4& color,
-              const Vector2& rotationPoint, float rotationAngle, bool positionIsCenter = false);
+             const cocos2d::Vec2& rotationPoint, float rotationAngle, bool positionIsCenter = false);
 
     /**
      * Draws a single sprite, rotated about the implied up vector.
@@ -191,11 +191,11 @@ public:
      * @param v2 Texture coordinate.
      * @param color The color to tint the sprite. Use white for no tint.
      * @param rotationPoint The point to rotate around, relative to dst's x and y values.
-     *                      (e.g. Use Vector2(0.5f, 0.5f) to rotate around the quad's center.)
+     *                      (e.g. Usecocos2d::Vec2(0.5f, 0.5f) to rotate around the quad's center.)
      * @param rotationAngle The rotation angle in radians.
      */
     void draw(const Vector3& position, const Vector3& right, const Vector3& forward, float width, float height, 
-              float u1, float v1, float u2, float v2, const Vector4& color, const Vector2& rotationPoint, float rotationAngle);
+              float u1, float v1, float u2, float v2, const Vector4& color,const cocos2d::Vec2& rotationPoint, float rotationAngle);
 
     /**
      * Draws a single sprite.

@@ -88,7 +88,7 @@ private:
         int row;
         int column;
         int textureIndex;
-        Vector2 textureRepeat;
+       cocos2d::Vec2 textureRepeat;
         int blendIndex;
         int blendChannel;
     };
@@ -116,7 +116,7 @@ private:
                 float xOffset, float zOffset, unsigned int step, float verticalSkirtSize);
 
 
-    bool setLayer(int index, const char* texturePath, const Vector2& textureRepeat, const char* blendPath, int blendChannel);
+    bool setLayer(int index, const char* texturePath,const cocos2d::Vec2& textureRepeat, const char* blendPath, int blendChannel);
 
     void deleteLayer(Layer* layer);
 

@@ -426,7 +426,7 @@ int TerrainPatch::addSampler(const char* path)
     return (int)(_samplers.size()-1);
 }
 
-bool TerrainPatch::setLayer(int index, const char* texturePath, const Vector2& textureRepeat, const char* blendPath, int blendChannel)
+bool TerrainPatch::setLayer(int index, const char* texturePath,const cocos2d::Vec2& textureRepeat, const char* blendPath, int blendChannel)
 {
     // If there is an existing layer at this index, delete it
     for (std::set<Layer*, LayerCompare>::iterator itr = _layers.begin(); itr != _layers.end(); ++itr)
@@ -639,8 +639,8 @@ unsigned int TerrainPatch::computeLOD(Camera* camera, const BoundingBox& worldBo
     Game* game = Game::getInstance();
     Rectangle vp(0, 0, game->getWidth(), game->getHeight());
     Vector3 corners[8];
-    Vector2 min(FLT_MAX, FLT_MAX);
-    Vector2 max(-FLT_MAX, -FLT_MAX);
+   cocos2d::Vec2 min(FLT_MAX, FLT_MAX);
+   cocos2d::Vec2 max(-FLT_MAX, -FLT_MAX);
     worldBounds.getCorners(corners);
     for (unsigned int i = 0; i < 8; ++i)
     {

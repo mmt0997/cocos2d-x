@@ -1,7 +1,7 @@
 #ifndef GAMEPAD_H_
 #define GAMEPAD_H_
 
-#include "CCMath.h"
+#include "math/CCMath.h"
 
 namespace gameplay
 {
@@ -82,12 +82,12 @@ public:
     unsigned int getJoystickCount() const;
 
     /**
-     * Returns the specified joystick's value as a Vector2.
+     * Returns the specified joystick's value as acocos2d::Vec2.
      *
      * @param joystickId The index of the joystick to get the value for.
      * @param outValues The current x-axis and y-axis values of the joystick.
      */
-    void getJoystickValues(unsigned int joystickId, Vector2* outValues) const;
+    void getJoystickValues(unsigned int joystickId,cocos2d::Vec2* outValues) const;
 
     /**
      * Returns the number of analog triggers (as opposed to digital shoulder buttons)
@@ -207,7 +207,7 @@ private:
     std::string _name;
     Button* _uiButtons[20];
     unsigned int _buttons;
-    Vector2 _joysticks[2];
+   cocos2d::Vec2 _joysticks[2];
     float _triggers[2];
 };
 

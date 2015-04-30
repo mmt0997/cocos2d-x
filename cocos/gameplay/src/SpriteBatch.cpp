@@ -161,7 +161,7 @@ void SpriteBatch::draw(const Rectangle& dst, const Rectangle& src, const Vector4
     draw(dst.x, dst.y, dst.width, dst.height, u1, v1, u2, v2, color);
 }
 
-void SpriteBatch::draw(const Vector3& dst, const Rectangle& src, const Vector2& scale, const Vector4& color)
+void SpriteBatch::draw(const Vector3& dst, const Rectangle& src,const cocos2d::Vec2& scale, const Vector4& color)
 {
     // Calculate uvs.
     float u1 = _textureWidthRatio * src.x;
@@ -172,8 +172,8 @@ void SpriteBatch::draw(const Vector3& dst, const Rectangle& src, const Vector2& 
     draw(dst.x, dst.y, dst.z, scale.x, scale.y, u1, v1, u2, v2, color);
 }
 
-void SpriteBatch::draw(const Vector3& dst, const Rectangle& src, const Vector2& scale, const Vector4& color,
-                       const Vector2& rotationPoint, float rotationAngle)
+void SpriteBatch::draw(const Vector3& dst, const Rectangle& src,const cocos2d::Vec2& scale, const Vector4& color,
+                      const cocos2d::Vec2& rotationPoint, float rotationAngle)
 {
     // Calculate uvs.
     float u1 = _textureWidthRatio * src.x;
@@ -185,13 +185,13 @@ void SpriteBatch::draw(const Vector3& dst, const Rectangle& src, const Vector2& 
 }
 
 void SpriteBatch::draw(const Vector3& dst, float width, float height, float u1, float v1, float u2, float v2, const Vector4& color,
-                       const Vector2& rotationPoint, float rotationAngle, bool positionIsCenter)
+                      const cocos2d::Vec2& rotationPoint, float rotationAngle, bool positionIsCenter)
 {
     draw(dst.x, dst.y, dst.z, width, height, u1, v1, u2, v2, color, rotationPoint, rotationAngle, positionIsCenter);
 }
 
 void SpriteBatch::draw(float x, float y, float z, float width, float height, float u1, float v1, float u2, float v2, const Vector4& color,
-          const Vector2& rotationPoint, float rotationAngle, bool positionIsCenter)
+         const cocos2d::Vec2& rotationPoint, float rotationAngle, bool positionIsCenter)
 {
     // Treat the given position as the center if the user specified it as such.
     if (positionIsCenter)
@@ -204,15 +204,15 @@ void SpriteBatch::draw(float x, float y, float z, float width, float height, flo
     float x2 = x + width;
     float y2 = y + height;
     
-    Vector2 upLeft(x, y);
-    Vector2 upRight(x2, y);
-    Vector2 downLeft(x, y2);
-    Vector2 downRight(x2, y2);
+   cocos2d::Vec2 upLeft(x, y);
+   cocos2d::Vec2 upRight(x2, y);
+   cocos2d::Vec2 downLeft(x, y2);
+   cocos2d::Vec2 downRight(x2, y2);
 
     // Rotate points around rotationAxis by rotationAngle.
     if (rotationAngle != 0)
     {
-        Vector2 pivotPoint(rotationPoint);
+       cocos2d::Vec2 pivotPoint(rotationPoint);
         pivotPoint.x *= width;
         pivotPoint.y *= height;
         pivotPoint.x += x;
@@ -236,7 +236,7 @@ void SpriteBatch::draw(float x, float y, float z, float width, float height, flo
 }
 
 void SpriteBatch::draw(const Vector3& position, const Vector3& right, const Vector3& forward, float width, float height,
-    float u1, float v1, float u2, float v2, const Vector4& color, const Vector2& rotationPoint, float rotationAngle)
+    float u1, float v1, float u2, float v2, const Vector4& color,const cocos2d::Vec2& rotationPoint, float rotationAngle)
 {
     // Calculate the vertex positions.
     Vector3 tRight(right);
