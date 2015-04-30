@@ -3,7 +3,6 @@
 
 #include "Base.h"
 #include "Mesh.h"
-#include "PhysicsRigidBody.h"
 #include "Properties.h"
 #include "Scene.h"
 
@@ -113,19 +112,11 @@ private:
 
     void createAnimations();
 
-    PhysicsConstraint* loadGenericConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB);
-
-    PhysicsConstraint* loadHingeConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB);
-
     Scene* loadMainSceneData(const Properties* sceneProperties);
 
     void loadPhysics(Properties* physics);
 
     void loadReferencedFiles();
-
-    PhysicsConstraint* loadSocketConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB);
-
-    PhysicsConstraint* loadSpringConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB);
 
     std::map<std::string, Properties*> _propertiesFromFile; // Holds the properties object for a given file.
     std::map<std::string, Properties*> _properties;         // Holds the properties object for a given URL.

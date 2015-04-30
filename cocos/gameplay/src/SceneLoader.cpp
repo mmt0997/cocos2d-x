@@ -368,7 +368,6 @@ void SceneLoader::applyNodeProperty(SceneNode& sceneNode, Node* node, const Prop
 
                             // Create collision object with new rigidBodyModel (aka collisionMesh) set.
                             node->setDrawable(dynamic_cast<Model*>(modelNode->getDrawable()));
-                            node->setCollisionObject(p);
 
                             // Restore original model.
                             node->setDrawable(model);
@@ -379,8 +378,6 @@ void SceneLoader::applyNodeProperty(SceneNode& sceneNode, Node* node, const Prop
                         }
                     }
                 }
-                else
-                    node->setCollisionObject(p);
             }
             break;
         }
@@ -885,110 +882,6 @@ void SceneLoader::createAnimations()
     }
 }
 
-PhysicsConstraint* SceneLoader::loadGenericConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB)
-{
-    GP_ASSERT(rbA);
-    GP_ASSERT(constraint);
-    GP_ASSERT(Game::getInstance()->getPhysicsController());
-    PhysicsGenericConstraint* physicsConstraint = NULL;
-
-    // Create the constraint from the specified properties.
-    Quaternion roA;
-    Vector3 toA;
-    bool offsetSpecified = constraint->getQuaternionFromAxisAngle("rotationOffsetA", &roA);
-    offsetSpecified |= constraint->getVector3("translationOffsetA", &toA);
-
-    if (offsetSpecified)
-    {
-        if (rbB)
-        {
-            Quaternion roB;
-            Vector3 toB;
-            constraint->getQuaternionFromAxisAngle("rotationOffsetB", &roB);
-            constraint->getVector3("translationOffsetB", &toB);
-
-            physicsConstraint = Game::getInstance()->getPhysicsController()->createGenericConstraint(rbA, roA, toB, rbB, roB, toB);
-        }
-        else
-        {
-            physicsConstraint = Game::getInstance()->getPhysicsController()->createGenericConstraint(rbA, roA, toA);
-        }
-    }
-    else
-    {
-        physicsConstraint = Game::getInstance()->getPhysicsController()->createGenericConstraint(rbA, rbB);
-    }
-    GP_ASSERT(physicsConstraint);
-
-    // Set the optional parameters that were specified.
-    Vector3 v;
-    if (constraint->getVector3("angularLowerLimit", &v))
-        physicsConstraint->setAngularLowerLimit(v);
-    if (constraint->getVector3("angularUpperLimit", &v))
-        physicsConstraint->setAngularUpperLimit(v);
-    if (constraint->getVector3("linearLowerLimit", &v))
-        physicsConstraint->setLinearLowerLimit(v);
-    if (constraint->getVector3("linearUpperLimit", &v))
-        physicsConstraint->setLinearUpperLimit(v);
-
-    return physicsConstraint;
-}
-
-PhysicsConstraint* SceneLoader::loadHingeConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB)
-{
-    GP_ASSERT(rbA);
-    GP_ASSERT(constraint);
-    GP_ASSERT(Game::getInstance()->getPhysicsController());
-    PhysicsHingeConstraint* physicsConstraint = NULL;
-
-    // Create the constraint from the specified properties.
-    Quaternion roA;
-    Vector3 toA;
-    constraint->getQuaternionFromAxisAngle("rotationOffsetA", &roA);
-    constraint->getVector3("translationOffsetA", &toA);
-    if (rbB)
-    {
-        Quaternion roB;
-        Vector3 toB;
-        constraint->getQuaternionFromAxisAngle("rotationOffsetB", &roB);
-        constraint->getVector3("translationOffsetB", &toB);
-
-        physicsConstraint = Game::getInstance()->getPhysicsController()->createHingeConstraint(rbA, roA, toB, rbB, roB, toB);
-    }
-    else
-    {
-        physicsConstraint = Game::getInstance()->getPhysicsController()->createHingeConstraint(rbA, roA, toA);
-    }
-
-    // Load the hinge angle limits (lower and upper) and the hinge bounciness (if specified).
-    const char* limitsString = constraint->getString("limits");
-    if (limitsString)
-    {
-        float lowerLimit, upperLimit;
-        int scanned;
-        scanned = sscanf(limitsString, "%f,%f", &lowerLimit, &upperLimit);
-        if (scanned == 2)
-        {
-            physicsConstraint->setLimits(MATH_DEG_TO_RAD(lowerLimit), MATH_DEG_TO_RAD(upperLimit));
-        }
-        else
-        {
-            float bounciness;
-            scanned = sscanf(limitsString, "%f,%f,%f", &lowerLimit, &upperLimit, &bounciness);
-            if (scanned == 3)
-            {
-                physicsConstraint->setLimits(MATH_DEG_TO_RAD(lowerLimit), MATH_DEG_TO_RAD(upperLimit), bounciness);
-            }
-            else
-            {
-                GP_ERROR("Failed to parse 'limits' attribute for hinge constraint '%s'.", constraint->getId());
-            }
-        }
-    }
-
-    return physicsConstraint;
-}
-
 Scene* SceneLoader::loadMainSceneData(const Properties* sceneProperties)
 {
     GP_ASSERT(sceneProperties);
@@ -1016,110 +909,6 @@ Scene* SceneLoader::loadMainSceneData(const Properties* sceneProperties)
 
 void SceneLoader::loadPhysics(Properties* physics)
 {
-    GP_ASSERT(physics);
-    GP_ASSERT(Game::getInstance()->getPhysicsController());
-
-    // Go through the supported global physics properties and apply them.
-    Vector3 gravity;
-    if (physics->getVector3("gravity", &gravity))
-        Game::getInstance()->getPhysicsController()->setGravity(gravity);
-
-    Properties* constraint;
-    const char* name;
-    while ((constraint = physics->getNextNamespace()) != NULL)
-    {
-        if (strcmp(constraint->getNamespace(), "constraint") == 0)
-        {
-            // Get the constraint type.
-            std::string type = constraint->getString("type");
-
-            // Attempt to load the first rigid body. If the first rigid body cannot
-            // be loaded or found, then continue to the next constraint (error).
-            name = constraint->getString("rigidBodyA");
-            if (!name)
-            {
-                GP_ERROR("Missing property 'rigidBodyA' for constraint '%s'.", constraint->getId());
-                continue;
-            }
-            Node* rbANode = _scene->findNode(name);
-            if (!rbANode)
-            {
-                GP_ERROR("Node '%s' to be used as 'rigidBodyA' for constraint '%s' cannot be found.", name, constraint->getId());
-                continue;
-            }
-            if (!rbANode->getCollisionObject() || rbANode->getCollisionObject()->getType() != PhysicsCollisionObject::RIGID_BODY)
-            {
-                GP_ERROR("Node '%s' to be used as 'rigidBodyA' does not have a rigid body.", name);
-                continue;
-            }
-            PhysicsRigidBody* rbA = static_cast<PhysicsRigidBody*>(rbANode->getCollisionObject());
-
-            // Attempt to load the second rigid body. If the second rigid body is not
-            // specified, that is usually okay (only spring constraints require both and
-            // we check that below), but if the second rigid body is specified and it doesn't
-            // load properly, then continue to the next constraint (error).
-            name = constraint->getString("rigidBodyB");
-            PhysicsRigidBody* rbB = NULL;
-            if (name)
-            {
-                Node* rbBNode = _scene->findNode(name);
-                if (!rbBNode)
-                {
-                    GP_ERROR("Node '%s' to be used as 'rigidBodyB' for constraint '%s' cannot be found.", name, constraint->getId());
-                    continue;
-                }
-                if (!rbBNode->getCollisionObject() || rbBNode->getCollisionObject()->getType() != PhysicsCollisionObject::RIGID_BODY)
-                {
-                    GP_ERROR("Node '%s' to be used as 'rigidBodyB' does not have a rigid body.", name);
-                    continue;
-                }
-                rbB = static_cast<PhysicsRigidBody*>(rbBNode->getCollisionObject());
-            }
-
-            PhysicsConstraint* physicsConstraint = NULL;
-
-            // Load the constraint based on its type.
-            if (type == "FIXED")
-            {
-                physicsConstraint = Game::getInstance()->getPhysicsController()->createFixedConstraint(rbA, rbB);
-            }
-            else if (type == "GENERIC")
-            {
-                physicsConstraint = loadGenericConstraint(constraint, rbA, rbB);
-            }
-            else if (type == "HINGE")
-            {
-                physicsConstraint = loadHingeConstraint(constraint, rbA, rbB);
-            }
-            else if (type == "SOCKET")
-            {
-                physicsConstraint = loadSocketConstraint(constraint, rbA, rbB);
-            }
-            else if (type == "SPRING")
-            {
-                physicsConstraint = loadSpringConstraint(constraint, rbA, rbB);
-            }
-            else
-            {
-                GP_ERROR("Unsupported physics constraint type '%s'.", type.c_str());
-            }
-            
-            // If the constraint failed to load, continue on to the next one.
-            if (!physicsConstraint)
-            {
-                GP_ERROR("Failed to create physics constraint.");
-                continue;
-            }
-
-            // If the breaking impulse was specified, apply it to the constraint.
-            if (constraint->exists("breakingImpulse"))
-                physicsConstraint->setBreakingImpulse(constraint->getFloat("breakingImpulse"));
-        }
-        else
-        {
-            GP_ERROR("Unsupported 'physics' child namespace '%s'.", physics->getNamespace());
-        }
-    }
 }
 
 void SceneLoader::loadReferencedFiles()
@@ -1163,108 +952,6 @@ void SceneLoader::loadReferencedFiles()
             iter->second = p;
         }
     }
-}
-
-PhysicsConstraint* SceneLoader::loadSocketConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB)
-{
-    GP_ASSERT(rbA);
-    GP_ASSERT(constraint);
-    GP_ASSERT(Game::getInstance()->getPhysicsController());
-
-    PhysicsSocketConstraint* physicsConstraint = NULL;
-    Vector3 toA;
-    bool offsetSpecified = constraint->getVector3("translationOffsetA", &toA);
-
-    if (offsetSpecified)
-    {
-        if (rbB)
-        {
-            Vector3 toB;
-            constraint->getVector3("translationOffsetB", &toB);
-
-            physicsConstraint = Game::getInstance()->getPhysicsController()->createSocketConstraint(rbA, toA, rbB, toB);
-        }
-        else
-        {
-            physicsConstraint = Game::getInstance()->getPhysicsController()->createSocketConstraint(rbA, toA);
-        }
-    }
-    else
-    {
-        physicsConstraint = Game::getInstance()->getPhysicsController()->createSocketConstraint(rbA, rbB);
-    }
-
-    return physicsConstraint;
-}
-
-PhysicsConstraint* SceneLoader::loadSpringConstraint(const Properties* constraint, PhysicsRigidBody* rbA, PhysicsRigidBody* rbB)
-{
-    GP_ASSERT(rbA);
-    GP_ASSERT(constraint);
-    GP_ASSERT(Game::getInstance()->getPhysicsController());
-
-    if (!rbB)
-    {
-        GP_ERROR("Spring constraints require two rigid bodies.");
-        return NULL;
-    }
-
-    PhysicsSpringConstraint* physicsConstraint = NULL;
-
-    // Create the constraint from the specified properties.
-    Quaternion roA, roB;
-    Vector3 toA, toB;
-    bool offsetsSpecified = constraint->getQuaternionFromAxisAngle("rotationOffsetA", &roA);
-    offsetsSpecified |= constraint->getVector3("translationOffsetA", &toA);
-    offsetsSpecified |= constraint->getQuaternionFromAxisAngle("rotationOffsetB", &roB);
-    offsetsSpecified |= constraint->getVector3("translationOffsetB", &toB);
-
-    if (offsetsSpecified)
-    {
-        physicsConstraint = Game::getInstance()->getPhysicsController()->createSpringConstraint(rbA, roA, toB, rbB, roB, toB);
-    }
-    else
-    {
-        physicsConstraint = Game::getInstance()->getPhysicsController()->createSpringConstraint(rbA, rbB);
-    }
-    GP_ASSERT(physicsConstraint);
-
-    // Set the optional parameters that were specified.
-    Vector3 v;
-    if (constraint->getVector3("angularLowerLimit", &v))
-        physicsConstraint->setAngularLowerLimit(v);
-    if (constraint->getVector3("angularUpperLimit", &v))
-        physicsConstraint->setAngularUpperLimit(v);
-    if (constraint->getVector3("linearLowerLimit", &v))
-        physicsConstraint->setLinearLowerLimit(v);
-    if (constraint->getVector3("linearUpperLimit", &v))
-        physicsConstraint->setLinearUpperLimit(v);
-    if (constraint->getString("angularDampingX"))
-        physicsConstraint->setAngularDampingX(constraint->getFloat("angularDampingX"));
-    if (constraint->getString("angularDampingY"))
-        physicsConstraint->setAngularDampingY(constraint->getFloat("angularDampingY"));
-    if (constraint->getString("angularDampingZ"))
-        physicsConstraint->setAngularDampingZ(constraint->getFloat("angularDampingZ"));
-    if (constraint->getString("angularStrengthX"))
-        physicsConstraint->setAngularStrengthX(constraint->getFloat("angularStrengthX"));
-    if (constraint->getString("angularStrengthY"))
-        physicsConstraint->setAngularStrengthY(constraint->getFloat("angularStrengthY"));
-    if (constraint->getString("angularStrengthZ"))
-        physicsConstraint->setAngularStrengthZ(constraint->getFloat("angularStrengthZ"));
-    if (constraint->getString("linearDampingX"))
-        physicsConstraint->setLinearDampingX(constraint->getFloat("linearDampingX"));
-    if (constraint->getString("linearDampingY"))
-        physicsConstraint->setLinearDampingY(constraint->getFloat("linearDampingY"));
-    if (constraint->getString("linearDampingZ"))
-        physicsConstraint->setLinearDampingZ(constraint->getFloat("linearDampingZ"));
-    if (constraint->getString("linearStrengthX"))
-        physicsConstraint->setLinearStrengthX(constraint->getFloat("linearStrengthX"));
-    if (constraint->getString("linearStrengthY"))
-        physicsConstraint->setLinearStrengthY(constraint->getFloat("linearStrengthY"));
-    if (constraint->getString("linearStrengthZ"))
-        physicsConstraint->setLinearStrengthZ(constraint->getFloat("linearStrengthZ"));
-
-    return physicsConstraint;
 }
 
 void splitURL(const std::string& url, std::string* file, std::string* id)

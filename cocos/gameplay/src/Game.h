@@ -8,7 +8,6 @@
 #include "Gamepad.h"
 #include "AudioController.h"
 #include "AnimationController.h"
-#include "PhysicsController.h"
 #include "AudioListener.h"
 #include "Rectangle.h"
 #include "Vector4.h"
@@ -243,14 +242,6 @@ public:
      * @return The animation controller for this game.
      */
     inline AnimationController* getAnimationController() const;
-
-    /**
-     * Gets the physics controller for managing control of physics
-     * associated with the game.
-     * 
-     * @return The physics controller for this game.
-     */
-    inline PhysicsController* getPhysicsController() const;
 
     /**
      * Gets the script controller for managing control of Lua scripts
@@ -751,7 +742,6 @@ private:
     Properties* _properties;                    // Game configuration properties object.
     AnimationController* _animationController;  // Controls the scheduling and running of animations.
     AudioController* _audioController;          // Controls audio sources that are playing in the game.
-    PhysicsController* _physicsController;      // Controls the simulation of a physics scene and entities.
     AudioListener* _audioListener;              // The audio listener in 3D space.
     std::priority_queue<TimeEvent, std::vector<TimeEvent>, std::less<TimeEvent> >* _timeEvents;     // Contains the scheduled time events.
     ScriptController* _scriptController;            // Controls the scripting engine.

@@ -3,11 +3,6 @@
 #include "AudioSource.h"
 #include "Scene.h"
 #include "Joint.h"
-#include "PhysicsRigidBody.h"
-#include "PhysicsVehicle.h"
-#include "PhysicsVehicleWheel.h"
-#include "PhysicsGhostObject.h"
-#include "PhysicsCharacter.h"
 #include "Terrain.h"
 #include "Game.h"
 #include "Drawable.h"
@@ -24,7 +19,7 @@ namespace gameplay
 
 Node::Node(const char* id)
     : _scene(NULL), _firstChild(NULL), _nextSibling(NULL), _prevSibling(NULL), _parent(NULL), _childCount(0), _enabled(true), _tags(NULL),
-    _drawable(NULL), _camera(NULL), _light(NULL), _audioSource(NULL), _collisionObject(NULL), _agent(NULL), _userObject(NULL),
+    _drawable(NULL), _camera(NULL), _light(NULL), _audioSource(NULL), _agent(NULL), _userObject(NULL),
       _dirtyBits(NODE_DIRTY_ALL)
 {
     GP_REGISTER_SCRIPT_EVENTS();
@@ -46,7 +41,6 @@ Node::~Node()
     SAFE_RELEASE(_camera);
     SAFE_RELEASE(_light);
     SAFE_RELEASE(_audioSource);
-    SAFE_DELETE(_collisionObject);
     SAFE_RELEASE(_userObject);
     SAFE_DELETE(_tags);
 }
@@ -365,10 +359,6 @@ void Node::setEnabled(bool enabled)
 {
     if (_enabled != enabled)
     {
-        if (_collisionObject)
-        {
-            _collisionObject->setEnabled(enabled);
-        }
         _enabled = enabled;
     }
 }
@@ -409,7 +399,7 @@ void Node::update(float elapsedTime)
 
 bool Node::isStatic() const
 {
-    return (_collisionObject && _collisionObject->isStatic());
+    return false;
 }
 
 const Matrix& Node::getWorldMatrix() const
@@ -425,7 +415,7 @@ const Matrix& Node::getWorldMatrix() const
             // If we have a parent, multiply our parent world transform by our local
             // transform to obtain our final resolved world transform.
             Node* parent = getParent();
-            if (parent && (!_collisionObject || _collisionObject->isKinematic()))
+            if (parent)
             {
                 Matrix::multiply(parent->getWorldMatrix(), getMatrix(), &_world);
             }
@@ -1015,136 +1005,6 @@ void Node::setAudioSource(AudioSource* audio)
         _audioSource->addRef();
         _audioSource->setNode(this);
     }
-}
-
-PhysicsCollisionObject* Node::getCollisionObject() const
-{
-    return _collisionObject;
-}
-
-PhysicsCollisionObject* Node::setCollisionObject(PhysicsCollisionObject::Type type, const PhysicsCollisionShape::Definition& shape, PhysicsRigidBody::Parameters* rigidBodyParameters, int group, int mask)
-{
-    SAFE_DELETE(_collisionObject);
-
-    switch (type)
-    {
-    case PhysicsCollisionObject::RIGID_BODY:
-        {
-            _collisionObject = new PhysicsRigidBody(this, shape, rigidBodyParameters ? *rigidBodyParameters : PhysicsRigidBody::Parameters(), group, mask);
-        }
-        break;
-
-    case PhysicsCollisionObject::GHOST_OBJECT:
-        {
-            _collisionObject = new PhysicsGhostObject(this, shape, group, mask);
-        }
-        break;
-
-    case PhysicsCollisionObject::CHARACTER:
-        {
-            _collisionObject = new PhysicsCharacter(this, shape, rigidBodyParameters ? rigidBodyParameters->mass : 1.0f);
-        }
-        break;
-
-    case PhysicsCollisionObject::VEHICLE:
-        {
-            _collisionObject = new PhysicsVehicle(this, shape, rigidBodyParameters ? *rigidBodyParameters : PhysicsRigidBody::Parameters());
-        }
-        break;
-
-    case PhysicsCollisionObject::VEHICLE_WHEEL:
-        {
-            //
-            // PhysicsVehicleWheel is special because this call will traverse up the scene graph for the
-            // first ancestor node that is shared with another node of collision type VEHICLE, and then
-            // proceed to add itself as a wheel onto that vehicle. This is by design, and allows the
-            // visual scene hierarchy to be the sole representation of the relationship between physics
-            // objects rather than forcing that upon the otherwise-flat ".physics" (properties) file.
-            //
-            // IMPORTANT: The VEHICLE must come before the VEHICLE_WHEEL in the ".scene" (properties) file!
-            //
-            _collisionObject = new PhysicsVehicleWheel(this, shape, rigidBodyParameters ? *rigidBodyParameters : PhysicsRigidBody::Parameters());
-        }
-        break;
-
-    case PhysicsCollisionObject::NONE:
-        break;  // Already deleted, Just don't add a new collision object back.
-    }
-
-    return _collisionObject;
-}
-
-PhysicsCollisionObject* Node::setCollisionObject(const char* url)
-{
-    // Load the collision object properties from file.
-    Properties* properties = Properties::create(url);
-    if (properties == NULL)
-    {
-        GP_ERROR("Failed to load collision object file: %s", url);
-        return NULL;
-    }
-
-    PhysicsCollisionObject* collisionObject = setCollisionObject((strlen(properties->getNamespace()) > 0) ? properties : properties->getNextNamespace());
-    SAFE_DELETE(properties);
-
-    return collisionObject;
-}
-
-PhysicsCollisionObject* Node::setCollisionObject(Properties* properties)
-{
-    SAFE_DELETE(_collisionObject);
-
-    // Check if the properties is valid.
-    if (!properties || !(strcmp(properties->getNamespace(), "collisionObject") == 0))
-    {
-        GP_ERROR("Failed to load collision object from properties object: must be non-null object and have namespace equal to 'collisionObject'.");
-        return NULL;
-    }
-
-    if (const char* type = properties->getString("type"))
-    {
-        if (strcmp(type, "CHARACTER") == 0)
-        {
-            _collisionObject = PhysicsCharacter::create(this, properties);
-        }
-        else if (strcmp(type, "GHOST_OBJECT") == 0)
-        {
-            _collisionObject = PhysicsGhostObject::create(this, properties);
-        }
-        else if (strcmp(type, "RIGID_BODY") == 0)
-        {
-            _collisionObject = PhysicsRigidBody::create(this, properties);
-        }
-        else if (strcmp(type, "VEHICLE") == 0)
-        {
-            _collisionObject = PhysicsVehicle::create(this, properties);
-        }
-        else if (strcmp(type, "VEHICLE_WHEEL") == 0)
-        {
-            //
-            // PhysicsVehicleWheel is special because this call will traverse up the scene graph for the
-            // first ancestor node that is shared with another node of collision type VEHICLE, and then
-            // proceed to add itself as a wheel onto that vehicle. This is by design, and allows the
-            // visual scene hierarchy to be the sole representation of the relationship between physics
-            // objects rather than forcing that upon the otherwise-flat ".physics" (properties) file.
-            //
-            // IMPORTANT: The VEHICLE must come before the VEHICLE_WHEEL in the ".scene" (properties) file!
-            //
-            _collisionObject = PhysicsVehicleWheel::create(this, properties);
-        }
-        else
-        {
-            GP_ERROR("Unsupported collision object type '%s'.", type);
-            return NULL;
-        }
-    }
-    else
-    {
-        GP_ERROR("Failed to load collision object from properties object; required attribute 'type' is missing.");
-        return NULL;
-    }
-
-    return _collisionObject;
 }
 
 Ref* Node::getUserObject() const

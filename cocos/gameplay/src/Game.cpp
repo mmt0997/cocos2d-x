@@ -61,7 +61,7 @@ Game::Game()
       _frameLastFPS(0), _frameCount(0), _frameRate(0), _width(0), _height(0),
       _clearDepth(1.0f), _clearStencil(0), _properties(NULL),
       _animationController(NULL), _audioController(NULL),
-      _physicsController(NULL), _audioListener(NULL),
+      _audioListener(NULL),
       _timeEvents(NULL), _scriptController(NULL), _scriptTarget(NULL)
 {
     GP_ASSERT(__gameInstance == NULL);
@@ -167,9 +167,6 @@ bool Game::startup()
     _audioController = new AudioController();
     _audioController->initialize();
 
-    _physicsController = new PhysicsController();
-    _physicsController->initialize();
-
     _scriptController = new ScriptController();
     _scriptController->initialize();
 
@@ -259,9 +256,6 @@ void Game::shutdown()
         _audioController->finalize();
         SAFE_DELETE(_audioController);
 
-        _physicsController->finalize();
-        SAFE_DELETE(_physicsController);
-
         // Note: we do not clean up the script controller here
         // because users can call Game::exit() from a script.
 
@@ -288,7 +282,6 @@ void Game::pause()
         _pausedTimeLast = Platform::getAbsoluteTime();
         _animationController->pause();
         _audioController->pause();
-        _physicsController->pause();
     }
 
     ++_pausedCount;
@@ -310,7 +303,6 @@ void Game::resume()
             _pausedTimeTotal += Platform::getAbsoluteTime() - _pausedTimeLast;
             _animationController->resume();
             _audioController->resume();
-            _physicsController->resume();
         }
     }
 }
@@ -373,9 +365,6 @@ void Game::frame()
 
         // Update the scheduled and running animations.
         _animationController->update(elapsedTime);
-
-        // Update the physics.
-        _physicsController->update(elapsedTime);
 
         // Update gamepads.
         Gamepad::updateInternal(elapsedTime);
@@ -448,7 +437,6 @@ void Game::updateOnce()
 
     // Update the internal controllers.
     _animationController->update(elapsedTime);
-    _physicsController->update(elapsedTime);
     _audioController->update(elapsedTime);
     if (_scriptTarget)
         _scriptTarget->fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(GameScriptTarget, update), elapsedTime);

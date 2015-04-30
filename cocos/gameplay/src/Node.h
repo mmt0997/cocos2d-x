@@ -10,8 +10,6 @@
 #include "ParticleEmitter.h"
 #include "Camera.h"
 #include "Light.h"
-#include "PhysicsRigidBody.h"
-#include "PhysicsCollisionObject.h"
 #include "BoundingBox.h"
 
 namespace gameplay
@@ -482,73 +480,6 @@ public:
     void setAudioSource(AudioSource* audio);
 
     /**
-     * Returns the pointer to this node's physics collision object.
-     *
-     * The type of the returned collision object can be queried using
-     * the PhysicsCollisionObject::getType() method.
-     *
-     * @return The pointer to this node's physics collision object.
-     */
-    PhysicsCollisionObject* getCollisionObject() const;
-
-    /**
-     * Sets (or disables) the physics collision object for this node.
-     *
-     * The supported collision object types include rigid bodies, ghost objects,
-     * characters, vehicles, and vehicle wheels.
-     *
-     * Rigid bodies are used to represent most physical objects in a game. The important
-     * feature of rigid bodies is that they can be simulated by the physics system as other
-     * rigid bodies or collision objects collide with them. To support this physics simulation,
-     * rigid bodies require additional parameters, such as mass, friction and restitution to
-     * define their physical features. These parameters can be passed into the
-     * 'rigidBodyParameters' parameter.
-     *
-     * Vehicles consist of a rigid body with wheels. The rigid body parameters can be passed-in
-     * via the 'rigidBodyParameters' parameter, and wheels can be added to the vehicle.
-     *
-     * Ghost objects are a simple type of collision object that are not simulated. By default
-     * they pass through other objects in the scene without affecting them. Ghost objects do
-     * receive collision events however, which makes them useful for representing non-simulated
-     * entities in a game that still require collision events, such as volumetric triggers,
-     * power-ups, etc.
-     *
-     * Characters are an extension of ghost objects which provide a number of additional features
-     * for animating and moving characters within a game. Characters are represented as ghost
-     * objects instead of rigid bodies to allow more direct control over character movement,
-     * since attempting to model a physics character with a simulated rigid body usually results
-     * in unresponsive and unpredictable character movement. Unlike normal ghost objects,
-     * characters to react to other characters and rigid bodies in the world. Characters react
-     * to gravity and collide (and respond) with rigid bodies to allow them to walk on the ground,
-     * slide along walls and walk up/down slopes and stairs.
-     *
-     * @param type The type of the collision object to set; to disable the physics
-     *        collision object, pass PhysicsCollisionObject::NONE.
-     * @param shape Definition of a physics collision shape to be used for this collision object.
-     *        Use the static shape methods on the PhysicsCollisionShape class to specify a shape
-     *        definition, such as PhysicsCollisionShape::box().
-     * @param rigidBodyParameters If type is PhysicsCollisionObject::RIGID_BODY or
-     *        PhysicsCollisionObject::VEHICLE, this must point to a valid rigid body
-     *        parameters object containing information about the rigid body;
-     *        otherwise, this parameter may be NULL.
-     * @param group Group identifier of the object for collision filtering.
-     * @param mask Bitmask to filter groups of objects to collide with this one.
-     */
-    PhysicsCollisionObject* setCollisionObject(PhysicsCollisionObject::Type type,
-                                               const PhysicsCollisionShape::Definition& shape = PhysicsCollisionShape::box(),
-                                               PhysicsRigidBody::Parameters* rigidBodyParameters = NULL,
-                                               int group = PHYSICS_COLLISION_GROUP_DEFAULT,
-                                               int mask = PHYSICS_COLLISION_MASK_DEFAULT);
-    /**
-     * Sets the physics collision object for this node using the data from the Properties object defined at the specified URL,
-     * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
-     * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
-     *
-     * @param url The URL pointing to the Properties object defining the physics collision object.
-     */
-    PhysicsCollisionObject* setCollisionObject(const char* url);
-
-    /**
      * Gets the user object assigned to this node.
      *
      * @return The user object assigned object to this node.
@@ -661,8 +592,6 @@ private:
      */
     Node& operator=(const Node&);
 
-    PhysicsCollisionObject* setCollisionObject(Properties* properties);
-
 protected:
 
     /** The scene this node is attached to. */
@@ -691,8 +620,6 @@ protected:
     Light* _light;
     /** The audio source component attached to this node. */
     AudioSource* _audioSource;
-    /** The collision object component attached to this node. */
-    PhysicsCollisionObject* _collisionObject;
     /** The AI agent component attached to this node. */
     mutable AIAgent* _agent;
     /** The user object component attached to this node. */

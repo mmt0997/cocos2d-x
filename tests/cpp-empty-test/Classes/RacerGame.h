@@ -116,7 +116,6 @@ private:
     unsigned int _keyFlags;
     unsigned int _mouseFlags;
     float _steering;
-    gameplay::PhysicsVehicle* _carVehicle;
     float _upsetTimer;
 
     // Music and Sounds
