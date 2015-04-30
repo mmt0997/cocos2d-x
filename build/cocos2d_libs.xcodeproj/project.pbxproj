@@ -1849,13 +1849,14 @@
 		A0AF76361AEE157900F77847 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C421AE8ED8800ACF6D6 /* Text.cpp */; };
 		A0AF76371AEE157900F77847 /* Plane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C441AE8ED8800ACF6D6 /* Plane.cpp */; };
 		A0AF76381AEE157A00F77847 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C481AE8ED8800ACF6D6 /* Transform.cpp */; };
-		A0AF76391AEE157A00F77847 /* Vector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C4A1AE8ED8800ACF6D6 /* Vector2.cpp */; };
 		A0AF763B1AEE157A00F77847 /* Curve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C4D1AE8ED8800ACF6D6 /* Curve.cpp */; };
 		A0AF763C1AEE157A00F77847 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C511AE8ED8800ACF6D6 /* Vector3.cpp */; };
 		A0AF763F1AEE157B00F77847 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C571AE8ED8800ACF6D6 /* Sprite.cpp */; };
 		A0AF76401AEE157B00F77847 /* SpriteBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C591AE8ED8800ACF6D6 /* SpriteBatch.cpp */; };
 		A0AF76421AEE15F100F77847 /* gameplay-main-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2361C241AE8ED8800ACF6D6 /* gameplay-main-ios.mm */; };
 		A0AF76431AEE15F100F77847 /* PlatformiOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2361C2D1AE8ED8800ACF6D6 /* PlatformiOS.mm */; };
+		A0BD499F1AF211A20046CCE3 /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD499E1AF211A20046CCE3 /* CCMath.h */; };
+		A0BD49A01AF211A20046CCE3 /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BD499E1AF211A20046CCE3 /* CCMath.h */; };
 		A0D728A91AEE1B1700B26A09 /* CC3DSceneSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23C17B41AED2238005B65C4 /* CC3DSceneSprite.cpp */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -1996,10 +1997,8 @@
 		B2361D321AE8ED8800ACF6D6 /* Touch.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C471AE8ED8800ACF6D6 /* Touch.h */; };
 		B2361D331AE8ED8800ACF6D6 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C481AE8ED8800ACF6D6 /* Transform.cpp */; };
 		B2361D341AE8ED8800ACF6D6 /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C491AE8ED8800ACF6D6 /* Transform.h */; };
-		B2361D351AE8ED8800ACF6D6 /* Vector2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C4A1AE8ED8800ACF6D6 /* Vector2.cpp */; };
 		B2361D381AE8ED8800ACF6D6 /* Curve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C4D1AE8ED8800ACF6D6 /* Curve.cpp */; };
 		B2361D391AE8ED8800ACF6D6 /* Curve.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C4E1AE8ED8800ACF6D6 /* Curve.h */; };
-		B2361D3A1AE8ED8800ACF6D6 /* Vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C4F1AE8ED8800ACF6D6 /* Vector2.h */; };
 		B2361D3B1AE8ED8800ACF6D6 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C511AE8ED8800ACF6D6 /* Vector3.cpp */; };
 		B2361D3C1AE8ED8800ACF6D6 /* Vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = B2361C521AE8ED8800ACF6D6 /* Vector3.h */; };
 		B2361D411AE8ED8800ACF6D6 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2361C571AE8ED8800ACF6D6 /* Sprite.cpp */; };
@@ -3792,6 +3791,7 @@
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0BD499E1AF211A20046CCE3 /* CCMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMath.h; path = ../cocos/gameplay/src/CCMath.h; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -3945,11 +3945,8 @@
 		B2361C471AE8ED8800ACF6D6 /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Touch.h; path = ../cocos/gameplay/src/Touch.h; sourceTree = "<group>"; };
 		B2361C481AE8ED8800ACF6D6 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = ../cocos/gameplay/src/Transform.cpp; sourceTree = "<group>"; };
 		B2361C491AE8ED8800ACF6D6 /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = ../cocos/gameplay/src/Transform.h; sourceTree = "<group>"; };
-		B2361C4A1AE8ED8800ACF6D6 /* Vector2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vector2.cpp; path = ../cocos/gameplay/src/Vector2.cpp; sourceTree = "<group>"; };
 		B2361C4D1AE8ED8800ACF6D6 /* Curve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Curve.cpp; path = ../cocos/gameplay/src/Curve.cpp; sourceTree = "<group>"; };
 		B2361C4E1AE8ED8800ACF6D6 /* Curve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Curve.h; path = ../cocos/gameplay/src/Curve.h; sourceTree = "<group>"; };
-		B2361C4F1AE8ED8800ACF6D6 /* Vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector2.h; path = ../cocos/gameplay/src/Vector2.h; sourceTree = "<group>"; };
-		B2361C501AE8ED8800ACF6D6 /* Vector2.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Vector2.inl; path = ../cocos/gameplay/src/Vector2.inl; sourceTree = "<group>"; };
 		B2361C511AE8ED8800ACF6D6 /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vector3.cpp; path = ../cocos/gameplay/src/Vector3.cpp; sourceTree = "<group>"; };
 		B2361C521AE8ED8800ACF6D6 /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vector3.h; path = ../cocos/gameplay/src/Vector3.h; sourceTree = "<group>"; };
 		B2361C571AE8ED8800ACF6D6 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite.cpp; path = ../cocos/gameplay/src/Sprite.cpp; sourceTree = "<group>"; };
@@ -6698,11 +6695,8 @@
 				B2361C471AE8ED8800ACF6D6 /* Touch.h */,
 				B2361C481AE8ED8800ACF6D6 /* Transform.cpp */,
 				B2361C491AE8ED8800ACF6D6 /* Transform.h */,
-				B2361C4A1AE8ED8800ACF6D6 /* Vector2.cpp */,
 				B2361C4D1AE8ED8800ACF6D6 /* Curve.cpp */,
 				B2361C4E1AE8ED8800ACF6D6 /* Curve.h */,
-				B2361C4F1AE8ED8800ACF6D6 /* Vector2.h */,
-				B2361C501AE8ED8800ACF6D6 /* Vector2.inl */,
 				B2361C511AE8ED8800ACF6D6 /* Vector3.cpp */,
 				B2361C521AE8ED8800ACF6D6 /* Vector3.h */,
 				B2361C571AE8ED8800ACF6D6 /* Sprite.cpp */,
@@ -6713,6 +6707,7 @@
 				B2361C5C1AE8ED8800ACF6D6 /* Image.inl */,
 				B2361C5F1AE8ED8800ACF6D6 /* Node.h */,
 				B2361C601AE8ED8800ACF6D6 /* gameplay.dox */,
+				A0BD499E1AF211A20046CCE3 /* CCMath.h */,
 			);
 			name = gameplay;
 			sourceTree = "<group>";
@@ -7130,6 +7125,7 @@
 				B2361C951AE8ED8800ACF6D6 /* DepthStencilTarget.h in Headers */,
 				B665E2901AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h in Headers */,
 				50ABBE891925AB6F00A911A9 /* CCMap.h in Headers */,
+				A0BD499F1AF211A20046CCE3 /* CCMath.h in Headers */,
 				50ABBE8D1925AB6F00A911A9 /* CCNS.h in Headers */,
 				B29A7DFD19EE1B7700872B35 /* IkConstraintData.h in Headers */,
 				50ABBEA51925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
@@ -7748,7 +7744,6 @@
 				B665E3E41AA80A6600DDB1C5 /* CCPUSineForceAffector.h in Headers */,
 				15AE188D19AAD33D00C27E9E /* CCLabelBMFontLoader.h in Headers */,
 				B665E3701AA80A6500DDB1C5 /* CCPUOnVelocityObserverTranslator.h in Headers */,
-				B2361D3A1AE8ED8800ACF6D6 /* Vector2.h in Headers */,
 				15AE1B5019AADA9900C27E9E /* UILoadingBar.h in Headers */,
 				50ABBFFD1926664800A911A9 /* CCFileUtils-apple.h in Headers */,
 				15B3708219EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
@@ -8240,6 +8235,7 @@
 				15AE1AB919AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
 				15AE1B7319AADA9A00C27E9E /* UIListView.h in Headers */,
 				15AE192A19AAD35100C27E9E /* TriggerMng.h in Headers */,
+				A0BD49A01AF211A20046CCE3 /* CCMath.h in Headers */,
 				5034CA2C191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
 				50ABBE981925AB6F00A911A9 /* CCProtocols.h in Headers */,
 				50CB247A19D9C5A100687767 /* AudioEngine-inl.h in Headers */,
@@ -8696,7 +8692,6 @@
 				B665E4261AA80A6600DDB1C5 /* CCPUUtil.cpp in Sources */,
 				15AE1B6319AADA9900C27E9E /* UICheckBox.cpp in Sources */,
 				15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
-				B2361D351AE8ED8800ACF6D6 /* Vector2.cpp in Sources */,
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
 				B665E2621AA80A6500DDB1C5 /* CCPUDoExpireEventHandler.cpp in Sources */,
 				B665E4161AA80A6600DDB1C5 /* CCPUTextureAnimatorTranslator.cpp in Sources */,
@@ -9978,7 +9973,6 @@
 				A0AF76361AEE157900F77847 /* Text.cpp in Sources */,
 				A0AF76371AEE157900F77847 /* Plane.cpp in Sources */,
 				A0AF76381AEE157A00F77847 /* Transform.cpp in Sources */,
-				A0AF76391AEE157A00F77847 /* Vector2.cpp in Sources */,
 				A0AF763B1AEE157A00F77847 /* Curve.cpp in Sources */,
 				A0AF763C1AEE157A00F77847 /* Vector3.cpp in Sources */,
 				A0AF763F1AEE157B00F77847 /* Sprite.cpp in Sources */,

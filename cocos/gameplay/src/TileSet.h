@@ -4,7 +4,7 @@
 #include "Ref.h"
 #include "Drawable.h"
 #include "Properties.h"
-#include "Vector2.h"
+#include "CCMath.h"
 #include "Vector4.h"
 #include "SpriteBatch.h"
 #include "Effect.h"

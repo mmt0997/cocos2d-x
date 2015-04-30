@@ -3,7 +3,7 @@
 
 #include "Base.h"
 #include "Matrix.h"
-#include "Vector2.h"
+#include "CCMath.h"
 #include "Stream.h"
 
 namespace gameplay
