@@ -321,57 +321,57 @@ void RenderState::applyAutoBinding(const char* uniformName, const char* autoBind
     }
 }
 
-const Matrix& RenderState::autoBindingGetWorldMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetWorldMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getWorldMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getWorldMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetViewMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetViewMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getViewMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getViewMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetProjectionMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetProjectionMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getProjectionMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getProjectionMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetWorldViewMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetWorldViewMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getWorldViewMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getWorldViewMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetViewProjectionMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetViewProjectionMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getViewProjectionMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getViewProjectionMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetWorldViewProjectionMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetWorldViewProjectionMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getWorldViewProjectionMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getWorldViewProjectionMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetInverseTransposeWorldMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetInverseTransposeWorldMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getInverseTransposeWorldMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getInverseTransposeWorldMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& RenderState::autoBindingGetInverseTransposeWorldViewMatrix() const
+const cocos2d::Mat4& RenderState::autoBindingGetInverseTransposeWorldViewMatrix() const
 {
-    return _nodeBinding ? _nodeBinding->getInverseTransposeWorldViewMatrix() : Matrix::identity();
+    return _nodeBinding ? _nodeBinding->getInverseTransposeWorldViewMatrix() : cocos2d::Mat4::IDENTITY;
 }
 
-Vector3 RenderState::autoBindingGetCameraWorldPosition() const
+cocos2d::Vec3 RenderState::autoBindingGetCameraWorldPosition() const
 {
-    return _nodeBinding ? _nodeBinding->getActiveCameraTranslationWorld() : Vector3::zero();
+    return _nodeBinding ? _nodeBinding->getActiveCameraTranslationWorld() : cocos2d::Vec3::ZERO;
 }
 
-Vector3 RenderState::autoBindingGetCameraViewPosition() const
+cocos2d::Vec3 RenderState::autoBindingGetCameraViewPosition() const
 {
-    return _nodeBinding ? _nodeBinding->getActiveCameraTranslationView() : Vector3::zero();
+    return _nodeBinding ? _nodeBinding->getActiveCameraTranslationView() : cocos2d::Vec3::ZERO;
 }
 
-const Vector4* RenderState::autoBindingGetMatrixPalette() const
+const cocos2d::Vec4* RenderState::autoBindingGetMatrixPalette() const
 {
     Model* model = dynamic_cast<Model*>(_nodeBinding->getDrawable());
     if (model)
@@ -395,10 +395,10 @@ unsigned int RenderState::autoBindingGetMatrixPaletteSize() const
     return 0;
 }
 
-const Vector3& RenderState::autoBindingGetAmbientColor() const
+const cocos2d::Vec3& RenderState::autoBindingGetAmbientColor() const
 {
     Scene* scene = _nodeBinding ? _nodeBinding->getScene() : NULL;
-    return scene ? scene->getAmbientColor() : Vector3::zero();
+    return scene ? scene->getAmbientColor() : cocos2d::Vec3::ZERO;
 }
 
 void RenderState::bind(Pass* pass)

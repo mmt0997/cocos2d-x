@@ -1,7 +1,7 @@
 #include "Base.h"
 #include "Properties.h"
 #include "FileSystem.h"
-#include "Quaternion.h"
+#include "math/CCMath.h"
 
 namespace gameplay
 {
@@ -851,7 +851,7 @@ long Properties::getLong(const char* name) const
     return 0L;
 }
 
-bool Properties::getMatrix(const char* name, Matrix* out) const
+bool Properties::getMatrix(const char* name, cocos2d::Mat4* out) const
 {
     GP_ASSERT(out);
 
@@ -884,27 +884,27 @@ bool Properties::getVector2(const char* name,cocos2d::Vec2* out) const
     return parseVector2(getString(name), out);
 }
 
-bool Properties::getVector3(const char* name, Vector3* out) const
+bool Properties::getVector3(const char* name, cocos2d::Vec3* out) const
 {
     return parseVector3(getString(name), out);
 }
 
-bool Properties::getVector4(const char* name, Vector4* out) const
+bool Properties::getVector4(const char* name, cocos2d::Vec4* out) const
 {
     return parseVector4(getString(name), out);
 }
 
-bool Properties::getQuaternionFromAxisAngle(const char* name, Quaternion* out) const
+bool Properties::getQuaternionFromAxisAngle(const char* name, cocos2d::Quaternion* out) const
 {
     return parseAxisAngle(getString(name), out);
 }
 
-bool Properties::getColor(const char* name, Vector3* out) const
+bool Properties::getColor(const char* name, cocos2d::Vec3* out) const
 {
     return parseColor(getString(name), out);
 }
 
-bool Properties::getColor(const char* name, Vector4* out) const
+bool Properties::getColor(const char* name, cocos2d::Vec4* out) const
 {
     return parseColor(getString(name), out);
 }
@@ -1137,7 +1137,7 @@ bool Properties::parseVector2(const char* str,cocos2d::Vec2* out)
     return false;
 }
 
-bool Properties::parseVector3(const char* str, Vector3* out)
+bool Properties::parseVector3(const char* str, cocos2d::Vec3* out)
 {
     if (str)
     {
@@ -1159,7 +1159,7 @@ bool Properties::parseVector3(const char* str, Vector3* out)
     return false;
 }
 
-bool Properties::parseVector4(const char* str, Vector4* out)
+bool Properties::parseVector4(const char* str, cocos2d::Vec4* out)
 {
     if (str)
     {
@@ -1181,7 +1181,7 @@ bool Properties::parseVector4(const char* str, Vector4* out)
     return false;
 }
 
-bool Properties::parseAxisAngle(const char* str, Quaternion* out)
+bool Properties::parseAxisAngle(const char* str, cocos2d::Quaternion* out)
 {
     if (str)
     {
@@ -1189,7 +1189,7 @@ bool Properties::parseAxisAngle(const char* str, Quaternion* out)
         if (sscanf(str, "%f,%f,%f,%f", &x, &y, &z, &theta) == 4)
         {
             if (out)
-                out->set(Vector3(x, y, z), MATH_DEG_TO_RAD(theta));
+                out->set(cocos2d::Vec3(x, y, z), MATH_DEG_TO_RAD(theta));
             return true;
         }
         else
@@ -1203,7 +1203,7 @@ bool Properties::parseAxisAngle(const char* str, Quaternion* out)
     return false;
 }
 
-bool Properties::parseColor(const char* str, Vector3* out)
+bool Properties::parseColor(const char* str, cocos2d::Vec3* out)
 {
     if (str)
     {
@@ -1214,7 +1214,7 @@ bool Properties::parseColor(const char* str, Vector3* out)
             if (sscanf(str + 1, "%x", &color) == 1)
             {
                 if (out)
-                    out->set(Vector3::fromColor(color));
+                    out->set(cocos2d::Vec3::fromColor(color));
                 return true;
             }
             else
@@ -1235,7 +1235,7 @@ bool Properties::parseColor(const char* str, Vector3* out)
     return false;
 }
 
-bool Properties::parseColor(const char* str, Vector4* out)
+bool Properties::parseColor(const char* str, cocos2d::Vec4* out)
 {
     if (str)
     {
@@ -1246,7 +1246,7 @@ bool Properties::parseColor(const char* str, Vector4* out)
             if (sscanf(str + 1, "%x", &color) == 1)
             {
                 if (out)
-                    out->set(Vector4::fromColor(color));
+                    out->set(cocos2d::Vec4::fromColor(color));
                 return true;
             }
             else

@@ -514,7 +514,7 @@ private:
     void interpolateLinear(float s, Point* from, Point* to, float* dst) const;
 
     /**
-     * Quaternion interpolation function.
+     * cocos2d::Quaternion interpolation function.
      */
     void interpolateQuaternion(float s, float* from, float* to, float* dst) const;
 
@@ -524,12 +524,12 @@ private:
     int determineIndex(float time, unsigned int min, unsigned int max) const;
 
     /**
-     * Sets the offset for the beginning of a Quaternion piece of data within the curve's value span at the specified
-     * index. The next four components of data starting at the given index will be interpolated as a Quaternion.
+     * Sets the offset for the beginning of a cocos2d::Quaternion piece of data within the curve's value span at the specified
+     * index. The next four components of data starting at the given index will be interpolated as a cocos2d::Quaternion.
      * This function will assert an error if the given index is greater than the component size subtracted by the four components required
      * to store a quaternion.
      *
-     * @param index The index of the Quaternion rotation data.
+     * @param index The index of the cocos2d::Quaternion rotation data.
      */
     void setQuaternionOffset(unsigned int index);
 

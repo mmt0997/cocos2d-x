@@ -1,7 +1,7 @@
 #ifndef FRUSTUM_H_
 #define FRUSTUM_H_
 
-#include "Matrix.h"
+#include "math/CCMath.h"
 #include "Ray.h"
 #include "Plane.h"
 
@@ -39,7 +39,7 @@ public:
      *
      * @param matrix The view projection matrix to create this frustum from.
      */
-    Frustum(const Matrix& matrix);
+    Frustum(const cocos2d::Mat4& matrix);
 
     /**
      * Constructs a new frustum from the given frustum.
@@ -100,7 +100,7 @@ public:
      * 
      * @param dst The projection matrix to copy into.
      */
-    void getMatrix(Matrix* dst) const;
+    void getMatrix(cocos2d::Mat4* dst) const;
 
     /**
      * Gets the corners of the frustum in the specified array.
@@ -111,7 +111,7 @@ public:
      * 
      * @param corners The array (of at least size 8) to store the corners in.
      */
-    void getCorners(Vector3* corners) const;
+    void getCorners(cocos2d::Vec3* corners) const;
 
     /**
      * Gets the corners of the frustum's near plane in the specified array.
@@ -121,7 +121,7 @@ public:
      *
      * @param corners The array (of at least size 4) to store the corners in.
      */
-    void getNearCorners(Vector3* corners) const;
+    void getNearCorners(cocos2d::Vec3* corners) const;
 
     /**
      * Gets the corners of the frustum's far plane in the specified array.
@@ -131,7 +131,7 @@ public:
      *
      * @param corners The array (of at least size 4) to store the corners in.
      */
-    void getFarCorners(Vector3* corners) const;
+    void getFarCorners(cocos2d::Vec3* corners) const;
 
     /**
      * Tests whether this frustum intersects the specified point.
@@ -140,7 +140,7 @@ public:
      *
      * @return true if the specified point intersects this frustum; false otherwise.
      */
-    bool intersects(const Vector3& point) const;
+    bool intersects(const cocos2d::Vec3& point) const;
 
     /**
      * Tests whether this frustum intersects the specified point.
@@ -205,7 +205,7 @@ public:
      *
      * @param matrix The view projection matrix.
      */
-    void set(const Matrix& matrix);
+    void set(const cocos2d::Mat4& matrix);
 
 private:
 
@@ -220,7 +220,7 @@ private:
     Plane _top;
     Plane _left;
     Plane _right;
-    Matrix _matrix;
+    cocos2d::Mat4 _matrix;
 };
 
 }

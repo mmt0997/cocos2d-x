@@ -4,7 +4,6 @@
 #include "Transform.h"
 #include "Mesh.h"
 #include "math/CCMath.h"
-#include "Vector4.h"
 #include "Texture.h"
 #include "Rectangle.h"
 #include "SpriteBatch.h"
@@ -363,35 +362,35 @@ public:
      * @param end The base end color of emitted particles.
      * @param endVariance The variance of end color of emitted particles.
      */
-    void setColor(const Vector4& start, const Vector4& startVariance, const Vector4& end, const Vector4& endVariance);
+    void setColor(const cocos2d::Vec4& start, const cocos2d::Vec4& startVariance, const cocos2d::Vec4& end, const cocos2d::Vec4& endVariance);
     
     /**
      * Gets the base start color of emitted particles.
      *
      * @return The base start color of emitted particles.
      */
-    const Vector4& getColorStart() const;
+    const cocos2d::Vec4& getColorStart() const;
 
     /**
      * Gets the variance of start color of emitted particles.
      *
      * @return The variance of start color of emitted particles.
      */
-    const Vector4& getColorStartVariance() const;
+    const cocos2d::Vec4& getColorStartVariance() const;
 
     /**
      * Gets the base end color of emitted particles.
      *
      * @return The base end color of emitted particles.
      */
-    const Vector4& getColorEnd() const;
+    const cocos2d::Vec4& getColorEnd() const;
 
     /**
      * Gets the variance of end color of emitted particles.
      *
      * @return The variance of end color of emitted particles.
      */
-    const Vector4& getColorEndVariance() const;
+    const cocos2d::Vec4& getColorEndVariance() const;
 
     /**
      * Sets the minimum and maximum lifetime of emitted particles, measured in milliseconds.
@@ -421,21 +420,21 @@ public:
      * @param position The initial position of new particles.
      * @param positionVariance The amount of variance allowed in the initial position of new particles.
      */
-    void setPosition(const Vector3& position, const Vector3& positionVariance);
+    void setPosition(const cocos2d::Vec3& position, const cocos2d::Vec3& positionVariance);
 
     /**
      * Gets the position of new particles, relative to the emitter's transform.
      *
      * @return The position of new particles, relative to the emitter's transform.
      */
-    const Vector3& getPosition() const;
+    const cocos2d::Vec3& getPosition() const;
 
     /**
      * Gets the position variance of new particles.
      *
      * @return The position variance of new particles.
      */
-    const Vector3& getPositionVariance() const;
+    const cocos2d::Vec3& getPositionVariance() const;
 
     /**
      * Sets the base velocity of new particles and its variance.
@@ -443,28 +442,28 @@ public:
      * @param velocity The initial velocity of new particles.
      * @param velocityVariance The amount of variance allowed in the initial velocity of new particles.
      */
-    void setVelocity(const Vector3& velocity, const Vector3& velocityVariance);
+    void setVelocity(const cocos2d::Vec3& velocity, const cocos2d::Vec3& velocityVariance);
 
     /**
      * Gets the initial velocity of new particles.
      *
      * @return The initial velocity of new particles.
      */
-    const Vector3& getVelocity() const;
+    const cocos2d::Vec3& getVelocity() const;
 
     /**
      * Gets the initial velocity variance of new particles.
      *
      * @return The initial velocity variance of new particles.
      */
-    const Vector3& getVelocityVariance() const;
+    const cocos2d::Vec3& getVelocityVariance() const;
 
     /**
      * Gets the base acceleration vector of particles.
      * 
      * @return The base acceleration vector of particles.
      */
-    const Vector3& getAcceleration() const;
+    const cocos2d::Vec3& getAcceleration() const;
 
     /**
      * Sets the base acceleration vector and its allowed variance for this ParticleEmitter.
@@ -472,14 +471,14 @@ public:
      * @param acceleration The base acceleration vector of emitted particles.
      * @param accelerationVariance The variance allowed in the acceleration of emitted particles.
      */
-    void setAcceleration(const Vector3& acceleration, const Vector3& accelerationVariance);
+    void setAcceleration(const cocos2d::Vec3& acceleration, const cocos2d::Vec3& accelerationVariance);
 
     /**
      * Gets the variance of acceleration of particles.
      * 
      * @return The variance of acceleration of particles.
      */
-    const Vector3& getAccelerationVariance() const;
+    const cocos2d::Vec3& getAccelerationVariance() const;
 
     /**
      * Gets the maximum rotation speed of each emitted particle.
@@ -514,7 +513,7 @@ public:
      * @param speedMin The minimum rotation speed of emitted particles.
      * @param speedMax The maximum rotation speed of emitted particles.
      */
-   void setRotation(float speedMin, float speedMax, const Vector3& axis, const Vector3& axisVariance);
+   void setRotation(float speedMin, float speedMax, const cocos2d::Vec3& axis, const cocos2d::Vec3& axisVariance);
 
     /**
      * Gets the minimum rotation speed of emitted particles.
@@ -535,14 +534,14 @@ public:
      *
      * @return The base rotation axis of emitted particles.
      */
-    const Vector3& getRotationAxis() const;
+    const cocos2d::Vec3& getRotationAxis() const;
 
     /**
      * Gets the variance of the rotation axis of emitted particles.
      *
      * @return The variance of the rotation axis of emitted particles.
      */
-    const Vector3& getRotationAxisVariance() const;
+    const cocos2d::Vec3& getRotationAxisVariance() const;
 
     /**
      * Sets whether particles cycle through the sprite frames.
@@ -752,15 +751,15 @@ private:
     long generateScalar(long min, long max);
 
     // Generates a vector within the domain defined by a base vector and its variance.
-    void generateVectorInRect(const Vector3& base, const Vector3& variance, Vector3* dst);
+    void generateVectorInRect(const cocos2d::Vec3& base, const cocos2d::Vec3& variance, cocos2d::Vec3* dst);
 
     // Generates a vector within the ellipsoidal domain defined by a center point and scale vector.
-    void generateVectorInEllipsoid(const Vector3& center, const Vector3& scale, Vector3* dst);
+    void generateVectorInEllipsoid(const cocos2d::Vec3& center, const cocos2d::Vec3& scale, cocos2d::Vec3* dst);
 
-    void generateVector(const Vector3& base, const Vector3& variance, Vector3* dst, bool ellipsoid);
+    void generateVector(const cocos2d::Vec3& base, const cocos2d::Vec3& variance, cocos2d::Vec3* dst, bool ellipsoid);
 
     // Generates a color within the domain defined by a base vector and its variance.
-    void generateColor(const Vector4& base, const Vector4& variance, Vector4* dst);
+    void generateColor(const cocos2d::Vec4& base, const cocos2d::Vec4& variance, cocos2d::Vec4* dst);
 
     // Gets the blend mode from string.
     static ParticleEmitter::BlendMode getBlendModeFromString(const char* src);
@@ -772,14 +771,14 @@ private:
     {
 
     public:
-        Vector3 _position;
-        Vector3 _velocity;
-        Vector3 _acceleration;
-        Vector4 _colorStart;
-        Vector4 _colorEnd;
-        Vector4 _color;
+        cocos2d::Vec3 _position;
+        cocos2d::Vec3 _velocity;
+        cocos2d::Vec3 _acceleration;
+        cocos2d::Vec4 _colorStart;
+        cocos2d::Vec4 _colorEnd;
+        cocos2d::Vec4 _color;
         float _rotationPerParticleSpeed;
-        Vector3 _rotationAxis;
+        cocos2d::Vec3 _rotationAxis;
         float _rotationSpeed;
         float _angle;
         long _energyStart;
@@ -803,23 +802,23 @@ private:
     float _sizeEndMax;
     float _energyMin;
     float _energyMax;
-    Vector4 _colorStart;
-    Vector4 _colorStartVar;
-    Vector4 _colorEnd;
-    Vector4 _colorEndVar;
-    Vector3 _position;
-    Vector3 _positionVar;
-    Vector3 _velocity;
-    Vector3 _velocityVar;
-    Vector3 _acceleration;
-    Vector3 _accelerationVar;
+    cocos2d::Vec4 _colorStart;
+    cocos2d::Vec4 _colorStartVar;
+    cocos2d::Vec4 _colorEnd;
+    cocos2d::Vec4 _colorEndVar;
+    cocos2d::Vec3 _position;
+    cocos2d::Vec3 _positionVar;
+    cocos2d::Vec3 _velocity;
+    cocos2d::Vec3 _velocityVar;
+    cocos2d::Vec3 _acceleration;
+    cocos2d::Vec3 _accelerationVar;
     float _rotationPerParticleSpeedMin;
     float _rotationPerParticleSpeedMax;
     float _rotationSpeedMin;
     float _rotationSpeedMax;
-    Vector3 _rotationAxis;
-    Vector3 _rotationAxisVar;
-    Matrix _rotation;
+    cocos2d::Vec3 _rotationAxis;
+    cocos2d::Vec3 _rotationAxisVar;
+    cocos2d::Mat4 _rotation;
     SpriteBatch* _spriteBatch;
     BlendMode _spriteBlendMode;
     float _spriteTextureWidth;

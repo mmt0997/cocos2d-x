@@ -1,7 +1,7 @@
 #ifndef MESHSKIN_H_
 #define MESHSKIN_H_
 
-#include "Matrix.h"
+#include "math/CCMath.h"
 #include "Transform.h"
 
 namespace gameplay
@@ -35,7 +35,7 @@ public:
      * 
      * @return The bind shape matrix.
      */
-    const Matrix& getBindShape() const;
+    const cocos2d::Mat4& getBindShape() const;
 
     /**
      * Sets the bind shape of this skin.
@@ -91,16 +91,16 @@ public:
     int getJointIndex(Joint* joint) const;
 
     /**
-     * Returns the pointer to the Vector4 array for the purpose of binding to a shader.
+     * Returns the pointer to the cocos2d::Vec4 array for the purpose of binding to a shader.
      * 
      * @return The pointer to the matrix palette.
      */
-    Vector4* getMatrixPalette() const;
+    cocos2d::Vec4* getMatrixPalette() const;
 
     /**
      * Returns the number of elements in the matrix palette array.
-     * Each element is a Vector4* that represents a row.
-     * Each matrix palette is represented by 3 rows of Vector4.
+     * Each element is a cocos2d::Vec4* that represents a row.
+     * Each matrix palette is represented by 3 rows of cocos2d::Vec4.
      * 
      * @return The matrix palette size.
      */
@@ -175,7 +175,7 @@ private:
      */
     void clearJoints();
 
-    Matrix _bindShape;
+    cocos2d::Mat4 _bindShape;
     std::vector<Joint*> _joints;
     Joint* _rootJoint;
     
@@ -186,9 +186,9 @@ private:
 
     // Pointer to the array of palette matrices.
     // This array is passed to the vertex shader as a uniform.
-    // Each 4x3 row-wise matrix is represented as 3 Vector4's.
-    // The number of Vector4's is (_joints.size() * 3).
-    Vector4* _matrixPalette;
+    // Each 4x3 row-wise matrix is represented as 3 cocos2d::Vec4's.
+    // The number of cocos2d::Vec4's is (_joints.size() * 3).
+    cocos2d::Vec4* _matrixPalette;
     Model* _model;
 };
 

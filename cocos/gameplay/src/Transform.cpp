@@ -12,16 +12,16 @@ std::vector<Transform*> Transform::_transformsChanged;
 Transform::Transform()
     : _matrixDirtyBits(0), _listeners(NULL)
 {
-    _scale.set(Vector3::one());
+    _scale.set(cocos2d::Vec3::ONE);
 }
 
-Transform::Transform(const Vector3& scale, const Quaternion& rotation, const Vector3& translation)
+Transform::Transform(const cocos2d::Vec3& scale, const cocos2d::Quaternion& rotation, const cocos2d::Vec3& translation)
     : _matrixDirtyBits(0), _listeners(NULL)
 {
     set(scale, rotation, translation);
 }
 
-Transform::Transform(const Vector3& scale, const Matrix& rotation, const Vector3& translation)
+Transform::Transform(const cocos2d::Vec3& scale, const cocos2d::Mat4& rotation, const cocos2d::Vec3& translation)
     : _matrixDirtyBits(0), _listeners(NULL)
 {
     set(scale, rotation, translation);
@@ -85,7 +85,7 @@ const char* Transform::getTypeName() const
     return "Transform";
 }
 
-const Matrix& Transform::getMatrix() const
+const cocos2d::Mat4& Transform::getMatrix() const
 {
     if (_matrixDirtyBits)
     {
@@ -99,7 +99,7 @@ const Matrix& Transform::getMatrix() const
             // multiply M*v (as opposed to XNA and DirectX that use row-major matrices with row vectors and multiply v*M).
             if (hasTranslation || (_matrixDirtyBits & DIRTY_TRANSLATION) == DIRTY_TRANSLATION)
             {
-                Matrix::createTranslation(_translation, &_matrix);
+                cocos2d::Mat4::createTranslation(_translation, &_matrix);
                 if (hasRotation || (_matrixDirtyBits & DIRTY_ROTATION) == DIRTY_ROTATION)
                 {
                     _matrix.rotate(_rotation);
@@ -111,7 +111,7 @@ const Matrix& Transform::getMatrix() const
             }
             else if (hasRotation || (_matrixDirtyBits & DIRTY_ROTATION) == DIRTY_ROTATION)
             {
-                Matrix::createRotation(_rotation, &_matrix);
+                cocos2d::Mat4::createRotation(_rotation, &_matrix);
                 if (hasScale || (_matrixDirtyBits & DIRTY_SCALE) == DIRTY_SCALE)
                 {
                     _matrix.scale(_scale);
@@ -119,7 +119,7 @@ const Matrix& Transform::getMatrix() const
             }
             else if (hasScale || (_matrixDirtyBits & DIRTY_SCALE) == DIRTY_SCALE)
             {
-                Matrix::createScale(_scale, &_matrix);
+                cocos2d::Mat4::createScale(_scale, &_matrix);
             }
         }
 
@@ -129,12 +129,12 @@ const Matrix& Transform::getMatrix() const
     return _matrix;
 }
 
-const Vector3& Transform::getScale() const
+const cocos2d::Vec3& Transform::getScale() const
 {
     return _scale;
 }
 
-void Transform::getScale(Vector3* scale) const
+void Transform::getScale(cocos2d::Vec3* scale) const
 {
     GP_ASSERT(scale);
     scale->set(_scale);
@@ -155,35 +155,35 @@ float Transform::getScaleZ() const
     return _scale.z;
 }
 
-const Quaternion& Transform::getRotation() const
+const cocos2d::Quaternion& Transform::getRotation() const
 {
     return _rotation;
 }
 
-void Transform::getRotation(Quaternion* rotation) const
+void Transform::getRotation(cocos2d::Quaternion* rotation) const
 {
     GP_ASSERT(rotation);
     rotation->set(_rotation);
 }
 
-void Transform::getRotation(Matrix* rotation) const
+void Transform::getRotation(cocos2d::Mat4* rotation) const
 {
     GP_ASSERT(rotation);
-    Matrix::createRotation(_rotation, rotation);
+    cocos2d::Mat4::createRotation(_rotation, rotation);
 }
 
-float Transform::getRotation(Vector3* axis) const
+float Transform::getRotation(cocos2d::Vec3* axis) const
 {
     GP_ASSERT(axis);
     return _rotation.toAxisAngle(axis);
 }
 
-const Vector3& Transform::getTranslation() const
+const cocos2d::Vec3& Transform::getTranslation() const
 {
     return _translation;
 }
 
-void Transform::getTranslation(Vector3* translation) const
+void Transform::getTranslation(cocos2d::Vec3* translation) const
 {
     GP_ASSERT(translation);
     translation->set(_translation);
@@ -204,74 +204,74 @@ float Transform::getTranslationZ() const
     return _translation.z;
 }
 
-Vector3 Transform::getForwardVector() const
+cocos2d::Vec3 Transform::getForwardVector() const
 {
-    Vector3 v;
+    cocos2d::Vec3 v;
     getForwardVector(&v);
     return v;
 }
 
-void Transform::getForwardVector(Vector3* dst) const
+void Transform::getForwardVector(cocos2d::Vec3* dst) const
 {
     getMatrix().getForwardVector(dst);
 }
 
-Vector3 Transform::getBackVector() const
+cocos2d::Vec3 Transform::getBackVector() const
 {
-    Vector3 v;
+    cocos2d::Vec3 v;
     getBackVector(&v);
     return v;
 }
 
-void Transform::getBackVector(Vector3* dst) const
+void Transform::getBackVector(cocos2d::Vec3* dst) const
 {
     getMatrix().getBackVector(dst);
 }
 
-Vector3 Transform::getUpVector() const
+cocos2d::Vec3 Transform::getUpVector() const
 {
-    Vector3 v;
+    cocos2d::Vec3 v;
     getUpVector(&v);
     return v;
 }
 
-void Transform::getUpVector(Vector3* dst) const
+void Transform::getUpVector(cocos2d::Vec3* dst) const
 {
     getMatrix().getUpVector(dst);
 }
 
-Vector3 Transform::getDownVector() const
+cocos2d::Vec3 Transform::getDownVector() const
 {
-    Vector3 v;
+    cocos2d::Vec3 v;
     getDownVector(&v);
     return v;
 }
 
-void Transform::getDownVector(Vector3* dst) const
+void Transform::getDownVector(cocos2d::Vec3* dst) const
 {
     getMatrix().getDownVector(dst);
 }
 
-Vector3 Transform::getLeftVector() const
+cocos2d::Vec3 Transform::getLeftVector() const
 {
-    Vector3 v;
+    cocos2d::Vec3 v;
     getLeftVector(&v);
     return v;
 }
 
-void Transform::getLeftVector(Vector3* dst) const
+void Transform::getLeftVector(cocos2d::Vec3* dst) const
 {
     getMatrix().getLeftVector(dst);
 }
 
-Vector3 Transform::getRightVector() const
+cocos2d::Vec3 Transform::getRightVector() const
 {
-    Vector3 v;
+    cocos2d::Vec3 v;
     getRightVector(&v);
     return v;
 }
 
-void Transform::getRightVector(Vector3* dst) const
+void Transform::getRightVector(cocos2d::Vec3* dst) const
 {
     getMatrix().getRightVector(dst);
 }
@@ -281,12 +281,12 @@ void Transform::rotate(float qx, float qy, float qz, float qw)
     if (isStatic())
         return;
 
-    Quaternion q(qx, qy, qz, qw);
+    cocos2d::Quaternion q(qx, qy, qz, qw);
     _rotation.multiply(q);
     dirty(DIRTY_ROTATION);
 }
 
-void Transform::rotate(const Quaternion& rotation)
+void Transform::rotate(const cocos2d::Quaternion& rotation)
 {
     if (isStatic())
         return;
@@ -295,25 +295,25 @@ void Transform::rotate(const Quaternion& rotation)
     dirty(DIRTY_ROTATION);
 }
 
-void Transform::rotate(const Vector3& axis, float angle)
+void Transform::rotate(const cocos2d::Vec3& axis, float angle)
 {
     if (isStatic())
         return;
 
-    Quaternion rotationQuat;
-    Quaternion::createFromAxisAngle(axis, angle, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromAxisAngle(axis, angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     _rotation.normalize();
     dirty(DIRTY_ROTATION);
 }
 
-void Transform::rotate(const Matrix& rotation)
+void Transform::rotate(const cocos2d::Mat4& rotation)
 {
     if (isStatic())
         return;
 
-    Quaternion rotationQuat;
-    Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
@@ -323,8 +323,8 @@ void Transform::rotateX(float angle)
     if (isStatic())
         return;
 
-    Quaternion rotationQuat;
-    Quaternion::createFromAxisAngle(Vector3::unitX(), angle, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromAxisAngle(cocos2d::Vec3::UNIT_X, angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
@@ -334,8 +334,8 @@ void Transform::rotateY(float angle)
     if (isStatic())
         return;
 
-    Quaternion rotationQuat;
-    Quaternion::createFromAxisAngle(Vector3::unitY(), angle, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromAxisAngle(cocos2d::Vec3::UNIT_Y, angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
@@ -345,8 +345,8 @@ void Transform::rotateZ(float angle)
     if (isStatic())
         return;
 
-    Quaternion rotationQuat;
-    Quaternion::createFromAxisAngle(Vector3::unitZ(), angle, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromAxisAngle(cocos2d::Vec3::UNIT_Z, angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
@@ -371,7 +371,7 @@ void Transform::scale(float sx, float sy, float sz)
     dirty(DIRTY_SCALE);
 }
 
-void Transform::scale(const Vector3& scale)
+void Transform::scale(const cocos2d::Vec3& scale)
 {
     if (isStatic())
         return;
@@ -409,7 +409,7 @@ void Transform::scaleZ(float sz)
     dirty(DIRTY_SCALE);
 }
 
-void Transform::set(const Vector3& scale, const Quaternion& rotation, const Vector3& translation)
+void Transform::set(const cocos2d::Vec3& scale, const cocos2d::Quaternion& rotation, const cocos2d::Vec3& translation)
 {
     if (isStatic())
         return;
@@ -420,20 +420,20 @@ void Transform::set(const Vector3& scale, const Quaternion& rotation, const Vect
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void Transform::set(const Vector3& scale, const Matrix& rotation, const Vector3& translation)
+void Transform::set(const cocos2d::Vec3& scale, const cocos2d::Mat4& rotation, const cocos2d::Vec3& translation)
 {
     if (isStatic())
         return;
 
     _scale.set(scale);
-    Quaternion rotationQuat;
-    Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
     _rotation.set(rotationQuat);
     _translation.set(translation);
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void Transform::set(const Vector3& scale, const Vector3& axis, float angle, const Vector3& translation)
+void Transform::set(const cocos2d::Vec3& scale, const cocos2d::Vec3& axis, float angle, const cocos2d::Vec3& translation)
 {
     if (isStatic())
         return;
@@ -484,7 +484,7 @@ void Transform::setScale(float sx, float sy, float sz)
     dirty(DIRTY_SCALE);
 }
 
-void Transform::setScale(const Vector3& scale)
+void Transform::setScale(const cocos2d::Vec3& scale)
 {
     _scale.set(scale);
     dirty(DIRTY_SCALE);
@@ -517,7 +517,7 @@ void Transform::setScaleZ(float sz)
     dirty(DIRTY_SCALE);
 }
 
-void Transform::setRotation(const Quaternion& rotation)
+void Transform::setRotation(const cocos2d::Quaternion& rotation)
 {
     if (isStatic())
         return;
@@ -535,18 +535,18 @@ void Transform::setRotation(float qx, float qy, float qz, float qw)
     dirty(DIRTY_ROTATION);
 }
 
-void Transform::setRotation(const Matrix& rotation)
+void Transform::setRotation(const cocos2d::Mat4& rotation)
 {
     if (isStatic())
         return;
 
-    Quaternion rotationQuat;
-    Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
+    cocos2d::Quaternion rotationQuat;
+    cocos2d::Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
     _rotation.set(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
 
-void Transform::setRotation(const Vector3& axis, float angle)
+void Transform::setRotation(const cocos2d::Vec3& axis, float angle)
 {
     if (isStatic())
         return;
@@ -555,7 +555,7 @@ void Transform::setRotation(const Vector3& axis, float angle)
     dirty(DIRTY_ROTATION);
 }
 
-void Transform::setTranslation(const Vector3& translation)
+void Transform::setTranslation(const cocos2d::Vec3& translation)
 {
     if (isStatic())
         return;
@@ -611,7 +611,7 @@ void Transform::translate(float tx, float ty, float tz)
     dirty(DIRTY_TRANSLATION);
 }
 
-void Transform::translate(const Vector3& translation)
+void Transform::translate(const cocos2d::Vec3& translation)
 {
     if (isStatic())
         return;
@@ -657,7 +657,7 @@ void Transform::translateLeft(float amount)
     // Force the current transform matrix to be updated.
     getMatrix();
 
-    Vector3 left;
+    cocos2d::Vec3 left;
     _matrix.getLeftVector(&left);
     left.normalize();
     left.scale(amount);
@@ -673,7 +673,7 @@ void Transform::translateUp(float amount)
     // Force the current transform matrix to be updated.
     getMatrix();
 
-    Vector3 up;
+    cocos2d::Vec3 up;
     _matrix.getUpVector(&up);
     up.normalize();
     up.scale(amount);
@@ -689,7 +689,7 @@ void Transform::translateForward(float amount)
     // Force the current transform matrix to be updated.
     getMatrix();
 
-    Vector3 forward;
+    cocos2d::Vec3 forward;
     _matrix.getForwardVector(&forward);
     forward.normalize();
     forward.scale(amount);
@@ -697,7 +697,7 @@ void Transform::translateForward(float amount)
     translate(forward);
 }
 
-void Transform::translateSmooth(const Vector3& target, float elapsedTime, float responseTime)
+void Transform::translateSmooth(const cocos2d::Vec3& target, float elapsedTime, float responseTime)
 {
     if (isStatic())
         return;
@@ -709,31 +709,31 @@ void Transform::translateSmooth(const Vector3& target, float elapsedTime, float 
     }
 }
 
-void Transform::transformPoint(Vector3* point)
+void Transform::transformPoint(cocos2d::Vec3* point)
 {
     getMatrix();
     _matrix.transformPoint(point);
 }
 
-void Transform::transformPoint(const Vector3& point, Vector3* dst)
+void Transform::transformPoint(const cocos2d::Vec3& point, cocos2d::Vec3* dst)
 {
     getMatrix();
     _matrix.transformPoint(point, dst);
 }
 
-void Transform::transformVector(Vector3* normal)
+void Transform::transformVector(cocos2d::Vec3* normal)
 {
     getMatrix();
     _matrix.transformVector(normal);
 }
 
-void Transform::transformVector(const Vector3& normal, Vector3* dst)
+void Transform::transformVector(const cocos2d::Vec3& normal, cocos2d::Vec3* dst)
 {
     getMatrix();
     _matrix.transformVector(normal, dst);
 }
 
-void Transform::transformVector(float x, float y, float z, float w, Vector3* dst)
+void Transform::transformVector(float x, float y, float z, float w, cocos2d::Vec3* dst)
 {
     getMatrix();
     _matrix.transformVector(x, y, z, w, dst);

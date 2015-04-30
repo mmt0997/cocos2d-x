@@ -401,7 +401,7 @@ void Material::loadRenderState(RenderState* renderState, Properties* properties)
             break;
         case Properties::VECTOR3:
             {
-                Vector3 vector3;
+                cocos2d::Vec3 vector3;
                 if (properties->getVector3(NULL, &vector3))
                 {
                     GP_ASSERT(renderState->getParameter(name));
@@ -411,7 +411,7 @@ void Material::loadRenderState(RenderState* renderState, Properties* properties)
             break;
         case Properties::VECTOR4:
             {
-                Vector4 vector4;
+                cocos2d::Vec4 vector4;
                 if (properties->getVector4(NULL, &vector4))
                 {
                     GP_ASSERT(renderState->getParameter(name));
@@ -421,7 +421,7 @@ void Material::loadRenderState(RenderState* renderState, Properties* properties)
             break;
         case Properties::MATRIX:
             {
-                Matrix matrix;
+                cocos2d::Mat4 matrix;
                 if (properties->getMatrix(NULL, &matrix))
                 {
                     GP_ASSERT(renderState->getParameter(name));

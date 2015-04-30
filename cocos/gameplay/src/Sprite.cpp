@@ -8,7 +8,7 @@ namespace gameplay
 Sprite::Sprite() : Drawable(),
     _width(0), _height(0), _offset(OFFSET_BOTTOM_LEFT), _anchor(cocos2d::Vec2(0.5f, 0.5f)), _flipFlags(FLIP_NONE),
     _frames(NULL), _frameCount(1), _frameStride(0), _framePadding(1), _frameIndex(0),
-    _opacity(1.0f), _color(Vector4::one()), _blendMode(BLEND_ALPHA), _batch(NULL)
+    _opacity(1.0f), _color(cocos2d::Vec4::ONE), _blendMode(BLEND_ALPHA), _batch(NULL)
 {
 }
 
@@ -274,7 +274,7 @@ Sprite* Sprite::create(Properties* properties)
     {
         // Get source frame
         Rectangle source;
-        properties->getVector4("source", (Vector4*)&source);
+        properties->getVector4("source", (cocos2d::Vec4*)&source);
 
         // Get frame count
         int frameCount = properties->getInt("frameCount");
@@ -312,7 +312,7 @@ Sprite* Sprite::create(Properties* properties)
     }
 
     // Get anchor
-    Vector4 vect;
+    cocos2d::Vec4 vect;
     if (properties->getVector2("anchor", (cocos2d::Vec2*)&vect))
     {
         sprite->setAnchor(*((cocos2d::Vec2*)&vect));
@@ -325,7 +325,7 @@ Sprite* Sprite::create(Properties* properties)
         {
             case Properties::VECTOR3:
                 vect.w = 1.0f;
-                properties->getVector3("color", (Vector3*)&vect);
+                properties->getVector3("color", (cocos2d::Vec3*)&vect);
                 break;
             case Properties::VECTOR4:
                 properties->getVector4("color", &vect);
@@ -503,12 +503,12 @@ float Sprite::getOpacity() const
     return _opacity;
 }
 
-void Sprite::setColor(const Vector4& color)
+void Sprite::setColor(const cocos2d::Vec4& color)
 {
     _color = color;
 }
 
-const Vector4& Sprite::getColor() const
+const cocos2d::Vec4& Sprite::getColor() const
 {
     return _color;
 }
@@ -564,7 +564,7 @@ Material* Sprite::getMaterial() const
 unsigned int Sprite::draw(bool wireframe)
 {
     // Apply scene camera projection and translation offsets
-    Vector3 position = Vector3::zero();
+    cocos2d::Vec3 position = cocos2d::Vec3::ZERO;
     if (_node && _node->getScene())
     {
         Camera* activeCamera = _node->getScene()->getActiveCamera();
@@ -574,7 +574,7 @@ unsigned int Sprite::draw(bool wireframe)
             if (cameraNode)
             {
                 // Scene projection
-                Matrix projectionMatrix;
+                cocos2d::Mat4 projectionMatrix;
                 projectionMatrix = _node->getProjectionMatrix();
                 _batch->setProjectionMatrix(projectionMatrix);
                 
@@ -586,7 +586,7 @@ unsigned int Sprite::draw(bool wireframe)
         }
         
         // Apply node translation offsets
-        Vector3 translation = _node->getTranslationWorld();
+        cocos2d::Vec3 translation = _node->getTranslationWorld();
         position.x += translation.x;
         position.y += translation.y;
         position.z += translation.z;
@@ -613,7 +613,7 @@ unsigned int Sprite::draw(bool wireframe)
     if (_node)
     {
         // Apply node rotation
-        const Quaternion& rot = _node->getRotation();
+        const cocos2d::Quaternion& rot = _node->getRotation();
         if (rot.x != 0.0f || rot.y != 0.0f || rot.z != 0.0f)
             rotationAngle = rot.toAxisAngle(NULL);
         
@@ -638,7 +638,7 @@ unsigned int Sprite::draw(bool wireframe)
     
     // TODO: Proper batching from cache based on batching rules (image, layers, etc)
     _batch->start();
-    _batch->draw(position, _frames[_frameIndex], scale, Vector4(_color.x, _color.y, _color.z, _color.w * _opacity),
+    _batch->draw(position, _frames[_frameIndex], scale, cocos2d::Vec4(_color.x, _color.y, _color.z, _color.w * _opacity),
                  _anchor, rotationAngle);
     _batch->finish();
     

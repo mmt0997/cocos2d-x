@@ -398,7 +398,7 @@ bool Node::isStatic() const
     return false;
 }
 
-const Matrix& Node::getWorldMatrix() const
+const cocos2d::Mat4& Node::getWorldMatrix() const
 {
     if (_dirtyBits & NODE_DIRTY_WORLD)
     {
@@ -413,7 +413,7 @@ const Matrix& Node::getWorldMatrix() const
             Node* parent = getParent();
             if (parent)
             {
-                Matrix::multiply(parent->getWorldMatrix(), getMatrix(), &_world);
+                cocos2d::Mat4::multiply(parent->getWorldMatrix(), getMatrix(), &_world);
             }
             else
             {
@@ -431,32 +431,32 @@ const Matrix& Node::getWorldMatrix() const
     return _world;
 }
 
-const Matrix& Node::getWorldViewMatrix() const
+const cocos2d::Mat4& Node::getWorldViewMatrix() const
 {
-    static Matrix worldView;
-    Matrix::multiply(getViewMatrix(), getWorldMatrix(), &worldView);
+    static cocos2d::Mat4 worldView;
+    cocos2d::Mat4::multiply(getViewMatrix(), getWorldMatrix(), &worldView);
     return worldView;
 }
 
-const Matrix& Node::getInverseTransposeWorldViewMatrix() const
+const cocos2d::Mat4& Node::getInverseTransposeWorldViewMatrix() const
 {
-    static Matrix invTransWorldView;
-    Matrix::multiply(getViewMatrix(), getWorldMatrix(), &invTransWorldView);
-    invTransWorldView.invert();
+    static cocos2d::Mat4 invTransWorldView;
+    cocos2d::Mat4::multiply(getViewMatrix(), getWorldMatrix(), &invTransWorldView);
+    invTransWorldView.inverse();
     invTransWorldView.transpose();
     return invTransWorldView;
 }
 
-const Matrix& Node::getInverseTransposeWorldMatrix() const
+const cocos2d::Mat4& Node::getInverseTransposeWorldMatrix() const
 {
-    static Matrix invTransWorld;
+    static cocos2d::Mat4 invTransWorld;
     invTransWorld = getWorldMatrix();
-    invTransWorld.invert();
+    invTransWorld.inverse();
     invTransWorld.transpose();
     return invTransWorld;
 }
 
-const Matrix& Node::getViewMatrix() const
+const cocos2d::Mat4& Node::getViewMatrix() const
 {
     Scene* scene = getScene();
     Camera* camera = scene ? scene->getActiveCamera() : NULL;
@@ -466,11 +466,11 @@ const Matrix& Node::getViewMatrix() const
     }
     else
     {
-        return Matrix::identity();
+        return cocos2d::Mat4::IDENTITY;
     }
 }
 
-const Matrix& Node::getInverseViewMatrix() const
+const cocos2d::Mat4& Node::getInverseViewMatrix() const
 {
     Scene* scene = getScene();
     Camera* camera = scene ? scene->getActiveCamera() : NULL;
@@ -480,11 +480,11 @@ const Matrix& Node::getInverseViewMatrix() const
     }
     else
     {
-        return Matrix::identity();
+        return cocos2d::Mat4::IDENTITY;
     }
 }
 
-const Matrix& Node::getProjectionMatrix() const
+const cocos2d::Mat4& Node::getProjectionMatrix() const
 {
     Scene* scene = getScene();
     Camera* camera = scene ? scene->getActiveCamera() : NULL;
@@ -494,11 +494,11 @@ const Matrix& Node::getProjectionMatrix() const
     }
     else
     {
-        return Matrix::identity();
+        return cocos2d::Mat4::IDENTITY;
     }
 }
 
-const Matrix& Node::getViewProjectionMatrix() const
+const cocos2d::Mat4& Node::getViewProjectionMatrix() const
 {
     Scene* scene = getScene();
     Camera* camera = scene ? scene->getActiveCamera() : NULL;
@@ -508,11 +508,11 @@ const Matrix& Node::getViewProjectionMatrix() const
     }
     else
     {
-        return Matrix::identity();
+        return cocos2d::Mat4::IDENTITY;
     }
 }
 
-const Matrix& Node::getInverseViewProjectionMatrix() const
+const cocos2d::Mat4& Node::getInverseViewProjectionMatrix() const
 {
     Scene* scene = getScene();
     Camera* camera = scene ? scene->getActiveCamera() : NULL;
@@ -520,63 +520,63 @@ const Matrix& Node::getInverseViewProjectionMatrix() const
     {
         return camera->getInverseViewProjectionMatrix();
     }
-    return Matrix::identity();
+    return cocos2d::Mat4::IDENTITY;
 }
 
-const Matrix& Node::getWorldViewProjectionMatrix() const
+const cocos2d::Mat4& Node::getWorldViewProjectionMatrix() const
 {
     // Always re-calculate worldViewProjection matrix since it's extremely difficult
     // to track whether the camera has changed (it may frequently change every frame).
-    static Matrix worldViewProj;
-    Matrix::multiply(getViewProjectionMatrix(), getWorldMatrix(), &worldViewProj);
+    static cocos2d::Mat4 worldViewProj;
+    cocos2d::Mat4::multiply(getViewProjectionMatrix(), getWorldMatrix(), &worldViewProj);
     return worldViewProj;
 }
 
-Vector3 Node::getTranslationWorld() const
+cocos2d::Vec3 Node::getTranslationWorld() const
 {
-    Vector3 translation;
+    cocos2d::Vec3 translation;
     getWorldMatrix().getTranslation(&translation);
     return translation;
 }
 
-Vector3 Node::getTranslationView() const
+cocos2d::Vec3 Node::getTranslationView() const
 {
-    Vector3 translation;
+    cocos2d::Vec3 translation;
     getWorldMatrix().getTranslation(&translation);
     getViewMatrix().transformPoint(&translation);
     return translation;
 }
 
-Vector3 Node::getForwardVectorWorld() const
+cocos2d::Vec3 Node::getForwardVectorWorld() const
 {
-    Vector3 vector;
+    cocos2d::Vec3 vector;
     getWorldMatrix().getForwardVector(&vector);
     return vector;
 }
 
-Vector3 Node::getForwardVectorView() const
+cocos2d::Vec3 Node::getForwardVectorView() const
 {
-    Vector3 vector;
+    cocos2d::Vec3 vector;
     getWorldMatrix().getForwardVector(&vector);
     getViewMatrix().transformVector(&vector);
     return vector;
 }
 
-Vector3 Node::getRightVectorWorld() const
+cocos2d::Vec3 Node::getRightVectorWorld() const
 {
-    Vector3 vector;
+    cocos2d::Vec3 vector;
     getWorldMatrix().getRightVector(&vector);
     return vector;
 }
 
-Vector3 Node::getUpVectorWorld() const
+cocos2d::Vec3 Node::getUpVectorWorld() const
 {
-    Vector3 vector;
+    cocos2d::Vec3 vector;
     getWorldMatrix().getUpVector(&vector);
     return vector;
 }
 
-Vector3 Node::getActiveCameraTranslationWorld() const
+cocos2d::Vec3 Node::getActiveCameraTranslationWorld() const
 {
     Scene* scene = getScene();
     if (scene)
@@ -591,10 +591,10 @@ Vector3 Node::getActiveCameraTranslationWorld() const
             }
         }
     }
-    return Vector3::zero();
+    return cocos2d::Vec3::ZERO;
 }
 
-Vector3 Node::getActiveCameraTranslationView() const
+cocos2d::Vec3 Node::getActiveCameraTranslationView() const
 {
     Scene* scene = getScene();
     if (scene)
@@ -609,7 +609,7 @@ Vector3 Node::getActiveCameraTranslationView() const
             }
         }
     }
-    return Vector3::zero();
+    return cocos2d::Vec3::ZERO;
 }
 
 void Node::hierarchyChanged()
@@ -742,7 +742,7 @@ const BoundingSphere& Node::getBoundingSphere() const
     {
         _dirtyBits &= ~NODE_DIRTY_BOUNDS;
 
-        const Matrix& worldMatrix = getWorldMatrix();
+        const cocos2d::Mat4& worldMatrix = getWorldMatrix();
 
         // Start with our local bounding sphere
         // TODO: Incorporate bounds from entities other than mesh (i.e. particleemitters, audiosource, etc)
@@ -773,12 +773,12 @@ const BoundingSphere& Node::getBoundingSphere() const
             case Light::POINT:
                 if (empty)
                 {
-                    _bounds.set(Vector3::zero(), _light->getRange());
+                    _bounds.set(cocos2d::Vec3::ZERO, _light->getRange());
                     empty = false;
                 }
                 else
                 {
-                    _bounds.merge(BoundingSphere(Vector3::zero(), _light->getRange()));
+                    _bounds.merge(BoundingSphere(cocos2d::Vec3::ZERO, _light->getRange()));
                 }
                 break;
             case Light::SPOT:
@@ -813,8 +813,8 @@ const BoundingSphere& Node::getBoundingSphere() const
                 {
                     // TODO: Should we protect against the case where joints are nested directly
                     // in the node hierachy of the model (this is normally not the case)?
-                    Matrix boundsMatrix;
-                    Matrix::multiply(getWorldMatrix(), jointParent->getWorldMatrix(), &boundsMatrix);
+                    cocos2d::Mat4 boundsMatrix;
+                    cocos2d::Mat4::multiply(getWorldMatrix(), jointParent->getWorldMatrix(), &boundsMatrix);
                     _bounds.transform(boundsMatrix);
                     applyWorldTransform = false;
                 }

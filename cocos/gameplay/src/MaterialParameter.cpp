@@ -147,7 +147,7 @@ void MaterialParameter::setValue(const cocos2d::Vec2* values, unsigned int count
     _type = MaterialParameter::VECTOR2;
 }
 
-void MaterialParameter::setValue(const Vector3& value)
+void MaterialParameter::setValue(const cocos2d::Vec3& value)
 {
     clearValue();
 
@@ -161,7 +161,7 @@ void MaterialParameter::setValue(const Vector3& value)
     _type = MaterialParameter::VECTOR3;
 }
 
-void MaterialParameter::setValue(const Vector3* values, unsigned int count)
+void MaterialParameter::setValue(const cocos2d::Vec3* values, unsigned int count)
 {
     GP_ASSERT(values);
     clearValue();
@@ -171,7 +171,7 @@ void MaterialParameter::setValue(const Vector3* values, unsigned int count)
     _type = MaterialParameter::VECTOR3;
 }
 
-void MaterialParameter::setValue(const Vector4& value)
+void MaterialParameter::setValue(const cocos2d::Vec4& value)
 {
     clearValue();
 
@@ -185,7 +185,7 @@ void MaterialParameter::setValue(const Vector4& value)
     _type = MaterialParameter::VECTOR4;
 }
 
-void MaterialParameter::setValue(const Vector4* values, unsigned int count)
+void MaterialParameter::setValue(const cocos2d::Vec4* values, unsigned int count)
 {
     GP_ASSERT(values);
     clearValue();
@@ -195,7 +195,7 @@ void MaterialParameter::setValue(const Vector4* values, unsigned int count)
     _type = MaterialParameter::VECTOR4;
 }
 
-void MaterialParameter::setValue(const Matrix& value)
+void MaterialParameter::setValue(const cocos2d::Mat4& value)
 {
     // If this parameter is already storing a single dynamic matrix, no need to clear it.
     if (!(_dynamic && _count == 1 && _type == MaterialParameter::MATRIX && _value.floatPtrValue != NULL))
@@ -213,12 +213,12 @@ void MaterialParameter::setValue(const Matrix& value)
     _type = MaterialParameter::MATRIX;
 }
 
-void MaterialParameter::setValue(const Matrix* values, unsigned int count)
+void MaterialParameter::setValue(const cocos2d::Mat4* values, unsigned int count)
 {
     GP_ASSERT(values);
     clearValue();
 
-    _value.floatPtrValue = const_cast<Matrix&> (values[0]).m;
+    _value.floatPtrValue = const_cast<cocos2d::Mat4&> (values[0]).m;
     _count = count;
     _type = MaterialParameter::MATRIX;
 }
@@ -336,12 +336,12 @@ void MaterialParameter::setVector2Array(const cocos2d::Vec2* values, unsigned in
     _type = MaterialParameter::VECTOR2;
 }
 
-void MaterialParameter::setVector3(const Vector3& value)
+void MaterialParameter::setVector3(const cocos2d::Vec3& value)
 {
     setValue(value);
 }
 
-void MaterialParameter::setVector3Array(const Vector3* values, unsigned int count, bool copy)
+void MaterialParameter::setVector3Array(const cocos2d::Vec3* values, unsigned int count, bool copy)
 {
     GP_ASSERT(values);
     clearValue();
@@ -361,12 +361,12 @@ void MaterialParameter::setVector3Array(const Vector3* values, unsigned int coun
     _type = MaterialParameter::VECTOR3;
 }
 
-void MaterialParameter::setVector4(const Vector4& value)
+void MaterialParameter::setVector4(const cocos2d::Vec4& value)
 {
     setValue(value);
 }
 
-void MaterialParameter::setVector4Array(const Vector4* values, unsigned int count, bool copy)
+void MaterialParameter::setVector4Array(const cocos2d::Vec4* values, unsigned int count, bool copy)
 {
     GP_ASSERT(values);
     clearValue();
@@ -386,12 +386,12 @@ void MaterialParameter::setVector4Array(const Vector4* values, unsigned int coun
     _type = MaterialParameter::VECTOR4;
 }
 
-void MaterialParameter::setMatrix(const Matrix& value)
+void MaterialParameter::setMatrix(const cocos2d::Mat4& value)
 {
     setValue(value);
 }
 
-void MaterialParameter::setMatrixArray(const Matrix* values, unsigned int count, bool copy)
+void MaterialParameter::setMatrixArray(const cocos2d::Mat4* values, unsigned int count, bool copy)
 {
     GP_ASSERT(values);
     clearValue();
@@ -399,12 +399,12 @@ void MaterialParameter::setMatrixArray(const Matrix* values, unsigned int count,
     if (copy)
     {
         _value.floatPtrValue = new float[16 * count];
-        memcpy(_value.floatPtrValue, const_cast<Matrix&> (values[0]).m, sizeof(float) * 16 * count);
+        memcpy(_value.floatPtrValue, const_cast<cocos2d::Mat4&> (values[0]).m, sizeof(float) * 16 * count);
         _dynamic = true;
     }
     else
     {
-        _value.floatPtrValue = const_cast<Matrix&> (values[0]).m;
+        _value.floatPtrValue = const_cast<cocos2d::Mat4&> (values[0]).m;
     }
 
     _count = count;
@@ -486,13 +486,13 @@ void MaterialParameter::bind(Effect* effect)
         effect->setValue(_uniform, reinterpret_cast<cocos2d::Vec2*>(_value.floatPtrValue), _count);
         break;
     case MaterialParameter::VECTOR3:
-        effect->setValue(_uniform, reinterpret_cast<Vector3*>(_value.floatPtrValue), _count);
+        effect->setValue(_uniform, reinterpret_cast<cocos2d::Vec3*>(_value.floatPtrValue), _count);
         break;
     case MaterialParameter::VECTOR4:
-        effect->setValue(_uniform, reinterpret_cast<Vector4*>(_value.floatPtrValue), _count);
+        effect->setValue(_uniform, reinterpret_cast<cocos2d::Vec4*>(_value.floatPtrValue), _count);
         break;
     case MaterialParameter::MATRIX:
-        effect->setValue(_uniform, reinterpret_cast<Matrix*>(_value.floatPtrValue), _count);
+        effect->setValue(_uniform, reinterpret_cast<cocos2d::Mat4*>(_value.floatPtrValue), _count);
         break;
     case MaterialParameter::SAMPLER:
         effect->setValue(_uniform, _value.samplerValue);
@@ -522,59 +522,59 @@ void MaterialParameter::bindValue(Node* node, const char* binding)
 
     if (strcmp(binding, "&Node::getBackVector") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getBackVector);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getBackVector);
     }
     else if (strcmp(binding, "&Node::getDownVector") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getDownVector);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getDownVector);
     }
     else if (strcmp(binding, "&Node::getTranslationWorld") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getTranslationWorld);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getTranslationWorld);
     }
     else if (strcmp(binding, "&Node::getTranslationView") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getTranslationView);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getTranslationView);
     }
     else if (strcmp(binding, "&Node::getForwardVector") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getForwardVector);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getForwardVector);
     }
     else if (strcmp(binding, "&Node::getForwardVectorWorld") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getForwardVectorWorld);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getForwardVectorWorld);
     }
     else if (strcmp(binding, "&Node::getForwardVectorView") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getForwardVectorView);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getForwardVectorView);
     }
     else if (strcmp(binding, "&Node::getLeftVector") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getLeftVector);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getLeftVector);
     }
     else if (strcmp(binding, "&Node::getRightVector") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getRightVector);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getRightVector);
     }
     else if (strcmp(binding, "&Node::getRightVectorWorld") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getRightVectorWorld);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getRightVectorWorld);
     }
     else if (strcmp(binding, "&Node::getUpVector") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getUpVector);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getUpVector);
     }
     else if (strcmp(binding, "&Node::getUpVectorWorld") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getUpVectorWorld);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getUpVectorWorld);
     }
     else if (strcmp(binding, "&Node::getActiveCameraTranslationWorld") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getActiveCameraTranslationWorld);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getActiveCameraTranslationWorld);
     }
     else if (strcmp(binding, "&Node::getActiveCameraTranslationView") == 0)
     {
-        bindValue<Node, Vector3>(node, &Node::getActiveCameraTranslationView);
+        bindValue<Node, cocos2d::Vec3>(node, &Node::getActiveCameraTranslationView);
     }
     else if (strcmp(binding, "&Node::getScaleX") == 0)
     {
@@ -681,7 +681,7 @@ void MaterialParameter::cloneInto(MaterialParameter* materialParameter) const
     }   
     case VECTOR3:
     {
-        Vector3* value = reinterpret_cast<Vector3*>(_value.floatPtrValue);
+        cocos2d::Vec3* value = reinterpret_cast<cocos2d::Vec3*>(_value.floatPtrValue);
         if (_count == 1)
         {
             GP_ASSERT(value);
@@ -695,7 +695,7 @@ void MaterialParameter::cloneInto(MaterialParameter* materialParameter) const
     }
     case VECTOR4:
     {
-        Vector4* value = reinterpret_cast<Vector4*>(_value.floatPtrValue);
+        cocos2d::Vec4* value = reinterpret_cast<cocos2d::Vec4*>(_value.floatPtrValue);
         if (_count == 1)
         {
             GP_ASSERT(value);
@@ -709,7 +709,7 @@ void MaterialParameter::cloneInto(MaterialParameter* materialParameter) const
     }
     case MATRIX:
     {
-        Matrix* value = reinterpret_cast<Matrix*>(_value.floatPtrValue);
+        cocos2d::Mat4* value = reinterpret_cast<cocos2d::Mat4*>(_value.floatPtrValue);
         if (_count == 1)
         {
             GP_ASSERT(value);

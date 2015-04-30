@@ -13,14 +13,14 @@ Plane::Plane()
 {
 }
 
-Plane::Plane(const Vector3& normal, float distance)
+Plane::Plane(const cocos2d::Vec3& normal, float distance)
 {
     set(normal, distance);
 }
 
 Plane::Plane(float normalX, float normalY, float normalZ, float distance)
 {
-    set(Vector3(normalX, normalY, normalZ), distance);
+    set(cocos2d::Vec3(normalX, normalY, normalZ), distance);
 }
 
 Plane::Plane(const Plane& copy)
@@ -32,12 +32,12 @@ Plane::~Plane()
 {
 }
 
-const Vector3& Plane::getNormal() const
+const cocos2d::Vec3& Plane::getNormal() const
 {
     return _normal;
 }
 
-void Plane::setNormal(const Vector3& normal)
+void Plane::setNormal(const cocos2d::Vec3& normal)
 {
     _normal = normal;
     normalize();
@@ -59,12 +59,12 @@ void Plane::setDistance(float distance)
     _distance = distance;
 }
 
-float Plane::distance(const Vector3& point) const
+float Plane::distance(const cocos2d::Vec3& point) const
 {
     return _normal.x * point.x + _normal.y * point.y + _normal.z * point.z + _distance;
 }
 
-void Plane::intersection(const Plane& p1, const Plane& p2, const Plane& p3, Vector3* point)
+void Plane::intersection(const Plane& p1, const Plane& p2, const Plane& p3, cocos2d::Vec3* point)
 {
     GP_ASSERT(point);
 
@@ -125,7 +125,7 @@ float Plane::intersects(const BoundingBox& box) const
 float Plane::intersects(const Frustum& frustum) const
 {
     // Get the corners of the frustum.
-    Vector3 corners[8];
+    cocos2d::Vec3 corners[8];
     frustum.getCorners(corners);
 
     // Calculate the distances from all of the corners to the plane.
@@ -179,7 +179,7 @@ float Plane::intersects(const Plane& plane) const
     }
 
     // Calculate the point where the given plane's normal vector intersects the given plane.
-    Vector3 point(plane._normal.x * -plane._distance, plane._normal.y * -plane._distance, plane._normal.z * -plane._distance);
+    cocos2d::Vec3 point(plane._normal.x * -plane._distance, plane._normal.y * -plane._distance, plane._normal.z * -plane._distance);
 
     // Calculate whether the given plane is in the positive or negative half-space of this plane
     // (corresponds directly to the sign of the distance from the point calculated above to this plane).
@@ -205,7 +205,7 @@ float Plane::intersects(const Ray& ray) const
     }
     else
     {
-        Vector3 rayDirection = ray.getDirection();
+        cocos2d::Vec3 rayDirection = ray.getDirection();
         // If the dot product of this plane's normal and the ray's direction is positive, and
         // if the distance from this plane to the ray's origin is negative -> intersection, OR
         // if the dot product of this plane's normal and the ray's direction is negative, and
@@ -242,7 +242,7 @@ bool Plane::isParallel(const Plane& plane) const
            (_normal.x * plane._normal.y) - (_normal.y * plane._normal.x) == 0.0f;
 }
 
-void Plane::set(const Vector3& normal, float distance)
+void Plane::set(const cocos2d::Vec3& normal, float distance)
 {
     _normal = normal;
     _distance = distance;
@@ -255,10 +255,10 @@ void Plane::set(const Plane& plane)
     _distance = plane._distance;
 }
 
-void Plane::transform(const Matrix& matrix)
+void Plane::transform(const cocos2d::Mat4& matrix)
 {
-    Matrix inverted;
-    if (matrix.invert(&inverted))
+    cocos2d::Mat4 inverted = matrix;
+    if (inverted.inverse())
     {
         // Treat the plane as a four-tuple and multiply by the inverse transpose of the matrix to get the transformed plane.
         // Then we normalize the plane by dividing both the normal and the distance by the length of the normal.

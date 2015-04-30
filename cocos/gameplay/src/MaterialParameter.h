@@ -2,9 +2,6 @@
 #define MATERIALPARAMETER_H_
 
 #include "math/CCMath.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix.h"
 #include "Texture.h"
 #include "Effect.h"
 
@@ -23,8 +20,8 @@ namespace gameplay
  * Setting a parameter by reference/pointer provides the ability to
  * pass an array of values as well as a convenient way to support
  * auto-binding of values to a material parameter. For example, by
- * setting the parameter value to a pointer to a Matrix, any changes
- * to the Matrix will automatically be reflected in the technique the
+ * setting the parameter value to a pointer to a cocos2d::Mat4, any changes
+ * to the cocos2d::Mat4 will automatically be reflected in the technique the
  * next time the parameter is applied to the render state.
  *
  * Note that for parameter values to arrays or pointers, the 
@@ -90,34 +87,34 @@ public:
     void setValue(const cocos2d::Vec2* values, unsigned int count = 1);
 
     /**
-     * Stores a copy of the specified Vector3 value in this parameter.
+     * Stores a copy of the specified cocos2d::Vec3 value in this parameter.
      */
-    void setValue(const Vector3& value);
+    void setValue(const cocos2d::Vec3& value);
 
     /**
-     * Stores a pointer/array of Vector3 values in this parameter.
+     * Stores a pointer/array of cocos2d::Vec3 values in this parameter.
      */
-    void setValue(const Vector3* values, unsigned int count = 1);
+    void setValue(const cocos2d::Vec3* values, unsigned int count = 1);
 
     /**
-     * Stores a copy of the specified Vector4 value in this parameter.
+     * Stores a copy of the specified cocos2d::Vec4 value in this parameter.
      */
-    void setValue(const Vector4& value);
+    void setValue(const cocos2d::Vec4& value);
 
     /**
-     * Stores a pointer/array of Vector4 values in this parameter.
+     * Stores a pointer/array of cocos2d::Vec4 values in this parameter.
      */
-    void setValue(const Vector4* values, unsigned int count = 1);
+    void setValue(const cocos2d::Vec4* values, unsigned int count = 1);
 
     /**
-     * Stores a copy of the specified Matrix value in this parameter.
+     * Stores a copy of the specified cocos2d::Mat4 value in this parameter.
      */
-    void setValue(const Matrix& value);
+    void setValue(const cocos2d::Mat4& value);
 
     /**
-     * Stores a pointer/array of Matrix values in this parameter.
+     * Stores a pointer/array of cocos2d::Mat4 values in this parameter.
      */
-    void setValue(const Matrix* values, unsigned int count = 1);
+    void setValue(const cocos2d::Mat4* values, unsigned int count = 1);
 
     /**
      * Sets the value of this parameter to the specified texture sampler.
@@ -190,26 +187,26 @@ public:
     void setVector2Array(const cocos2d::Vec2* values, unsigned int count, bool copy = false);
 
     /**
-     * Stores a Vector3 value in this parameter.
+     * Stores a cocos2d::Vec3 value in this parameter.
      *
      * @param value The value to set.
      */
-    void setVector3(const Vector3& value);
+    void setVector3(const cocos2d::Vec3& value);
 
     /**
-     * Stores an array of Vector3 values in this parameter.
+     * Stores an array of cocos2d::Vec3 values in this parameter.
      */
-    void setVector3Array(const Vector3* values, unsigned int count, bool copy = false);
+    void setVector3Array(const cocos2d::Vec3* values, unsigned int count, bool copy = false);
 
     /**
-     * Stores a Vector4 value in this parameter.
+     * Stores a cocos2d::Vec4 value in this parameter.
      *
      * @param value The value to set.
      */
-    void setVector4(const Vector4& value);
+    void setVector4(const cocos2d::Vec4& value);
 
     /**
-     * Stores an array of Vector4 values in this parameter.
+     * Stores an array of cocos2d::Vec4 values in this parameter.
      *
      * @param values The array of values.
      * @param count The number of values in the array.
@@ -217,17 +214,17 @@ public:
      *      to point to the passed in array/pointer (which must be valid for the lifetime
      *      of the MaterialParameter).
      */
-    void setVector4Array(const Vector4* values, unsigned int count, bool copy = false);
+    void setVector4Array(const cocos2d::Vec4* values, unsigned int count, bool copy = false);
 
     /**
-     * Stores a Matrix value in this parameter.
+     * Stores a cocos2d::Mat4 value in this parameter.
      *
      * @param value The value to set.
      */
-    void setMatrix(const Matrix& value);
+    void setMatrix(const cocos2d::Mat4& value);
 
     /**
-     * Stores an array of Matrix values in this parameter.
+     * Stores an array of cocos2d::Mat4 values in this parameter.
      *
      * @param values The array of values.
      * @param count The number of values in the array.
@@ -235,7 +232,7 @@ public:
      *      to point to the passed in array/pointer (which must be valid for the lifetime
      *      of the MaterialParameter).
      */
-    void setMatrixArray(const Matrix* values, unsigned int count, bool copy = false);
+    void setMatrixArray(const cocos2d::Mat4* values, unsigned int count, bool copy = false);
 
     /**
      * Loads a texture sampler from the specified path and sets it as the value of this parameter.
@@ -288,7 +285,7 @@ public:
      *
      * This overloads the setBinding method to provide support for array parameters.
      * The valueMethod parameter should return an array (pointer) of a supported
-     * material parameter type, such as Matrix* for an array of matrices. The
+     * material parameter type, such as cocos2d::Mat4* for an array of matrices. The
      * countMethod should point to a method that returns the number of entries in
      * the value returned from valueMethod.
      *

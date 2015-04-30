@@ -128,7 +128,7 @@ private:
 
     unsigned int computeLOD(Camera* camera, const BoundingBox& worldBounds);
 
-    const Vector3& getAmbientColor() const;
+    const cocos2d::Vec3& getAmbientColor() const;
 
     void setMaterialDirty();
 

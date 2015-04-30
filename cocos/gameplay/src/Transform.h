@@ -2,9 +2,7 @@
 #define TRANSFORM_H_
 
 #include "ScriptTarget.h"
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "Matrix.h"
+#include "math/CCMath.h"
 
 namespace gameplay
 {
@@ -22,9 +20,9 @@ class ScriptListener;
  * component is updated (it is not as if the scale, rotate, or translate
  * is applied to the transform's matrix).
  *
- * Note: To construct a Transform from a transformation matrix stored as a Matrix,
- * first decompose the Matrix into its separate translation, scale, and rotation
- * components using matrix.decompose(Vector3, Quaternion, Vector3) and then pass
+ * Note: To construct a Transform from a transformation matrix stored as a cocos2d::Mat4,
+ * first decompose the cocos2d::Mat4 into its separate translation, scale, and rotation
+ * components using matrix.decompose(cocos2d::Vec3, cocos2d::Quaternion, cocos2d::Vec3) and then pass
  * those arguments to the appropriate constructor or set methods of Transform.
  */
 class Transform// : public AnimationTarget, public ScriptTarget
@@ -152,7 +150,7 @@ public:
      * @param rotation The rotation quaternion.
      * @param translation The translation vector.
      */
-    Transform(const Vector3& scale, const Quaternion& rotation, const Vector3& translation);
+    Transform(const cocos2d::Vec3& scale, const cocos2d::Quaternion& rotation, const cocos2d::Vec3& translation);
 
     /**
      * Constructs a new transform from the specified values.
@@ -161,7 +159,7 @@ public:
      * @param rotation The rotation matrix.
      * @param translation The translation vector.
      */
-    Transform(const Vector3& scale, const Matrix& rotation, const Vector3& translation);
+    Transform(const cocos2d::Vec3& scale, const cocos2d::Mat4& rotation, const cocos2d::Vec3& translation);
 
     /**
      * Constructs a new transform from the given transform.
@@ -195,19 +193,19 @@ public:
      *
      * @return The matrix of this transform.
      */
-    const Matrix& getMatrix() const;
+    const cocos2d::Mat4& getMatrix() const;
 
     /**
      * Returns the scale for this transform.
      */
-    const Vector3& getScale() const;
+    const cocos2d::Vec3& getScale() const;
 
     /**
      * Gets the scale component of this transform in the specified vector.
      *
      * @param scale The vector to store the scale in.
      */
-    void getScale(Vector3* scale) const;
+    void getScale(cocos2d::Vec3* scale) const;
 
     /**
      * Gets the scale factor along the x-axis of this transform.
@@ -233,43 +231,43 @@ public:
     /**
      * Returns the rotation for this transform.
      */
-    const Quaternion& getRotation() const;
+    const cocos2d::Quaternion& getRotation() const;
 
     /**
      * Gets the rotation component of this transform in the specified quaternion.
      *
      * @param rotation The quaternion to store the rotation in.
      */
-    void getRotation(Quaternion* rotation) const;
+    void getRotation(cocos2d::Quaternion* rotation) const;
 
     /**
      * Gets the rotation component of this transform in the specified matrix.
      *
      * @param rotation The matrix to store the rotation in.
      */
-    void getRotation(Matrix* rotation) const;
+    void getRotation(cocos2d::Mat4* rotation) const;
 
     /**
      * Gets the angle of rotation, and stores the axis of rotation
-     * of this transform in the specified Vector3.
+     * of this transform in the specified cocos2d::Vec3.
      *
      * @param axis The vector to store the axis of rotation.
      * 
      * @return The angle of rotation.
      */
-    float getRotation(Vector3* axis) const;
+    float getRotation(cocos2d::Vec3* axis) const;
 
     /**
      * Returns the translation for this transform.
      */
-    const Vector3& getTranslation() const;
+    const cocos2d::Vec3& getTranslation() const;
 
     /**
      * Gets the translation component of this transform in the specified vector.
      *
      * @param translation The vector to store the translation in.
      */
-    void getTranslation(Vector3* translation) const;
+    void getTranslation(cocos2d::Vec3* translation) const;
 
     /**
      * Gets the translation factor along the x-axis of this transform.
@@ -295,74 +293,74 @@ public:
     /**
      * Returns the forward vector for this Transform.
      */
-    Vector3 getForwardVector() const;
+    cocos2d::Vec3 getForwardVector() const;
 
     /**
      * Returns the forward vector for this Transform.
      * 
      * @param dst The vector to store the result in.
      */
-    void getForwardVector(Vector3* dst) const;
+    void getForwardVector(cocos2d::Vec3* dst) const;
 
     /**
      * Returns the back vector for this transform.
      */
-    Vector3 getBackVector() const;
+    cocos2d::Vec3 getBackVector() const;
 
     /**
      * Returns the back vector for this Transform.
      *
      * @param dst The vector to store the result in.
      */
-    void getBackVector(Vector3* dst) const;
+    void getBackVector(cocos2d::Vec3* dst) const;
 
     /**
      * Returns the up vector for this Transform.
      */
-    Vector3 getUpVector() const;
+    cocos2d::Vec3 getUpVector() const;
 
     /**
      * Returns the up vector for this Transform.
      * 
      * @param dst The vector to store the result in.
      */
-    void getUpVector(Vector3* dst) const;
+    void getUpVector(cocos2d::Vec3* dst) const;
 
     /**
      * Returns the down vector for this transform.
      */
-    Vector3 getDownVector() const;
+    cocos2d::Vec3 getDownVector() const;
 
     /**
      * Returns the down vector for this Transform.
      *
      * @param dst The vector to store the result in.
      */
-    void getDownVector(Vector3* dst) const;
+    void getDownVector(cocos2d::Vec3* dst) const;
 
     /**
      * Returns the left vector for this Transform.
      */
-    Vector3 getLeftVector() const;
+    cocos2d::Vec3 getLeftVector() const;
 
     /**
      * Returns the left vector for this Transform.
      * 
      * @param dst The vector to store the result in.
      */
-    void getLeftVector(Vector3* dst) const;
+    void getLeftVector(cocos2d::Vec3* dst) const;
 
     /**
      * Returns the right vector for this transform.
      */
-    Vector3 getRightVector() const;
+    cocos2d::Vec3 getRightVector() const;
 
     /**
      * Returns the right vector for this Transform.
      *
      * @param dst The vector to store the result in.
      */
-    void getRightVector(Vector3* dst) const;
+    void getRightVector(cocos2d::Vec3* dst) const;
 
     /**
      * Rotates this transform's rotation component by the given rotation.
@@ -379,7 +377,7 @@ public:
      *
      * @param rotation The rotation to rotate by (as a quaternion).
      */
-    void rotate(const Quaternion& rotation);
+    void rotate(const cocos2d::Quaternion& rotation);
 
     /**
      * Rotates this transform's rotation component by the given rotation
@@ -388,14 +386,14 @@ public:
      * @param axis The axis to rotate about.
      * @param angle The axis to rotate about (in radians).
      */
-    void rotate(const Vector3& axis, float angle);
+    void rotate(const cocos2d::Vec3& axis, float angle);
 
     /**
      * Rotates this transform's rotation component by the given rotation.
      *
      * @param rotation The rotation to rotate by (as a matrix).
      */
-    void rotate(const Matrix& rotation);
+    void rotate(const cocos2d::Mat4& rotation);
 
     /**
      * Rotates this transform's rotation component by the given angle
@@ -442,7 +440,7 @@ public:
      *
      * @param scale The vector to scale by.
      */
-    void scale(const Vector3& scale);
+    void scale(const cocos2d::Vec3& scale);
 
     /**
      * Scales this transform's scale component by the given scale
@@ -475,7 +473,7 @@ public:
      * @param rotation The rotation quaternion.
      * @param translation The translation vector.
      */
-    void set(const Vector3& scale, const Quaternion& rotation, const Vector3& translation);
+    void set(const cocos2d::Vec3& scale, const cocos2d::Quaternion& rotation, const cocos2d::Vec3& translation);
 
     /**
      * Sets the transform to the specified values.
@@ -484,7 +482,7 @@ public:
      * @param rotation The rotation matrix.
      * @param translation The translation vector.
      */
-    void set(const Vector3& scale, const Matrix& rotation, const Vector3& translation);
+    void set(const cocos2d::Vec3& scale, const cocos2d::Mat4& rotation, const cocos2d::Vec3& translation);
 
     /**
      * Sets the transform to the specified values.
@@ -494,7 +492,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param translation The translation vector.
      */
-    void set(const Vector3& scale, const Vector3& axis, float angle, const Vector3& translation);
+    void set(const cocos2d::Vec3& scale, const cocos2d::Vec3& axis, float angle, const cocos2d::Vec3& translation);
 
     /**
      * Sets this transform to the specified transform.
@@ -532,7 +530,7 @@ public:
      *
      * @param scale The scale vector.
      */
-    void setScale(const Vector3& scale);
+    void setScale(const cocos2d::Vec3& scale);
 
     /**
      * Sets the scale factor along the x-axis for this transform
@@ -575,7 +573,7 @@ public:
      *
      * @param rotation The rotation as a quaternion.
      */
-    void setRotation(const Quaternion& rotation);
+    void setRotation(const cocos2d::Quaternion& rotation);
 
     /**
      * Sets the rotation component for this transform to the
@@ -583,7 +581,7 @@ public:
      *
      * @param rotation The rotation as a matrix.
      */
-    void setRotation(const Matrix& rotation);
+    void setRotation(const cocos2d::Mat4& rotation);
 
     /**
      * Sets the rotation component for this transform to the rotation from the specified axis and angle.
@@ -591,7 +589,7 @@ public:
      * @param axis The axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    void setRotation(const Vector3& axis, float angle);
+    void setRotation(const cocos2d::Vec3& axis, float angle);
 
     /**
      * Sets the translation component for this transform to the
@@ -599,7 +597,7 @@ public:
      *
      * @param translation The translation vector.
      */
-    void setTranslation(const Vector3& translation);
+    void setTranslation(const cocos2d::Vec3& translation);
 
     /**
      * Sets the translation component for this transform
@@ -651,7 +649,7 @@ public:
      *
      * @param translation The amount to translate.
      */
-    void translate(const Vector3& translation);
+    void translate(const cocos2d::Vec3& translation);
 
     /**
      * Translates this transform's translation component by the
@@ -709,7 +707,7 @@ public:
      * @param elapsedTime elapsed time between calls.
      * @param responseTime response time (in the same units as elapsedTime).
      */
-    void translateSmooth(const Vector3& target, float elapsedTime, float responseTime);
+    void translateSmooth(const cocos2d::Vec3& target, float elapsedTime, float responseTime);
 
     /**
      * Transforms the specified point and stores the
@@ -717,7 +715,7 @@ public:
      *
      * @param point The point to transform.
      */
-    void transformPoint(Vector3* point);
+    void transformPoint(cocos2d::Vec3* point);
 
     /**
      * Transforms the specified point and stores the
@@ -726,7 +724,7 @@ public:
      * @param point The point to transform.
      * @param dst The point to store the result in.
      */
-    void transformPoint(const Vector3& point, Vector3* dst);
+    void transformPoint(const cocos2d::Vec3& point, cocos2d::Vec3* dst);
 
     /**
      * Transforms the specified vector and stores the
@@ -734,7 +732,7 @@ public:
      *
      * @param vector The vector to transform.
      */
-    void transformVector(Vector3* vector);
+    void transformVector(cocos2d::Vec3* vector);
 
     /**
      * Transforms the specified vector and stores the result
@@ -743,7 +741,7 @@ public:
      * @param transformVector The vector to transform.
      * @param dst The vector to store the result in.
      */
-    void transformVector(const Vector3& transformVector, Vector3* dst);
+    void transformVector(const cocos2d::Vec3& transformVector, cocos2d::Vec3* dst);
 
     /**
      * Transforms the specified vector and stores the result
@@ -755,7 +753,7 @@ public:
      * @param w The w factor to transform.
      * @param dst The vector to store the result in.
      */
-    void transformVector(float x, float y, float z, float w, Vector3* dst);
+    void transformVector(float x, float y, float z, float w, cocos2d::Vec3* dst);
 
     /**
      * Returns whether or not this Transform object is static.
@@ -847,25 +845,25 @@ protected:
     /**
      * The scale component of the Transform.
      */
-    Vector3 _scale;
+    cocos2d::Vec3 _scale;
 
     /** 
      * The rotation component of the Transform.
      */
-    Quaternion _rotation;
+    cocos2d::Quaternion _rotation;
     
     /** 
      * The translation component of the Transform.
      */
-    Vector3 _translation;
+    cocos2d::Vec3 _translation;
     
     /** 
-     * The Matrix representation of the Transform.
+     * The cocos2d::Mat4 representation of the Transform.
      */
-    mutable Matrix _matrix;
+    mutable cocos2d::Mat4 _matrix;
     
     /** 
-     * Matrix dirty bits flag.
+     * cocos2d::Mat4 dirty bits flag.
      */
     mutable char _matrixDirtyBits;
     

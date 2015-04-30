@@ -420,7 +420,7 @@ void Game::setViewport(const Rectangle& viewport)
     glViewport((GLuint)viewport.x, (GLuint)viewport.y, (GLuint)viewport.width, (GLuint)viewport.height);
 }
 
-void Game::clear(ClearFlags flags, const Vector4& clearColor, float clearDepth, int clearStencil)
+void Game::clear(ClearFlags flags, const cocos2d::Vec4& clearColor, float clearDepth, int clearStencil)
 {
     GLbitfield bits = 0;
     if (flags & CLEAR_COLOR)
@@ -465,7 +465,7 @@ void Game::clear(ClearFlags flags, const Vector4& clearColor, float clearDepth, 
 
 void Game::clear(ClearFlags flags, float red, float green, float blue, float alpha, float clearDepth, int clearStencil)
 {
-    clear(flags, Vector4(red, green, blue, alpha), clearDepth, clearStencil);
+    clear(flags, cocos2d::Vec4(red, green, blue, alpha), clearDepth, clearStencil);
 }
 
 void Game::keyEvent(Keyboard::KeyEvent evt, int key)

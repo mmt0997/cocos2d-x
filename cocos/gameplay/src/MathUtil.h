@@ -1,6 +1,8 @@
 #ifndef MATHUTIL_H_
 #define MATHUTIL_H_
 
+#include "math/CCMath.h"
+
 namespace gameplay
 {
 /**
@@ -10,8 +12,8 @@ namespace gameplay
  */
 class MathUtil
 {
-    friend class Matrix;
-    friend class Vector3;
+    friend class cocos2d::Mat4;
+    friend class cocos2d::Vec3;
 
 public:
 

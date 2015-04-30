@@ -103,7 +103,7 @@ private:
      * @param pos desired position.
      * @param rot desired rotation.
      */
-    void reset(const gameplay::Vector3& pos, const gameplay::Quaternion& rot);
+    void reset(const cocos2d::Vec3& pos, const cocos2d::Quaternion& rot);
 
     /**
      * Indicates that the vehicle may be over-turned.

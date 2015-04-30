@@ -138,7 +138,7 @@ private:
     {
         MeshSkin* skin;
         std::vector<std::string> joints;
-        std::vector<Matrix> inverseBindPoseMatrices;
+        std::vector<cocos2d::Mat4> inverseBindPoseMatrices;
     };
 
     struct MeshPartData

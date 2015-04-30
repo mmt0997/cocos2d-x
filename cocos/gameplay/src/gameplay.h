@@ -15,10 +15,6 @@
 // Math
 #include "math/CCMath.h"
 #include "Rectangle.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Quaternion.h"
-#include "Matrix.h"
 #include "Transform.h"
 #include "Ray.h"
 #include "Plane.h"

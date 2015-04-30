@@ -8,10 +8,10 @@ namespace gameplay
 
 Frustum::Frustum()
 {
-    set(Matrix::identity());
+    set(cocos2d::Mat4::IDENTITY);
 }
 
-Frustum::Frustum(const Matrix& matrix)
+Frustum::Frustum(const cocos2d::Mat4& matrix)
 {
     set(matrix);
 }
@@ -55,19 +55,19 @@ const Plane& Frustum::getTop() const
     return _top;
 }
 
-void Frustum::getMatrix(Matrix* dst) const
+void Frustum::getMatrix(cocos2d::Mat4* dst) const
 {
     GP_ASSERT(dst);
     dst->set(_matrix);
 }
 
-void Frustum::getCorners(Vector3* corners) const
+void Frustum::getCorners(cocos2d::Vec3* corners) const
 {
     getNearCorners(corners);
     getFarCorners(corners + 4);
 }
 
-void Frustum::getNearCorners(Vector3* corners) const
+void Frustum::getNearCorners(cocos2d::Vec3* corners) const
 {
     GP_ASSERT(corners);
 
@@ -77,7 +77,7 @@ void Frustum::getNearCorners(Vector3* corners) const
     Plane::intersection(_near, _right, _top, &corners[3]);
 }
 
-void Frustum::getFarCorners(Vector3* corners) const
+void Frustum::getFarCorners(cocos2d::Vec3* corners) const
 {
     GP_ASSERT(corners);
 
@@ -87,7 +87,7 @@ void Frustum::getFarCorners(Vector3* corners) const
     Plane::intersection(_far, _left, _top, &corners[3]);
 }
 
-bool Frustum::intersects(const Vector3& point) const
+bool Frustum::intersects(const cocos2d::Vec3& point) const
 {
     if (_near.distance(point) <= 0)
         return false;
@@ -107,7 +107,7 @@ bool Frustum::intersects(const Vector3& point) const
 
 bool Frustum::intersects(float x, float y, float z) const
 {
-    return intersects(Vector3(x, y, z));
+    return intersects(cocos2d::Vec3(x, y, z));
 }
 
 bool Frustum::intersects(const BoundingSphere& sphere) const
@@ -143,15 +143,15 @@ void Frustum::set(const Frustum& frustum)
 
 void Frustum::updatePlanes()
 {
-    _near.set(Vector3(_matrix.m[3] + _matrix.m[2], _matrix.m[7] + _matrix.m[6], _matrix.m[11] + _matrix.m[10]), _matrix.m[15] + _matrix.m[14]);
-    _far.set(Vector3(_matrix.m[3] - _matrix.m[2], _matrix.m[7] - _matrix.m[6], _matrix.m[11] - _matrix.m[10]), _matrix.m[15] - _matrix.m[14]);
-    _bottom.set(Vector3(_matrix.m[3] + _matrix.m[1], _matrix.m[7] + _matrix.m[5], _matrix.m[11] + _matrix.m[9]), _matrix.m[15] + _matrix.m[13]);
-    _top.set(Vector3(_matrix.m[3] - _matrix.m[1], _matrix.m[7] - _matrix.m[5], _matrix.m[11] - _matrix.m[9]), _matrix.m[15] - _matrix.m[13]);
-    _left.set(Vector3(_matrix.m[3] + _matrix.m[0], _matrix.m[7] + _matrix.m[4], _matrix.m[11] + _matrix.m[8]), _matrix.m[15] + _matrix.m[12]);
-    _right.set(Vector3(_matrix.m[3] - _matrix.m[0], _matrix.m[7] - _matrix.m[4], _matrix.m[11] - _matrix.m[8]), _matrix.m[15] - _matrix.m[12]);
+    _near.set(cocos2d::Vec3(_matrix.m[3] + _matrix.m[2], _matrix.m[7] + _matrix.m[6], _matrix.m[11] + _matrix.m[10]), _matrix.m[15] + _matrix.m[14]);
+    _far.set(cocos2d::Vec3(_matrix.m[3] - _matrix.m[2], _matrix.m[7] - _matrix.m[6], _matrix.m[11] - _matrix.m[10]), _matrix.m[15] - _matrix.m[14]);
+    _bottom.set(cocos2d::Vec3(_matrix.m[3] + _matrix.m[1], _matrix.m[7] + _matrix.m[5], _matrix.m[11] + _matrix.m[9]), _matrix.m[15] + _matrix.m[13]);
+    _top.set(cocos2d::Vec3(_matrix.m[3] - _matrix.m[1], _matrix.m[7] - _matrix.m[5], _matrix.m[11] - _matrix.m[9]), _matrix.m[15] - _matrix.m[13]);
+    _left.set(cocos2d::Vec3(_matrix.m[3] + _matrix.m[0], _matrix.m[7] + _matrix.m[4], _matrix.m[11] + _matrix.m[8]), _matrix.m[15] + _matrix.m[12]);
+    _right.set(cocos2d::Vec3(_matrix.m[3] - _matrix.m[0], _matrix.m[7] - _matrix.m[4], _matrix.m[11] - _matrix.m[8]), _matrix.m[15] - _matrix.m[12]);
 }
 
-void Frustum::set(const Matrix& matrix)
+void Frustum::set(const cocos2d::Mat4& matrix)
 {
     _matrix.set(matrix);
 

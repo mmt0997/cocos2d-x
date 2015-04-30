@@ -21,7 +21,7 @@ MeshSkin::~MeshSkin()
     SAFE_DELETE_ARRAY(_matrixPalette);
 }
 
-const Matrix& MeshSkin::getBindShape() const
+const cocos2d::Mat4& MeshSkin::getBindShape() const
 {
     return _bindShape;
 }
@@ -121,12 +121,12 @@ void MeshSkin::setJointCount(unsigned int jointCount)
         _joints[i] = NULL;
     }
 
-    // Rebuild the matrix palette. Each matrix is 3 rows of Vector4.
+    // Rebuild the matrix palette. Each matrix is 3 rows of cocos2d::Vec4.
     SAFE_DELETE_ARRAY(_matrixPalette);
 
     if (jointCount > 0)
     {
-        _matrixPalette = new Vector4[jointCount * PALETTE_ROWS];
+        _matrixPalette = new cocos2d::Vec4[jointCount * PALETTE_ROWS];
         for (unsigned int i = 0; i < jointCount * PALETTE_ROWS; i+=PALETTE_ROWS)
         {
             _matrixPalette[i+0].set(1.0f, 0.0f, 0.0f, 0.0f);
@@ -155,7 +155,7 @@ void MeshSkin::setJoint(Joint* joint, unsigned int index)
     }
 }
 
-Vector4* MeshSkin::getMatrixPalette() const
+cocos2d::Vec4* MeshSkin::getMatrixPalette() const
 {
     GP_ASSERT(_matrixPalette);
 

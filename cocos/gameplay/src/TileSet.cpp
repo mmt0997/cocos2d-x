@@ -1,6 +1,6 @@
 #include "Base.h"
 #include "TileSet.h"
-#include "Matrix.h"
+#include "math/CCMath.h"
 #include "Scene.h"
 
 namespace gameplay
@@ -9,7 +9,7 @@ namespace gameplay
 TileSet::TileSet() : Drawable(),
     _tiles(NULL), _tileWidth(0), _tileHeight(0),
     _rowCount(0), _columnCount(0), _width(0), _height(0),
-    _opacity(1.0f), _color(Vector4::one()), _batch(NULL)
+    _opacity(1.0f), _color(cocos2d::Vec4::ONE), _batch(NULL)
 {
 }
 
@@ -102,12 +102,12 @@ TileSet* TileSet::create(Properties* properties)
     // Get color
     if (properties->exists("color"))
     {
-        Vector4 color;
+        cocos2d::Vec4 color;
         switch (properties->getType("color"))
         {
         case Properties::VECTOR3:
             color.w = 1.0f;
-            properties->getVector3("color", (Vector3*)&color);
+            properties->getVector3("color", (cocos2d::Vec3*)&color);
             break;
         case Properties::VECTOR4:
             properties->getVector4("color", &color);
@@ -204,12 +204,12 @@ float TileSet::getOpacity() const
     return _opacity;
 }
 
-void TileSet::setColor(const Vector4& color)
+void TileSet::setColor(const cocos2d::Vec4& color)
 {
     _color = color;
 }
 
-const Vector4& TileSet::getColor() const
+const cocos2d::Vec4& TileSet::getColor() const
 {
     return _color;
 }
@@ -217,7 +217,7 @@ const Vector4& TileSet::getColor() const
 unsigned int TileSet::draw(bool wireframe)
 {
     // Apply scene camera projection and translation offsets
-    Vector3 position = Vector3::zero();
+    cocos2d::Vec3 position = cocos2d::Vec3::ZERO;
     if (_node && _node->getScene())
     {
         Camera* activeCamera = _node->getScene()->getActiveCamera();
@@ -227,7 +227,7 @@ unsigned int TileSet::draw(bool wireframe)
             if (cameraNode)
             {
                 // Scene projection
-                Matrix projectionMatrix;
+                cocos2d::Mat4 projectionMatrix;
                 projectionMatrix = _node->getProjectionMatrix();
                 _batch->setProjectionMatrix(projectionMatrix);
 
@@ -237,7 +237,7 @@ unsigned int TileSet::draw(bool wireframe)
         }
         
         // Apply node translation offsets
-        Vector3 translation = _node->getTranslationWorld();
+        cocos2d::Vec3 translation = _node->getTranslationWorld();
         position.x += translation.x;
         position.y += translation.y;
         position.z += translation.z;
@@ -259,7 +259,7 @@ unsigned int TileSet::draw(bool wireframe)
             {
                 Rectangle source = Rectangle(_tiles[row * _columnCount + col].x,
                                              _tiles[row * _columnCount + col].y, _tileWidth, _tileHeight);
-                _batch->draw(position, source, scale, Vector4(_color.x, _color.y, _color.z, _color.w * _opacity),
+                _batch->draw(position, source, scale, cocos2d::Vec4(_color.x, _color.y, _color.z, _color.w * _opacity),
                             cocos2d::Vec2(0.5f, 0.5f), 0);
             }
             

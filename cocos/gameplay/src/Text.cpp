@@ -1,6 +1,6 @@
 #include "Base.h"
 #include "Text.h"
-#include "Matrix.h"
+#include "math/CCMath.h"
 #include "Scene.h"
 
 namespace gameplay
@@ -9,7 +9,7 @@ namespace gameplay
 Text::Text() :
     _font(NULL), _drawFont(NULL), _text(""), _size(0), _width(0), _height(0), _wrap(true), _rightToLeft(false),
     _align(Font::ALIGN_TOP_LEFT), _clip(Rectangle(0, 0, 0, 0)),
-    _opacity(1.0f), _color(Vector4::one())
+    _opacity(1.0f), _color(cocos2d::Vec4::ONE)
 {
 }
 
@@ -25,7 +25,7 @@ Text& Text::operator=(const Text& text)
     return *this;
 }
     
-Text* Text::create(const char* fontPath, const char* str, const Vector4& color, unsigned int size)
+Text* Text::create(const char* fontPath, const char* str, const cocos2d::Vec4& color, unsigned int size)
 {
     GP_ASSERT(fontPath);
     GP_ASSERT(str);
@@ -92,14 +92,14 @@ Text* Text::create(Properties* properties)
     }
 
     // Get text color
-    Vector4 color = Vector4::one();
+    cocos2d::Vec4 color = cocos2d::Vec4::ONE;
     if (properties->exists("color"))
     {
         switch (properties->getType("color"))
         {
             case Properties::VECTOR3:
                 color.w = 1.0f;
-                properties->getVector3("color", (Vector3*)&color);
+                properties->getVector3("color", (cocos2d::Vec3*)&color);
                 break;
             case Properties::VECTOR4:
                 properties->getVector4("color", &color);
@@ -200,12 +200,12 @@ float Text::getOpacity() const
     return _opacity;
 }
 
-void Text::setColor(const Vector4& color)
+void Text::setColor(const cocos2d::Vec4& color)
 {
     _color = color;
 }
 
-const Vector4& Text::getColor() const
+const cocos2d::Vec4& Text::getColor() const
 {
     return _color;
 }
@@ -233,7 +233,7 @@ unsigned int Text::draw(bool wireframe)
 {
     // Apply scene camera projection and translation offsets
     Rectangle viewport = Game::getInstance()->getViewport();
-    Vector3 position = Vector3::zero();
+    cocos2d::Vec3 position = cocos2d::Vec3::ZERO;
     
     // Font is always using a offset projection matrix to top-left. So we need to adjust it back to cartesian
     position.x += viewport.width / 2;
@@ -254,7 +254,7 @@ unsigned int Text::draw(bool wireframe)
         }
         
         // Apply node translation offsets
-        Vector3 translation = _node->getTranslationWorld();
+        cocos2d::Vec3 translation = _node->getTranslationWorld();
         position.x += translation.x;
         position.y -= translation.y;
     
@@ -266,7 +266,7 @@ unsigned int Text::draw(bool wireframe)
     }
     _drawFont->start();
     _drawFont->drawText(_text.c_str(), Rectangle(position.x, position.y, _width, _height),
-                    Vector4(_color.x, _color.y, _color.z, _color.w * _opacity), _size,
+                    cocos2d::Vec4(_color.x, _color.y, _color.z, _color.w * _opacity), _size,
                     _align, _wrap, _rightToLeft, clipViewport);
     _drawFont->finish();
     return 1;

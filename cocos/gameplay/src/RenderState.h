@@ -2,8 +2,7 @@
 #define RENDERSTATE_H_
 
 #include "Ref.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "math/CCMath.h"
 
 namespace gameplay
 {
@@ -142,12 +141,12 @@ public:
         INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX,
 
         /**
-         * Binds the position (Vector3) of the active camera for the node's scene.
+         * Binds the position (cocos2d::Vec3) of the active camera for the node's scene.
          */
         CAMERA_WORLD_POSITION,
 
         /**
-         * Binds the view-space position (Vector3) of the active camera for the node's scene.
+         * Binds the view-space position (cocos2d::Vec3) of the active camera for the node's scene.
          */
         CAMERA_VIEW_POSITION,
 
@@ -157,7 +156,7 @@ public:
         MATRIX_PALETTE,
 
         /**
-         * Binds the current scene's ambient color (Vector3).
+         * Binds the current scene's ambient color (cocos2d::Vec3).
          */
         SCENE_AMBIENT_COLOR
     };
@@ -633,21 +632,21 @@ private:
     RenderState& operator=(const RenderState&);
 
     // Internal auto binding handler methods.
-    const Matrix& autoBindingGetWorldMatrix() const;
-    const Matrix& autoBindingGetViewMatrix() const;
-    const Matrix& autoBindingGetProjectionMatrix() const;
-    const Matrix& autoBindingGetWorldViewMatrix() const;
-    const Matrix& autoBindingGetViewProjectionMatrix() const;
-    const Matrix& autoBindingGetWorldViewProjectionMatrix() const;
-    const Matrix& autoBindingGetInverseTransposeWorldMatrix() const;
-    const Matrix& autoBindingGetInverseTransposeWorldViewMatrix() const;
-    Vector3 autoBindingGetCameraWorldPosition() const;
-    Vector3 autoBindingGetCameraViewPosition() const;
-    const Vector4* autoBindingGetMatrixPalette() const;
+    const cocos2d::Mat4& autoBindingGetWorldMatrix() const;
+    const cocos2d::Mat4& autoBindingGetViewMatrix() const;
+    const cocos2d::Mat4& autoBindingGetProjectionMatrix() const;
+    const cocos2d::Mat4& autoBindingGetWorldViewMatrix() const;
+    const cocos2d::Mat4& autoBindingGetViewProjectionMatrix() const;
+    const cocos2d::Mat4& autoBindingGetWorldViewProjectionMatrix() const;
+    const cocos2d::Mat4& autoBindingGetInverseTransposeWorldMatrix() const;
+    const cocos2d::Mat4& autoBindingGetInverseTransposeWorldViewMatrix() const;
+    cocos2d::Vec3 autoBindingGetCameraWorldPosition() const;
+    cocos2d::Vec3 autoBindingGetCameraViewPosition() const;
+    const cocos2d::Vec4* autoBindingGetMatrixPalette() const;
     unsigned int autoBindingGetMatrixPaletteSize() const;
-    const Vector3& autoBindingGetAmbientColor() const;
-    const Vector3& autoBindingGetLightColor() const;
-    const Vector3& autoBindingGetLightDirection() const;
+    const cocos2d::Vec3& autoBindingGetAmbientColor() const;
+    const cocos2d::Vec3& autoBindingGetLightColor() const;
+    const cocos2d::Vec3& autoBindingGetLightDirection() const;
 
 protected:
 

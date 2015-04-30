@@ -553,13 +553,13 @@ void Effect::setValue(Uniform* uniform, const int* values, unsigned int count)
     GL_ASSERT( glUniform1iv(uniform->_location, count, values) );
 }
 
-void Effect::setValue(Uniform* uniform, const Matrix& value)
+void Effect::setValue(Uniform* uniform, const cocos2d::Mat4& value)
 {
     GP_ASSERT(uniform);
     GL_ASSERT( glUniformMatrix4fv(uniform->_location, 1, GL_FALSE, value.m) );
 }
 
-void Effect::setValue(Uniform* uniform, const Matrix* values, unsigned int count)
+void Effect::setValue(Uniform* uniform, const cocos2d::Mat4* values, unsigned int count)
 {
     GP_ASSERT(uniform);
     GP_ASSERT(values);
@@ -579,26 +579,26 @@ void Effect::setValue(Uniform* uniform,const cocos2d::Vec2* values, unsigned int
     GL_ASSERT( glUniform2fv(uniform->_location, count, (GLfloat*)values) );
 }
 
-void Effect::setValue(Uniform* uniform, const Vector3& value)
+void Effect::setValue(Uniform* uniform, const cocos2d::Vec3& value)
 {
     GP_ASSERT(uniform);
     GL_ASSERT( glUniform3f(uniform->_location, value.x, value.y, value.z) );
 }
 
-void Effect::setValue(Uniform* uniform, const Vector3* values, unsigned int count)
+void Effect::setValue(Uniform* uniform, const cocos2d::Vec3* values, unsigned int count)
 {
     GP_ASSERT(uniform);
     GP_ASSERT(values);
     GL_ASSERT( glUniform3fv(uniform->_location, count, (GLfloat*)values) );
 }
 
-void Effect::setValue(Uniform* uniform, const Vector4& value)
+void Effect::setValue(Uniform* uniform, const cocos2d::Vec4& value)
 {
     GP_ASSERT(uniform);
     GL_ASSERT( glUniform4f(uniform->_location, value.x, value.y, value.z, value.w) );
 }
 
-void Effect::setValue(Uniform* uniform, const Vector4* values, unsigned int count)
+void Effect::setValue(Uniform* uniform, const cocos2d::Vec4* values, unsigned int count)
 {
     GP_ASSERT(uniform);
     GP_ASSERT(values);

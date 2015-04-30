@@ -7,7 +7,7 @@
 #include "Gesture.h"
 #include "Gamepad.h"
 #include "Rectangle.h"
-#include "Vector4.h"
+#include "math/CCMath.h"
 #include "TimeListener.h"
 #include "Properties.h"
 #include "ScriptTarget.h"
@@ -211,7 +211,7 @@ public:
      * @param clearDepth The depth value to clear to when the flags includes the color buffer.
      * @param clearStencil The stencil value to clear to when the flags includes the color buffer.
      */
-    void clear(ClearFlags flags, const Vector4& clearColor, float clearDepth, int clearStencil);
+    void clear(ClearFlags flags, const cocos2d::Vec4& clearColor, float clearDepth, int clearStencil);
 
     /**
      * Clears the specified resource buffers to the specified clear values. 
@@ -712,7 +712,7 @@ private:
     unsigned int _width;                        // The game's display width.
     unsigned int _height;                       // The game's display height.
     Rectangle _viewport;                        // the games's current viewport.
-    Vector4 _clearColor;                        // The clear color value last used for clearing the color buffer.
+    cocos2d::Vec4 _clearColor;                        // The clear color value last used for clearing the color buffer.
     float _clearDepth;                          // The clear depth value last used for clearing the depth buffer.
     int _clearStencil;                          // The clear stencil value last used for clearing the stencil buffer.
     Properties* _properties;                    // Game configuration properties object.

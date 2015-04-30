@@ -39,7 +39,7 @@ public:
      * 
      * @return Inverse bind pose matrix.
      */
-    const Matrix& getInverseBindPose() const;
+    const cocos2d::Mat4& getInverseBindPose() const;
 
 protected:
 
@@ -75,9 +75,9 @@ protected:
     /**
      * Sets the inverse bind pose matrix.
      * 
-     * @param m Matrix representing the inverse bind pose for this Joint.
+     * @param m cocos2d::Mat4 representing the inverse bind pose for this Joint.
      */
-    void setInverseBindPose(const Matrix& m);
+    void setInverseBindPose(const cocos2d::Mat4& m);
 
     /**
      * Updates the joint matrix.
@@ -85,7 +85,7 @@ protected:
      * @param bindShape The bind shape matrix.
      * @param matrixPalette The matrix palette to update.
      */
-    void updateJointMatrix(const Matrix& bindShape, Vector4* matrixPalette);
+    void updateJointMatrix(const cocos2d::Mat4& bindShape, cocos2d::Vec4* matrixPalette);
 
     /**
      * Called when this Joint's transform changes.
@@ -121,9 +121,9 @@ private:
     void removeSkin(MeshSkin* skin);
 
     /** 
-     * The Matrix representation of the Joint's bind pose.
+     * The cocos2d::Mat4 representation of the Joint's bind pose.
      */
-    Matrix _bindPose;
+    cocos2d::Mat4 _bindPose;
 
     /**
      * Flag used to mark if the Joint's matrix is dirty.

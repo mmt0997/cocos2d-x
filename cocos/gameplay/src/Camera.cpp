@@ -233,14 +233,14 @@ void Camera::setNode(Node* node)
     }
 }
 
-const Matrix& Camera::getViewMatrix() const
+const cocos2d::Mat4& Camera::getViewMatrix() const
 {
     if (_bits & CAMERA_DIRTY_VIEW)
     {
         if (_node)
         {
             // The view matrix is the inverse of our transform matrix.
-            _node->getWorldMatrix().invert(&_view);
+            _view = _node->getWorldMatrix().getInversed();
         }
         else
         {
@@ -253,11 +253,11 @@ const Matrix& Camera::getViewMatrix() const
     return _view;
 }
 
-const Matrix& Camera::getInverseViewMatrix() const
+const cocos2d::Mat4& Camera::getInverseViewMatrix() const
 {
     if (_bits & CAMERA_DIRTY_INV_VIEW)
     {
-        getViewMatrix().invert(&_inverseView);
+        _inverseView = getViewMatrix().getInversed();
 
         _bits &= ~CAMERA_DIRTY_INV_VIEW;
     }
@@ -265,18 +265,18 @@ const Matrix& Camera::getInverseViewMatrix() const
     return _inverseView;
 }
 
-const Matrix& Camera::getProjectionMatrix() const
+const cocos2d::Mat4& Camera::getProjectionMatrix() const
 {
     if (!(_bits & CAMERA_CUSTOM_PROJECTION) && (_bits & CAMERA_DIRTY_PROJ))
     {
         if (_type == PERSPECTIVE)
         {
-            Matrix::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
+            cocos2d::Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
         }
         else
         {
             // Create an ortho projection with the origin at the bottom left of the viewport, +X to the right and +Y up.
-            Matrix::createOrthographic(_zoom[0], _zoom[1], _nearPlane, _farPlane, &_projection);
+            cocos2d::Mat4::createOrthographic(_zoom[0], _zoom[1], _nearPlane, _farPlane, &_projection);
         }
 
         _bits &= ~CAMERA_DIRTY_PROJ;
@@ -285,7 +285,7 @@ const Matrix& Camera::getProjectionMatrix() const
     return _projection;
 }
 
-void Camera::setProjectionMatrix(const Matrix& matrix)
+void Camera::setProjectionMatrix(const cocos2d::Mat4& matrix)
 {
     _projection = matrix;
     _bits |= CAMERA_CUSTOM_PROJECTION;
@@ -305,11 +305,11 @@ void Camera::resetProjectionMatrix()
     }
 }
 
-const Matrix& Camera::getViewProjectionMatrix() const
+const cocos2d::Mat4& Camera::getViewProjectionMatrix() const
 {
     if (_bits & CAMERA_DIRTY_VIEW_PROJ)
     {
-        Matrix::multiply(getProjectionMatrix(), getViewMatrix(), &_viewProjection);
+        cocos2d::Mat4::multiply(getProjectionMatrix(), getViewMatrix(), &_viewProjection);
 
         _bits &= ~CAMERA_DIRTY_VIEW_PROJ;
     }
@@ -317,11 +317,11 @@ const Matrix& Camera::getViewProjectionMatrix() const
     return _viewProjection;
 }
 
-const Matrix& Camera::getInverseViewProjectionMatrix() const
+const cocos2d::Mat4& Camera::getInverseViewProjectionMatrix() const
 {
     if (_bits & CAMERA_DIRTY_INV_VIEW_PROJ)
     {
-        getViewProjectionMatrix().invert(&_inverseViewProjection);
+        _inverseViewProjection = getViewProjectionMatrix().getInversed();
 
         _bits &= ~CAMERA_DIRTY_INV_VIEW_PROJ;
     }
@@ -342,14 +342,14 @@ const Frustum& Camera::getFrustum() const
     return _bounds;
 }
 
-void Camera::project(const Rectangle& viewport, const Vector3& position, float* x, float* y, float* depth) const
+void Camera::project(const Rectangle& viewport, const cocos2d::Vec3& position, float* x, float* y, float* depth) const
 {
     GP_ASSERT(x);
     GP_ASSERT(y);
 
     // Transform the point to clip-space.
-    Vector4 clipPos;
-    getViewProjectionMatrix().transformVector(Vector4(position.x, position.y, position.z, 1.0f), &clipPos);
+    cocos2d::Vec4 clipPos;
+    getViewProjectionMatrix().transformVector(cocos2d::Vec4(position.x, position.y, position.z, 1.0f), &clipPos);
 
     // Compute normalized device coordinates.
     GP_ASSERT(clipPos.w != 0.0f);
@@ -366,7 +366,7 @@ void Camera::project(const Rectangle& viewport, const Vector3& position, float* 
     }
 }
 
-void Camera::project(const Rectangle& viewport, const Vector3& position,cocos2d::Vec2* out) const
+void Camera::project(const Rectangle& viewport, const cocos2d::Vec3& position,cocos2d::Vec2* out) const
 {
     GP_ASSERT(out);
     float x, y;
@@ -374,7 +374,7 @@ void Camera::project(const Rectangle& viewport, const Vector3& position,cocos2d:
     out->set(x, y);
 }
 
-void Camera::project(const Rectangle& viewport, const Vector3& position, Vector3* out) const
+void Camera::project(const Rectangle& viewport, const cocos2d::Vec3& position, cocos2d::Vec3* out) const
 {
     GP_ASSERT(out);
     float x, y, depth;
@@ -382,13 +382,13 @@ void Camera::project(const Rectangle& viewport, const Vector3& position, Vector3
     out->set(x, y, depth);
 }
 
-void Camera::unproject(const Rectangle& viewport, float x, float y, float depth, Vector3* dst) const
+void Camera::unproject(const Rectangle& viewport, float x, float y, float depth, cocos2d::Vec3* dst) const
 {
     GP_ASSERT(dst);
     
     // Create our screen space position in NDC.
     GP_ASSERT(viewport.width != 0.0f && viewport.height != 0.0f);
-    Vector4 screen((x - viewport.x) / viewport.width, ((viewport.height - y) - viewport.y) / viewport.height, depth, 1.0f);
+    cocos2d::Vec4 screen((x - viewport.x) / viewport.width, ((viewport.height - y) - viewport.y) / viewport.height, depth, 1.0f);
 
     // Map to range -1 to 1.
     screen.x = screen.x * 2.0f - 1.0f;
@@ -414,16 +414,16 @@ void Camera::pickRay(const Rectangle& viewport, float x, float y, Ray* dst) cons
     GP_ASSERT(dst);
 
     // Get the world-space position at the near clip plane.
-    Vector3 nearPoint;
+    cocos2d::Vec3 nearPoint;
     unproject(viewport, x, y, 0.0f, &nearPoint);
 
     // Get the world-space position at the far clip plane.
-    Vector3 farPoint;
+    cocos2d::Vec3 farPoint;
     unproject(viewport, x, y, 1.0f, &farPoint);
 
     // Set the direction of the ray.
-    Vector3 direction;
-    Vector3::subtract(farPoint, nearPoint, &direction);
+    cocos2d::Vec3 direction;
+    cocos2d::Vec3::subtract(farPoint, nearPoint, &direction);
     direction.normalize();
 
     dst->set(nearPoint, direction);

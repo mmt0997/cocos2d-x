@@ -270,14 +270,14 @@ public:
      *
      * @return The world matrix of this node.
      */
-    virtual const Matrix& getWorldMatrix() const;
+    virtual const cocos2d::Mat4& getWorldMatrix() const;
 
     /**
      * Gets the world view matrix corresponding to this node.
      *
      * @return The world view matrix of this node.
      */
-    const Matrix& getWorldViewMatrix() const;
+    const cocos2d::Mat4& getWorldViewMatrix() const;
 
     /**
      * Gets the inverse transpose world matrix corresponding to this node.
@@ -286,7 +286,7 @@ public:
      *
      * @return The inverse world matrix of this node.
      */
-    const Matrix& getInverseTransposeWorldMatrix() const;
+    const cocos2d::Mat4& getInverseTransposeWorldMatrix() const;
 
     /**
      * Gets the inverse transpose world view matrix corresponding to this node.
@@ -295,7 +295,7 @@ public:
      *
      * @return The inverse world view matrix of this node.
      */
-    const Matrix& getInverseTransposeWorldViewMatrix() const;
+    const cocos2d::Mat4& getInverseTransposeWorldViewMatrix() const;
 
     /**
      * Gets the view matrix corresponding to this node based
@@ -303,7 +303,7 @@ public:
      *
      * @return The view matrix of this node.
      */
-    const Matrix& getViewMatrix() const;
+    const cocos2d::Mat4& getViewMatrix() const;
 
     /**
      * Gets the inverse view matrix corresponding to this node based
@@ -311,7 +311,7 @@ public:
      *
      * @return The inverse view matrix of this node.
      */
-    const Matrix& getInverseViewMatrix() const;
+    const cocos2d::Mat4& getInverseViewMatrix() const;
 
     /**
      * Gets the projection matrix corresponding to this node based
@@ -319,7 +319,7 @@ public:
      *
      * @return The projection matrix of this node.
      */
-    const Matrix& getProjectionMatrix() const;
+    const cocos2d::Mat4& getProjectionMatrix() const;
 
     /**
      * Gets the view * projection matrix corresponding to this node based
@@ -327,7 +327,7 @@ public:
      *
      * @return The view * projection matrix of this node.
      */
-    const Matrix& getViewProjectionMatrix() const;
+    const cocos2d::Mat4& getViewProjectionMatrix() const;
 
     /**
      * Gets the inverse view * projection matrix corresponding to this node based
@@ -335,7 +335,7 @@ public:
      *
      * @return The inverse view * projection matrix of this node.
      */
-    const Matrix& getInverseViewProjectionMatrix() const;
+    const cocos2d::Mat4& getInverseViewProjectionMatrix() const;
 
     /**
      * Gets the world * view * projection matrix corresponding to this node based
@@ -343,63 +343,63 @@ public:
      *
      * @return The world * view * projection matrix of this node.
      */
-    const Matrix& getWorldViewProjectionMatrix() const;
+    const cocos2d::Mat4& getWorldViewProjectionMatrix() const;
 
     /**
      * Gets the translation vector (or position) of this Node in world space.
      *
      * @return The world translation vector.
      */
-    Vector3 getTranslationWorld() const;
+    cocos2d::Vec3 getTranslationWorld() const;
 
     /**
      * Gets the translation vector (or position) of this Node in view space.
      *
      * @return The view space translation vector.
      */
-    Vector3 getTranslationView() const;
+    cocos2d::Vec3 getTranslationView() const;
 
     /**
      * Returns the forward vector of the Node in world space.
      *
      * @return The forward vector in world space.
      */
-    Vector3 getForwardVectorWorld() const;
+    cocos2d::Vec3 getForwardVectorWorld() const;
 
     /**
      * Returns the forward vector of the Node in view space.
      *
      * @return The forward vector in view space.
      */
-    Vector3 getForwardVectorView() const;
+    cocos2d::Vec3 getForwardVectorView() const;
 
     /**
      * Returns the right vector of the Node in world space.
      *
      * @return The right vector in world space.
      */
-    Vector3 getRightVectorWorld() const;
+    cocos2d::Vec3 getRightVectorWorld() const;
 
     /**
      * Returns the up vector of the Node in world space.
      *
      * @return The up vector in world space.
      */
-    Vector3 getUpVectorWorld() const;
+    cocos2d::Vec3 getUpVectorWorld() const;
 
     /**
      * Returns the translation vector of the currently active camera for this node's scene.
      *
      * @return The translation vector of the scene's active camera.
      */
-    Vector3 getActiveCameraTranslationWorld() const;
+    cocos2d::Vec3 getActiveCameraTranslationWorld() const;
 
     /**
      * Returns the view-space translation vector of the currently active camera for this node's scene.
      *
      * @return The translation vector of the scene's active camera, in view-space.
      */
-    Vector3 getActiveCameraTranslationView() const;
+    cocos2d::Vec3 getActiveCameraTranslationView() const;
 
     /**
      * Gets the drawable object attached to this node.
@@ -598,7 +598,7 @@ protected:
     /** The user object component attached to this node. */
     Ref* _userObject;
     /** The world matrix for this node. */
-    mutable Matrix _world;
+    mutable cocos2d::Mat4 _world;
     /** The bounding sphere for this node. */
     mutable BoundingSphere _bounds;
     /** The dirty bits used for optimization. */

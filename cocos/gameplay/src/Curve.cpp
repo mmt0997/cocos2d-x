@@ -1,6 +1,6 @@
 // Purposely not including Base.h here, or any other gameplay dependencies, so it can be reused between gameplay and gameplay-encoder.
 #include "Curve.h"
-#include "Quaternion.h"
+#include "math/CCMath.h"
 #include <cassert>
 #include <cstring>
 #include <cmath>
@@ -1240,11 +1240,18 @@ void Curve::interpolateLinear(float s, Point* from, Point* to, float* dst) const
 
 void Curve::interpolateQuaternion(float s, float* from, float* to, float* dst) const
 {
+#if 1
+    if (s >= 0)
+        cocos2d::Quaternion::slerp(cocos2d::Quaternion(from), cocos2d::Quaternion(to), s, (cocos2d::Quaternion*)dst);
+    else
+        cocos2d::Quaternion::slerp(cocos2d::Quaternion(to), cocos2d::Quaternion(from), s, (cocos2d::Quaternion*)dst);
+#else
     // Evaluate.
     if (s >= 0)
-        Quaternion::slerp(from[0], from[1], from[2], from[3], to[0], to[1], to[2], to[3], s, dst, dst + 1, dst + 2, dst + 3);
+        cocos2d::Quaternion::slerp(from[0], from[1], from[2], from[3], to[0], to[1], to[2], to[3], s, dst, dst + 1, dst + 2, dst + 3);
     else
-        Quaternion::slerp(to[0], to[1], to[2], to[3], from[0], from[1], from[2], from[3], s, dst, dst + 1, dst + 2, dst + 3);
+        cocos2d::Quaternion::slerp(to[0], to[1], to[2], to[3], from[0], from[1], from[2], from[3], s, dst, dst + 1, dst + 2, dst + 3);
+#endif
 }
 
 int Curve::determineIndex(float time, unsigned int min, unsigned int max) const

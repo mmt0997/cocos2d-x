@@ -62,7 +62,7 @@ void Joint::transformChanged()
     _jointMatrixDirty = true;
 }
 
-void Joint::updateJointMatrix(const Matrix& bindShape, Vector4* matrixPalette)
+void Joint::updateJointMatrix(const cocos2d::Mat4& bindShape, cocos2d::Vec4* matrixPalette)
 {
     // Note: If more than one MeshSkin influences this Joint, we need to skip
     // the _jointMatrixDirty optimization since updateJointMatrix() may be
@@ -72,9 +72,9 @@ void Joint::updateJointMatrix(const Matrix& bindShape, Vector4* matrixPalette)
     {
         _jointMatrixDirty = false;
 
-        static Matrix t;
-        Matrix::multiply(Node::getWorldMatrix(), getInverseBindPose(), &t);
-        Matrix::multiply(t, bindShape, &t);
+        static cocos2d::Mat4 t;
+        cocos2d::Mat4::multiply(Node::getWorldMatrix(), getInverseBindPose(), &t);
+        cocos2d::Mat4::multiply(t, bindShape, &t);
 
         GP_ASSERT(matrixPalette);
         matrixPalette[0].set(t.m[0], t.m[4], t.m[8], t.m[12]);
@@ -83,12 +83,12 @@ void Joint::updateJointMatrix(const Matrix& bindShape, Vector4* matrixPalette)
     }
 }
 
-const Matrix& Joint::getInverseBindPose() const
+const cocos2d::Mat4& Joint::getInverseBindPose() const
 {
     return _bindPose;
 }
 
-void Joint::setInverseBindPose(const Matrix& m)
+void Joint::setInverseBindPose(const cocos2d::Mat4& m)
 {
     _bindPose = m;
     _jointMatrixDirty = true;

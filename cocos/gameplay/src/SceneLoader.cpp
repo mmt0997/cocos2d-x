@@ -117,7 +117,7 @@ Scene* SceneLoader::loadInternal(const char* url)
     }
 
     // Set ambient and light properties
-    Vector3 vec3;
+    cocos2d::Vec3 vec3;
     if (sceneProperties->getVector3("ambientColor", &vec3))
         _scene->setAmbientColor(vec3.x, vec3.y, vec3.z);
 
@@ -406,21 +406,21 @@ void SceneLoader::applyNodeProperty(SceneNode& sceneNode, Node* node, const Prop
         {
         case SceneNodeProperty::TRANSLATE:
         {
-            Vector3 t;
+            cocos2d::Vec3 t;
             if (Properties::parseVector3(snp._value.c_str(), &t))
                 node->translate(t);
             break;
         }
         case SceneNodeProperty::ROTATE:
         {
-            Quaternion r;
+            cocos2d::Quaternion r;
             if (Properties::parseAxisAngle(snp._value.c_str(), &r))
                 node->rotate(r);
             break;
         }
         case SceneNodeProperty::SCALE:
         {
-            Vector3 s;
+            cocos2d::Vec3 s;
             if (Properties::parseVector3(snp._value.c_str(), &s))
                 node->scale(s);
             break;

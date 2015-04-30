@@ -192,21 +192,21 @@ public:
      *
      * @return The camera view matrix.
      */
-    const Matrix& getViewMatrix() const;
+    const cocos2d::Mat4& getViewMatrix() const;
 
     /**
      * Gets the camera's inverse view matrix.
      *
      * @return The camera inverse view matrix.
      */
-    const Matrix& getInverseViewMatrix() const;
+    const cocos2d::Mat4& getInverseViewMatrix() const;
 
     /**
      * Gets the camera's projection matrix.
      *
      * @return The camera projection matrix.
      */
-    const Matrix& getProjectionMatrix() const;
+    const cocos2d::Mat4& getProjectionMatrix() const;
 
     /**
      * Sets a custom projection matrix to be used by the camera.
@@ -220,7 +220,7 @@ public:
      *
      * @param matrix Custom projection matrix.
      */
-    void setProjectionMatrix(const Matrix& matrix);
+    void setProjectionMatrix(const cocos2d::Mat4& matrix);
 
     /**
      * Resets the camera to use the internally computed projection matrix
@@ -233,14 +233,14 @@ public:
      *
      * @return The camera view * projection matrix.
      */
-    const Matrix& getViewProjectionMatrix() const;
+    const cocos2d::Mat4& getViewProjectionMatrix() const;
 
     /**
      * Gets the camera's inverse view * projection matrix.
      *
      * @return The camera inverse view * projection matrix.
      */
-    const Matrix& getInverseViewProjectionMatrix() const;
+    const cocos2d::Mat4& getInverseViewProjectionMatrix() const;
 
     /**
      * Gets the view bounding frustum.
@@ -260,7 +260,7 @@ public:
      *
      * @script{ignore}
      */
-    void project(const Rectangle& viewport, const Vector3& position, float* x, float* y, float* depth = NULL) const;
+    void project(const Rectangle& viewport, const cocos2d::Vec3& position, float* x, float* y, float* depth = NULL) const;
 
     /**
      * Projects the specified world position into the viewport coordinates.
@@ -269,7 +269,7 @@ public:
      * @param position The world space position.
      * @param out Populated with the resulting screen-space position.
      */
-    void project(const Rectangle& viewport, const Vector3& position,cocos2d::Vec2* out) const;
+    void project(const Rectangle& viewport, const cocos2d::Vec3& position,cocos2d::Vec2* out) const;
 
     /**
      * Projects the specified world position into the viewport coordinates.
@@ -278,7 +278,7 @@ public:
      * @param position The world space position.
      * @param out Populated with the resulting screen-space position, with the pixel depth in the Z coordinate.
      */
-    void project(const Rectangle& viewport, const Vector3& position, Vector3* out) const;
+    void project(const Rectangle& viewport, const cocos2d::Vec3& position, cocos2d::Vec3* out) const;
 
     /**
      * Converts a viewport-space coordinate to a world-space position for the given depth value.
@@ -292,7 +292,7 @@ public:
      * @param depth The depth range.
      * @param dst The world space position.
      */
-    void unproject(const Rectangle& viewport, float x, float y, float depth, Vector3* dst) const;
+    void unproject(const Rectangle& viewport, float x, float y, float depth, cocos2d::Vec3* dst) const;
 
     /**
      * Picks a ray that can be used for picking given the specified viewport-space coordinates.
@@ -366,11 +366,11 @@ private:
     float _aspectRatio;
     float _nearPlane;
     float _farPlane;
-    mutable Matrix _view;
-    mutable Matrix _projection;
-    mutable Matrix _viewProjection;
-    mutable Matrix _inverseView;
-    mutable Matrix _inverseViewProjection;
+    mutable cocos2d::Mat4 _view;
+    mutable cocos2d::Mat4 _projection;
+    mutable cocos2d::Mat4 _viewProjection;
+    mutable cocos2d::Mat4 _inverseView;
+    mutable cocos2d::Mat4 _inverseViewProjection;
     mutable Frustum _bounds;
     mutable int _bits;
     Node* _node;

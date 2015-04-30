@@ -89,9 +89,9 @@ void RacerGame::update(float elapsedTime)
     if (_scene->getActiveCamera() && (cameraNode = _scene->getActiveCamera()->getNode()))
     {
         float dt = elapsedTime / 1000.0f;
-        gameplay::Vector3 commandedPosition(-263.990082f, 5.000000f, 286.007416f);
+        cocos2d::Vec3 commandedPosition(-263.990082f, 5.000000f, 286.007416f);
         cameraNode->translateSmooth(commandedPosition, dt, 0.2f);
-        gameplay::Quaternion q(-0.177254f, -0.310793f, -0.059113f, 0.931931f);
+        cocos2d::Quaternion q(-0.177254f, -0.310793f, -0.059113f, 0.931931f);
         cameraNode->setRotation(q);
     }
 }
@@ -104,7 +104,7 @@ bool RacerGame::isUpset() const
 void RacerGame::render(float elapsedTime)
 {
     // Clear the color and depth buffers
-    clear(CLEAR_COLOR_DEPTH, gameplay::Vector4::zero(), 1.0f, 0);
+    clear(CLEAR_COLOR_DEPTH, cocos2d::Vec4::ZERO, 1.0f, 0);
     
 
     // Visit all the nodes in the scene to build our render queues
@@ -120,17 +120,17 @@ void RacerGame::render(float elapsedTime)
 //        Game::getInstance()->getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());
 //    }
     
-    clear(Game::CLEAR_DEPTH, Vector4::zero(), 1, 0);
+    clear(Game::CLEAR_DEPTH, cocos2d::Vec4::ZERO, 1, 0);
         
     // Draw FPS and speed
     int carSpeed = 0;//_carVehicle ? (int)_carVehicle->getSpeedKph() : 0;
     _font->start();
     char fps[32];
     sprintf(fps, "%d", getFrameRate());
-    _font->drawText(fps, 5, 5, gameplay::Vector4(0,0.5f,1,1), 20);
+    _font->drawText(fps, 5, 5, cocos2d::Vec4(0,0.5f,1,1), 20);
     char kph[32];
     sprintf(kph, "%d [km/h]", carSpeed);
-    _font->drawText(kph, getWidth() / 2 - 50, getHeight() - 60, gameplay::Vector4(1,1,1,1), 40);
+    _font->drawText(kph, getWidth() / 2 - 50, getHeight() - 60, cocos2d::Vec4(1,1,1,1), 40);
     _font->finish();
 }
 
@@ -171,11 +171,11 @@ void RacerGame::drawScene()
 
 void RacerGame::drawSplash(void* param)
 {
-    clear(CLEAR_COLOR_DEPTH, gameplay::Vector4(0, 0, 0, 1), 1.0f, 0);
+    clear(CLEAR_COLOR_DEPTH, cocos2d::Vec4(0, 0, 0, 1), 1.0f, 0);
 
     gameplay::SpriteBatch* batch = gameplay::SpriteBatch::create("res/logo_powered_white.png");
     batch->start();
-    batch->draw(this->getWidth() * 0.5f, this->getHeight() * 0.5f, 0.0f, 512.0f, 512.0f, 0.0f, 1.0f, 1.0f, 0.0f, gameplay::Vector4::one(), true);
+    batch->draw(this->getWidth() * 0.5f, this->getHeight() * 0.5f, 0.0f, 512.0f, 512.0f, 0.0f, 1.0f, 1.0f, 0.0f, cocos2d::Vec4::ONE, true);
     batch->finish();
     SAFE_DELETE(batch);
 }
@@ -319,8 +319,8 @@ void RacerGame::menuEvent()
 
 void RacerGame::resetToStart()
 {
-    Vector3 pos(-258, 1, 278);
-    Quaternion rot(Vector3::unitY(), MATH_DEG_TO_RAD(143.201f));
+    cocos2d::Vec3 pos(-258, 1, 278);
+    cocos2d::Quaternion rot(cocos2d::Vec3::UNIT_Y, MATH_DEG_TO_RAD(143.201f));
 
     reset(pos, rot);
 }
@@ -329,6 +329,6 @@ void RacerGame::resetInPlace()
 {
 }
 
-void RacerGame::reset(const Vector3& pos, const Quaternion& rot)
+void RacerGame::reset(const cocos2d::Vec3& pos, const cocos2d::Quaternion& rot)
 {
 }

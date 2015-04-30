@@ -3,13 +3,13 @@
 namespace gameplay
 {
 
-inline Ray& Ray::operator*=(const Matrix& matrix)
+inline Ray& Ray::operator*=(const cocos2d::Mat4& matrix)
 {
     transform(matrix);
     return *this;
 }
 
-inline const Ray operator*(const Matrix& matrix, const Ray& ray)
+inline const Ray operator*(const cocos2d::Mat4& matrix, const Ray& ray)
 {
     Ray r(ray);
     r.transform(matrix);

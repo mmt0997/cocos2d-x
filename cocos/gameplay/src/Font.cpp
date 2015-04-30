@@ -199,8 +199,8 @@ void Font::lazyStart()
     if (!vp.isEmpty())
     {
         Game* game = Game::getInstance();
-        Matrix projectionMatrix;
-        Matrix::createOrthographicOffCenter(vp.x, vp.width, vp.height, vp.y, 0, 1, &projectionMatrix);
+        cocos2d::Mat4 projectionMatrix;
+        cocos2d::Mat4::createOrthographicOffCenter(vp.x, vp.width, vp.height, vp.y, 0, 1, &projectionMatrix);
         _batch->setProjectionMatrix(projectionMatrix);
     }
 
@@ -242,7 +242,7 @@ Font* Font::findClosestSize(int size)
     return closest;
 }
 
-void Font::drawText(const char* text, int x, int y, const Vector4& color, unsigned int size, bool rightToLeft)
+void Font::drawText(const char* text, int x, int y, const cocos2d::Vec4& color, unsigned int size, bool rightToLeft)
 {
     GP_ASSERT(_size);
     GP_ASSERT(text);
@@ -389,10 +389,10 @@ void Font::drawText(const char* text, int x, int y, const Vector4& color, unsign
 
 void Font::drawText(const char* text, int x, int y, float red, float green, float blue, float alpha, unsigned int size, bool rightToLeft)
 {
-    drawText(text, x, y, Vector4(red, green, blue, alpha), size, rightToLeft);
+    drawText(text, x, y, cocos2d::Vec4(red, green, blue, alpha), size, rightToLeft);
 }
 
-void Font::drawText(const char* text, const Rectangle& area, const Vector4& color, unsigned int size, Justify justify, bool wrap, bool rightToLeft, const Rectangle& clip)
+void Font::drawText(const char* text, const Rectangle& area, const cocos2d::Vec4& color, unsigned int size, Justify justify, bool wrap, bool rightToLeft, const Rectangle& clip)
 {
     GP_ASSERT(text);
     GP_ASSERT(_size);

@@ -13,14 +13,14 @@ Ray::Ray()
 {
 }
 
-Ray::Ray(const Vector3& origin, const Vector3& direction)
+Ray::Ray(const cocos2d::Vec3& origin, const cocos2d::Vec3& direction)
 {
     set(origin, direction);
 }
 
 Ray::Ray(float originX, float originY, float originZ, float dirX, float dirY, float dirZ)
 {
-    set(Vector3(originX, originY, originZ), Vector3(dirX, dirY, dirZ));
+    set(cocos2d::Vec3(originX, originY, originZ), cocos2d::Vec3(dirX, dirY, dirZ));
 }
 
 Ray::Ray(const Ray& copy)
@@ -32,12 +32,12 @@ Ray::~Ray()
 {
 }
 
-const Vector3& Ray::getOrigin() const
+const cocos2d::Vec3& Ray::getOrigin() const
 {
     return _origin;
 }
 
-void Ray::setOrigin(const Vector3& origin)
+void Ray::setOrigin(const cocos2d::Vec3& origin)
 {
     _origin = origin;
 }
@@ -47,12 +47,12 @@ void Ray::setOrigin(float x, float y, float z)
     _origin.set(x, y, z);
 }
 
-const Vector3& Ray::getDirection() const
+const cocos2d::Vec3& Ray::getDirection() const
 {
     return _direction;
 }
 
-void Ray::setDirection(const Vector3& direction)
+void Ray::setDirection(const cocos2d::Vec3& direction)
 {
     _direction = direction;
     normalize();
@@ -122,7 +122,7 @@ float Ray::intersects(const Frustum& frustum) const
 
 float Ray::intersects(const Plane& plane) const
 {
-    const Vector3& normal = plane.getNormal();
+    const cocos2d::Vec3& normal = plane.getNormal();
     // If the origin of the ray is on the plane then the distance is zero.
     float alpha = (normal.dot(_origin) + plane.getDistance());
     if (fabs(alpha) < MATH_EPSILON)
@@ -149,7 +149,7 @@ float Ray::intersects(const Plane& plane) const
     return d;
 }
 
-void Ray::set(const Vector3& origin, const Vector3& direction)
+void Ray::set(const cocos2d::Vec3& origin, const cocos2d::Vec3& direction)
 {
     _origin = origin;
     _direction = direction;
@@ -163,7 +163,7 @@ void Ray::set(const Ray& ray)
     normalize();
 }
 
-void Ray::transform(const Matrix& matrix)
+void Ray::transform(const cocos2d::Mat4& matrix)
 {
     matrix.transformPoint(&_origin);
     matrix.transformVector(&_direction);

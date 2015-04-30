@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Node.h"
 #include "Scene.h"
-#include "Quaternion.h"
+#include "math/CCMath.h"
 #include "Properties.h"
 
 #define PARTICLE_COUNT_MAX                       100
@@ -19,13 +19,13 @@ ParticleEmitter::ParticleEmitter(unsigned int particleCountMax) : Drawable(),
     _emissionRate(PARTICLE_EMISSION_RATE), _started(false), _ellipsoid(false),
     _sizeStartMin(1.0f), _sizeStartMax(1.0f), _sizeEndMin(1.0f), _sizeEndMax(1.0f),
     _energyMin(1000L), _energyMax(1000L),
-    _colorStart(Vector4::zero()), _colorStartVar(Vector4::zero()), _colorEnd(Vector4::one()), _colorEndVar(Vector4::zero()),
-    _position(Vector3::zero()), _positionVar(Vector3::zero()),
-    _velocity(Vector3::zero()), _velocityVar(Vector3::one()),
-    _acceleration(Vector3::zero()), _accelerationVar(Vector3::zero()),
+    _colorStart(cocos2d::Vec4::ZERO), _colorStartVar(cocos2d::Vec4::ZERO), _colorEnd(cocos2d::Vec4::ONE), _colorEndVar(cocos2d::Vec4::ZERO),
+    _position(cocos2d::Vec3::ZERO), _positionVar(cocos2d::Vec3::ZERO),
+    _velocity(cocos2d::Vec3::ZERO), _velocityVar(cocos2d::Vec3::ONE),
+    _acceleration(cocos2d::Vec3::ZERO), _accelerationVar(cocos2d::Vec3::ZERO),
     _rotationPerParticleSpeedMin(0.0f), _rotationPerParticleSpeedMax(0.0f),
     _rotationSpeedMin(0.0f), _rotationSpeedMax(0.0f),
-    _rotationAxis(Vector3::zero()), _rotation(Matrix::identity()),
+    _rotationAxis(cocos2d::Vec3::ZERO), _rotation(cocos2d::Mat4::IDENTITY),
     _spriteBatch(NULL), _spriteBlendMode(BLEND_ALPHA),  _spriteTextureWidth(0), _spriteTextureHeight(0), _spriteTextureWidthRatio(0), _spriteTextureHeightRatio(0), _spriteTextureCoords(NULL),
     _spriteAnimated(false),  _spriteLooped(false), _spriteFrameCount(1), _spriteFrameRandomOffset(0),_spriteFrameDuration(0L), _spriteFrameDurationSecs(0.0f), _spritePercentPerFrame(0.0f),
     _orbitPosition(false), _orbitVelocity(false), _orbitAcceleration(false),
@@ -143,23 +143,23 @@ ParticleEmitter* ParticleEmitter::create(Properties* properties)
     long energyMin = properties->getLong("energyMin");
     long energyMax = properties->getLong("energyMax");
 
-    Vector4 colorStart;
-    Vector4 colorStartVar;
-    Vector4 colorEnd;
-    Vector4 colorEndVar;
+    cocos2d::Vec4 colorStart;
+    cocos2d::Vec4 colorStartVar;
+    cocos2d::Vec4 colorEnd;
+    cocos2d::Vec4 colorEndVar;
     properties->getVector4("colorStart", &colorStart);
     properties->getVector4("colorStartVar", &colorStartVar);
     properties->getVector4("colorEnd", &colorEnd);
     properties->getVector4("colorEndVar", &colorEndVar);
 
-    Vector3 position;
-    Vector3 positionVar;
-    Vector3 velocity;
-    Vector3 velocityVar;
-    Vector3 acceleration;
-    Vector3 accelerationVar;
-    Vector3 rotationAxis;
-    Vector3 rotationAxisVar;
+    cocos2d::Vec3 position;
+    cocos2d::Vec3 positionVar;
+    cocos2d::Vec3 velocity;
+    cocos2d::Vec3 velocityVar;
+    cocos2d::Vec3 acceleration;
+    cocos2d::Vec3 accelerationVar;
+    cocos2d::Vec3 rotationAxis;
+    cocos2d::Vec3 rotationAxisVar;
     properties->getVector3("position", &position);
     properties->getVector3("positionVar", &positionVar);
     properties->getVector3("velocity", &velocity);
@@ -308,8 +308,8 @@ void ParticleEmitter::emitOnce(unsigned int particleCount)
         particleCount = _particleCountMax - _particleCount;
     }
 
-    Vector3 translation;
-    Matrix world = _node->getWorldMatrix();
+    cocos2d::Vec3 translation;
+    cocos2d::Mat4 world = _node->getWorldMatrix();
     world.getTranslation(&translation);
 
     // Take translation out of world matrix so it can be used to rotate orbiting properties.
@@ -439,7 +439,7 @@ long ParticleEmitter::getEnergyMax() const
     return _energyMax;
 }
 
-void ParticleEmitter::setColor(const Vector4& startColor, const Vector4& startColorVar, const Vector4& endColor, const Vector4& endColorVar)
+void ParticleEmitter::setColor(const cocos2d::Vec4& startColor, const cocos2d::Vec4& startColorVar, const cocos2d::Vec4& endColor, const cocos2d::Vec4& endColorVar)
 {
     _colorStart.set(startColor);
     _colorStartVar.set(startColorVar);
@@ -447,69 +447,69 @@ void ParticleEmitter::setColor(const Vector4& startColor, const Vector4& startCo
     _colorEndVar.set(endColorVar);
 }
 
-const Vector4& ParticleEmitter::getColorStart() const
+const cocos2d::Vec4& ParticleEmitter::getColorStart() const
 {
     return _colorStart;
 }
 
-const Vector4& ParticleEmitter::getColorStartVariance() const
+const cocos2d::Vec4& ParticleEmitter::getColorStartVariance() const
 {
     return _colorStartVar;
 }
 
-const Vector4& ParticleEmitter::getColorEnd() const
+const cocos2d::Vec4& ParticleEmitter::getColorEnd() const
 {
     return _colorEnd;
 }
 
-const Vector4& ParticleEmitter::getColorEndVariance() const
+const cocos2d::Vec4& ParticleEmitter::getColorEndVariance() const
 {
     return _colorEndVar;
 }
 
-void ParticleEmitter::setPosition(const Vector3& position, const Vector3& positionVar)
+void ParticleEmitter::setPosition(const cocos2d::Vec3& position, const cocos2d::Vec3& positionVar)
 {
     _position.set(position);
     _positionVar.set(positionVar);
 }
 
-const Vector3& ParticleEmitter::getPosition() const
+const cocos2d::Vec3& ParticleEmitter::getPosition() const
 {
     return _position;
 }
 
-const Vector3& ParticleEmitter::getPositionVariance() const
+const cocos2d::Vec3& ParticleEmitter::getPositionVariance() const
 {
     return _positionVar;
 }
 
-const Vector3& ParticleEmitter::getVelocity() const
+const cocos2d::Vec3& ParticleEmitter::getVelocity() const
 {
     return _velocity;
 }
 
-const Vector3& ParticleEmitter::getVelocityVariance() const
+const cocos2d::Vec3& ParticleEmitter::getVelocityVariance() const
 {
     return _velocityVar;
 }
 
-void ParticleEmitter::setVelocity(const Vector3& velocity, const Vector3& velocityVar)
+void ParticleEmitter::setVelocity(const cocos2d::Vec3& velocity, const cocos2d::Vec3& velocityVar)
 {
     _velocity.set(velocity);
     _velocityVar.set(velocityVar);
 }
 
-const Vector3& ParticleEmitter::getAcceleration() const
+const cocos2d::Vec3& ParticleEmitter::getAcceleration() const
 {
     return _acceleration;
 }
 
-const Vector3& ParticleEmitter::getAccelerationVariance() const
+const cocos2d::Vec3& ParticleEmitter::getAccelerationVariance() const
 {
     return _accelerationVar;
 }
 
-void ParticleEmitter::setAcceleration(const Vector3& acceleration, const Vector3& accelerationVar)
+void ParticleEmitter::setAcceleration(const cocos2d::Vec3& acceleration, const cocos2d::Vec3& accelerationVar)
 {
     _acceleration.set(acceleration);
     _accelerationVar.set(accelerationVar);
@@ -531,7 +531,7 @@ float ParticleEmitter::getRotationPerParticleSpeedMax() const
     return _rotationPerParticleSpeedMax;
 }
 
-void ParticleEmitter::setRotation(float speedMin, float speedMax, const Vector3& axis, const Vector3& axisVariance)
+void ParticleEmitter::setRotation(float speedMin, float speedMax, const cocos2d::Vec3& axis, const cocos2d::Vec3& axisVariance)
 {
     _rotationSpeedMin = speedMin;
     _rotationSpeedMax = speedMax;
@@ -549,12 +549,12 @@ float ParticleEmitter::getRotationSpeedMax() const
     return _rotationSpeedMax;
 }
 
-const Vector3& ParticleEmitter::getRotationAxis() const
+const cocos2d::Vec3& ParticleEmitter::getRotationAxis() const
 {
     return _rotationAxis;
 }
 
-const Vector3& ParticleEmitter::getRotationAxisVariance() const
+const cocos2d::Vec3& ParticleEmitter::getRotationAxisVariance() const
 {
     return _rotationAxisVar;
 }
@@ -766,7 +766,7 @@ float ParticleEmitter::generateScalar(float min, float max)
     return min + (max - min) * MATH_RANDOM_0_1();
 }
 
-void ParticleEmitter::generateVectorInRect(const Vector3& base, const Vector3& variance, Vector3* dst)
+void ParticleEmitter::generateVectorInRect(const cocos2d::Vec3& base, const cocos2d::Vec3& variance, cocos2d::Vec3* dst)
 {
     GP_ASSERT(dst);
 
@@ -777,7 +777,7 @@ void ParticleEmitter::generateVectorInRect(const Vector3& base, const Vector3& v
     dst->z = base.z + variance.z * MATH_RANDOM_MINUS1_1();
 }
 
-void ParticleEmitter::generateVectorInEllipsoid(const Vector3& center, const Vector3& scale, Vector3* dst)
+void ParticleEmitter::generateVectorInEllipsoid(const cocos2d::Vec3& center, const cocos2d::Vec3& scale, cocos2d::Vec3* dst)
 {
     GP_ASSERT(dst);
 
@@ -798,7 +798,7 @@ void ParticleEmitter::generateVectorInEllipsoid(const Vector3& center, const Vec
     dst->add(center);
 }
 
-void ParticleEmitter::generateVector(const Vector3& base, const Vector3& variance, Vector3* dst, bool ellipsoid)
+void ParticleEmitter::generateVector(const cocos2d::Vec3& base, const cocos2d::Vec3& variance, cocos2d::Vec3* dst, bool ellipsoid)
 {
     if (ellipsoid)
     {
@@ -810,7 +810,7 @@ void ParticleEmitter::generateVector(const Vector3& base, const Vector3& varianc
     }
 }
 
-void ParticleEmitter::generateColor(const Vector4& base, const Vector4& variance, Vector4* dst)
+void ParticleEmitter::generateColor(const cocos2d::Vec4& base, const cocos2d::Vec4& variance, cocos2d::Vec4* dst)
 {
     GP_ASSERT(dst);
 
@@ -904,7 +904,7 @@ void ParticleEmitter::update(float elapsedTime)
         {
             if (p->_rotationSpeed != 0.0f && !p->_rotationAxis.isZero())
             {
-                Matrix::createRotation(p->_rotationAxis, p->_rotationSpeed * elapsedSecs, &_rotation);
+                cocos2d::Mat4::createRotation(p->_rotationAxis, p->_rotationSpeed * elapsedSecs, &_rotation);
 
                 _rotation.transformPoint(p->_velocity, &p->_velocity);
                 _rotation.transformPoint(p->_acceleration, &p->_acceleration);
@@ -1004,11 +1004,11 @@ unsigned int ParticleEmitter::draw(bool wireframe)
 
         // 3D Rotation so that particles always face the camera.
         GP_ASSERT(_node && _node->getScene() && _node->getScene()->getActiveCamera() && _node->getScene()->getActiveCamera()->getNode());
-        const Matrix& cameraWorldMatrix = _node->getScene()->getActiveCamera()->getNode()->getWorldMatrix();
+        const cocos2d::Mat4& cameraWorldMatrix = _node->getScene()->getActiveCamera()->getNode()->getWorldMatrix();
 
-        Vector3 right;
+        cocos2d::Vec3 right;
         cameraWorldMatrix.getRightVector(&right);
-        Vector3 up;
+        cocos2d::Vec3 up;
         cameraWorldMatrix.getUpVector(&up);
 
         for (unsigned int i = 0; i < _particleCount; i++)

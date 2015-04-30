@@ -3,13 +3,13 @@
 namespace gameplay
 {
 
-inline BoundingSphere& BoundingSphere::operator*=(const Matrix& matrix)
+inline BoundingSphere& BoundingSphere::operator*=(const cocos2d::Mat4& matrix)
 {
     transform(matrix);
     return *this;
 }
 
-inline const BoundingSphere operator*(const Matrix& matrix, const BoundingSphere& sphere)
+inline const BoundingSphere operator*(const cocos2d::Mat4& matrix, const BoundingSphere& sphere)
 {
     BoundingSphere s(sphere);
     s.transform(matrix);

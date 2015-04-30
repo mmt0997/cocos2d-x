@@ -838,7 +838,7 @@ Light* Bundle::readLight()
         GP_ERROR("Failed to load light color in bundle '%s'.", _path.c_str());
         return NULL;
     }
-    Vector3 color(red, blue, green);
+    cocos2d::Vec3 color(red, blue, green);
 
     Light* light = NULL;
     if (type == Light::DIRECTIONAL)
@@ -1608,9 +1608,9 @@ void Bundle::setTransform(const float* values, Transform* transform)
     GP_ASSERT(transform);
 
     // Load array into transform.
-    Matrix matrix(values);
-    Vector3 scale, translation;
-    Quaternion rotation;
+    cocos2d::Mat4 matrix(values);
+    cocos2d::Vec3 scale, translation;
+    cocos2d::Quaternion rotation;
     matrix.decompose(&scale, &rotation, &translation);
     transform->setScale(scale);
     transform->setTranslation(translation);

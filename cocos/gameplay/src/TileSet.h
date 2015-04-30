@@ -5,7 +5,6 @@
 #include "Drawable.h"
 #include "Properties.h"
 #include "math/CCMath.h"
-#include "Vector4.h"
 #include "SpriteBatch.h"
 #include "Effect.h"
 
@@ -139,14 +138,14 @@ public:
      *
      * @param color The color(RGBA) for the sprite.
      */
-    void setColor(const Vector4& color);
+    void setColor(const cocos2d::Vec4& color);
     
     /**
      * Gets the color (RGBA) for the sprite.
      *
      * @return The color(RGBA) for the sprite.
      */
-    const Vector4& getColor() const;
+    const cocos2d::Vec4& getColor() const;
    
     /**
      * @see Drawable::draw
@@ -185,7 +184,7 @@ private:
     float _height;
     SpriteBatch* _batch;
     float _opacity;
-    Vector4 _color;
+    cocos2d::Vec4 _color;
 };
     
 }
