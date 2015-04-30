@@ -21,7 +21,7 @@ Node::Node(const char* id)
     _drawable(NULL), _camera(NULL), _light(NULL), _agent(NULL), _userObject(NULL),
       _dirtyBits(NODE_DIRTY_ALL)
 {
-    GP_REGISTER_SCRIPT_EVENTS();
+    //GP_REGISTER_SCRIPT_EVENTS();
     if (id)
     {
         _id = id;
@@ -46,10 +46,10 @@ Node* Node::create(const char* id)
     return new Node(id);
 }
 
-const char* Node::getTypeName() const
-{
-    return "Node";
-}
+//const char* Node::getTypeName() const
+//{
+//    return "Node";
+//}
 
 const char* Node::getId() const
 {
@@ -390,7 +390,7 @@ void Node::update(float elapsedTime)
             node->update(elapsedTime);
         }
     }
-    fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(Node, update), dynamic_cast<void*>(this), elapsedTime);
+    //fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(Node, update), dynamic_cast<void*>(this), elapsedTime);
 }
 
 bool Node::isStatic() const
@@ -652,57 +652,6 @@ void Node::setBoundsDirty()
     // Mark our parent bounds as dirty as well
     if (_parent)
         _parent->setBoundsDirty();
-}
-
-Animation* Node::getAnimation(const char* id) const
-{
-    Animation* animation = ((AnimationTarget*)this)->getAnimation(id);
-    if (animation)
-        return animation;
-    
-    // See if this node has a model, then drill down.
-    Model* model = dynamic_cast<Model*>(_drawable);
-    if (model)
-    {
-        // Check to see if there's any animations with the ID on the joints.
-        MeshSkin* skin = model->getSkin();
-        if (skin)
-        {
-            Node* rootNode = skin->_rootNode;
-            if (rootNode)
-            {
-                animation = rootNode->getAnimation(id);
-                if (animation)
-                    return animation;
-            }
-        }
-
-        // Check to see if any of the model's material parameter's has an animation
-        // with the given ID.
-        Material* material = model->getMaterial();
-        if (material)
-        {
-            // How to access material parameters? hidden on the Material::RenderState.
-            std::vector<MaterialParameter*>::iterator itr = material->_parameters.begin();
-            for (; itr != material->_parameters.end(); itr++)
-            {
-                GP_ASSERT(*itr);
-                animation = ((MaterialParameter*)(*itr))->getAnimation(id);
-                if (animation)
-                    return animation;
-            }
-        }
-    }
-
-    // Look through this node's children for an animation with the specified ID.
-    for (Node* child = getFirstChild(); child != NULL; child = child->getNextSibling())
-    {
-        animation = child->getAnimation(id);
-        if (animation)
-            return animation;
-    }
-    
-    return NULL;
 }
 
 Camera* Node::getCamera() const
@@ -986,22 +935,6 @@ NodeCloneContext::NodeCloneContext()
 
 NodeCloneContext::~NodeCloneContext()
 {
-}
-
-Animation* NodeCloneContext::findClonedAnimation(const Animation* animation)
-{
-    GP_ASSERT(animation);
-
-    std::map<const Animation*, Animation*>::iterator it = _clonedAnimations.find(animation);
-    return it != _clonedAnimations.end() ? it->second : NULL;
-}
-
-void NodeCloneContext::registerClonedAnimation(const Animation* original, Animation* clone)
-{
-    GP_ASSERT(original);
-    GP_ASSERT(clone);
-
-    _clonedAnimations[original] = clone;
 }
 
 Node* NodeCloneContext::findClonedNode(const Node* node)

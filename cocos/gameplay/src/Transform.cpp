@@ -12,36 +12,24 @@ std::vector<Transform*> Transform::_transformsChanged;
 Transform::Transform()
     : _matrixDirtyBits(0), _listeners(NULL)
 {
-    GP_REGISTER_SCRIPT_EVENTS();
-
-    _targetType = AnimationTarget::TRANSFORM;
     _scale.set(Vector3::one());
 }
 
 Transform::Transform(const Vector3& scale, const Quaternion& rotation, const Vector3& translation)
     : _matrixDirtyBits(0), _listeners(NULL)
 {
-    GP_REGISTER_SCRIPT_EVENTS();
-
-    _targetType = AnimationTarget::TRANSFORM;
     set(scale, rotation, translation);
 }
 
 Transform::Transform(const Vector3& scale, const Matrix& rotation, const Vector3& translation)
     : _matrixDirtyBits(0), _listeners(NULL)
 {
-    GP_REGISTER_SCRIPT_EVENTS();
-
-    _targetType = AnimationTarget::TRANSFORM;
     set(scale, rotation, translation);
 }
 
 Transform::Transform(const Transform& copy)
     : _matrixDirtyBits(0), _listeners(NULL)
 {
-    GP_REGISTER_SCRIPT_EVENTS();
-
-    _targetType = AnimationTarget::TRANSFORM;
     set(copy);
 }
 
@@ -756,181 +744,6 @@ bool Transform::isStatic() const
     return false;
 }
 
-unsigned int Transform::getAnimationPropertyComponentCount(int propertyId) const
-{
-    switch (propertyId)
-    {
-        case ANIMATE_SCALE_UNIT:
-        case ANIMATE_SCALE_X:
-        case ANIMATE_SCALE_Y:
-        case ANIMATE_SCALE_Z:
-        case ANIMATE_TRANSLATE_X:
-        case ANIMATE_TRANSLATE_Y:
-        case ANIMATE_TRANSLATE_Z:
-            return 1;
-        case ANIMATE_SCALE:
-        case ANIMATE_TRANSLATE:
-            return 3;
-        case ANIMATE_ROTATE:
-            return 4;
-        case ANIMATE_SCALE_TRANSLATE:
-            return 6;
-        case ANIMATE_ROTATE_TRANSLATE:
-        case ANIMATE_SCALE_ROTATE:
-            return 7;
-        case ANIMATE_SCALE_ROTATE_TRANSLATE:
-            return 10;
-        default:
-            return -1;
-    }
-}
-
-void Transform::getAnimationPropertyValue(int propertyId, AnimationValue* value)
-{
-    GP_ASSERT(value);
-
-    switch (propertyId)
-    {
-        case ANIMATE_SCALE_UNIT:
-            value->setFloat(0, _scale.x);
-            break;
-        case ANIMATE_SCALE:
-            value->setFloats(0, &_scale.x, 3);
-            break;
-        case ANIMATE_SCALE_X:
-            value->setFloat(0, _scale.x);
-            break;
-        case ANIMATE_SCALE_Y:
-            value->setFloat(0, _scale.y);
-            break;
-        case ANIMATE_SCALE_Z:
-            value->setFloat(0, _scale.z);
-            break;
-        case ANIMATE_ROTATE:
-            value->setFloats(0, &_rotation.x, 4);
-            break;
-        case ANIMATE_TRANSLATE:
-            value->setFloats(0, &_translation.x, 3);
-            break;
-        case ANIMATE_TRANSLATE_X:
-            value->setFloat(0, _translation.x);
-            break;
-        case ANIMATE_TRANSLATE_Y:
-            value->setFloat(0, _translation.y);
-            break;
-        case ANIMATE_TRANSLATE_Z:
-            value->setFloat(0, _translation.z);
-            break;
-        case ANIMATE_ROTATE_TRANSLATE:
-            value->setFloats(0, &_rotation.x, 4);
-            value->setFloats(4, &_translation.x, 3);
-            break;
-        case ANIMATE_SCALE_ROTATE:
-            value->setFloats(0, &_scale.x, 3);
-            value->setFloats(3, &_rotation.x, 4);
-            break;
-        case ANIMATE_SCALE_TRANSLATE:
-            value->setFloats(0, &_scale.x, 3);
-            value->setFloats(3, &_translation.x, 3);
-            break;
-        case ANIMATE_SCALE_ROTATE_TRANSLATE:
-            value->setFloats(0, &_scale.x, 3);
-            value->setFloats(3, &_rotation.x, 4);
-            value->setFloats(7, &_translation.x, 3);
-            break;
-        default:
-            break;
-    }
-}
-
-void Transform::setAnimationPropertyValue(int propertyId, AnimationValue* value, float blendWeight)
-{
-    GP_ASSERT(value);
-    GP_ASSERT(blendWeight >= 0.0f && blendWeight <= 1.0f);
-
-    switch (propertyId)
-    {
-        case ANIMATE_SCALE_UNIT:
-        {
-            float scale = Curve::lerp(blendWeight, _scale.x, value->getFloat(0));
-            setScale(scale);
-            break;
-        }   
-        case ANIMATE_SCALE:
-        {
-            setScale(Curve::lerp(blendWeight, _scale.x, value->getFloat(0)), Curve::lerp(blendWeight, _scale.y, value->getFloat(1)), Curve::lerp(blendWeight, _scale.z, value->getFloat(2)));
-            break;
-        }
-        case ANIMATE_SCALE_X:
-        {
-            setScaleX(Curve::lerp(blendWeight, _scale.x, value->getFloat(0)));
-            break;
-        }
-        case ANIMATE_SCALE_Y:
-        {
-            setScaleY(Curve::lerp(blendWeight, _scale.y, value->getFloat(0)));
-            break;
-        }
-        case ANIMATE_SCALE_Z:
-        {
-            setScaleZ(Curve::lerp(blendWeight, _scale.z, value->getFloat(0)));
-            break;
-        }
-        case ANIMATE_ROTATE:
-        {
-            applyAnimationValueRotation(value, 0, blendWeight);
-            break;
-        }
-        case ANIMATE_TRANSLATE:
-        {
-            setTranslation(Curve::lerp(blendWeight, _translation.x, value->getFloat(0)), Curve::lerp(blendWeight, _translation.y, value->getFloat(1)), Curve::lerp(blendWeight, _translation.z, value->getFloat(2)));
-            break;
-        }
-        case ANIMATE_TRANSLATE_X:
-        {
-            setTranslationX(Curve::lerp(blendWeight, _translation.x, value->getFloat(0)));
-            break;
-        }
-        case ANIMATE_TRANSLATE_Y:
-        {
-            setTranslationY(Curve::lerp(blendWeight, _translation.y, value->getFloat(0)));
-            break;
-        }
-        case ANIMATE_TRANSLATE_Z:
-        {
-            setTranslationZ(Curve::lerp(blendWeight, _translation.z, value->getFloat(0)));
-            break;
-        }
-        case ANIMATE_ROTATE_TRANSLATE:
-        {
-            applyAnimationValueRotation(value, 0, blendWeight);
-            setTranslation(Curve::lerp(blendWeight, _translation.x, value->getFloat(4)), Curve::lerp(blendWeight, _translation.y, value->getFloat(5)), Curve::lerp(blendWeight, _translation.z, value->getFloat(6)));
-            break;
-        }
-        case ANIMATE_SCALE_ROTATE:
-        {
-            setScale(Curve::lerp(blendWeight, _scale.x, value->getFloat(0)), Curve::lerp(blendWeight, _scale.y, value->getFloat(1)), Curve::lerp(blendWeight, _scale.z, value->getFloat(2)));
-            applyAnimationValueRotation(value, 3, blendWeight);
-            break;
-        }
-        case ANIMATE_SCALE_TRANSLATE:
-        {
-            setScale(Curve::lerp(blendWeight, _scale.x, value->getFloat(0)), Curve::lerp(blendWeight, _scale.y, value->getFloat(1)), Curve::lerp(blendWeight, _scale.z, value->getFloat(2)));
-            setTranslation(Curve::lerp(blendWeight, _translation.x, value->getFloat(3)), Curve::lerp(blendWeight, _translation.y, value->getFloat(4)), Curve::lerp(blendWeight, _translation.z, value->getFloat(5)));
-            break;
-        }
-        case ANIMATE_SCALE_ROTATE_TRANSLATE:
-        {
-            setScale(Curve::lerp(blendWeight, _scale.x, value->getFloat(0)), Curve::lerp(blendWeight, _scale.y, value->getFloat(1)), Curve::lerp(blendWeight, _scale.z, value->getFloat(2)));
-            applyAnimationValueRotation(value, 3, blendWeight);
-            setTranslation(Curve::lerp(blendWeight, _translation.x, value->getFloat(7)), Curve::lerp(blendWeight, _translation.y, value->getFloat(8)), Curve::lerp(blendWeight, _translation.z, value->getFloat(9)));
-            break;
-        }
-        default:
-            break;
-    }
-}
-
 void Transform::dirty(char matrixDirtyBits)
 {
     _matrixDirtyBits |= matrixDirtyBits;
@@ -1000,29 +813,17 @@ void Transform::transformChanged()
             l.listener->transformChanged(this, l.cookie);
         }
     }
-    fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(Transform, transformChanged), dynamic_cast<void*>(this));
 }
 
+    
 void Transform::cloneInto(Transform* transform, NodeCloneContext &context) const
 {
     GP_ASSERT(transform);
-
-    AnimationTarget::cloneInto(transform, context);
+        
     transform->_scale.set(_scale);
     transform->_rotation.set(_rotation);
     transform->_translation.set(_translation);
     transform->dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
-}
-
-void Transform::applyAnimationValueRotation(AnimationValue* value, unsigned int index, float blendWeight)
-{
-    if (isStatic())
-        return;
-
-    GP_ASSERT(value);
-    Quaternion::slerp(_rotation.x, _rotation.y, _rotation.z, _rotation.w, value->getFloat(index), value->getFloat(index + 1), value->getFloat(index + 2), value->getFloat(index + 3), blendWeight, 
-        &_rotation.x, &_rotation.y, &_rotation.z, &_rotation.w);
-    dirty(DIRTY_ROTATION);
 }
 
 }

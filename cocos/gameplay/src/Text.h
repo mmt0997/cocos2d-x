@@ -2,7 +2,6 @@
 #define TEXT_H__
 
 #include "Ref.h"
-#include "AnimationTarget.h"
 #include "Properties.h"
 #include "Font.h"
 #include "Vector2.h"
@@ -18,7 +17,7 @@ namespace gameplay
  *
  * Text can be attached to a node.
  */
-class Text : public Ref, public Drawable, public AnimationTarget
+class Text : public Ref, public Drawable
 {
     friend class Node;
     
@@ -230,26 +229,6 @@ protected:
      * @see Drawable::clone
      */
     Drawable* clone(NodeCloneContext &context);
-
-    /**
-     * @see AnimationTarget::getPropertyId
-     */
-    int getPropertyId(TargetType type, const char* propertyIdStr);
-    
-    /**
-     * @see AnimationTarget::getAnimationPropertyComponentCount
-     */
-    unsigned int getAnimationPropertyComponentCount(int propertyId) const;
-    
-    /**
-     * @see AnimationTarget::getAnimationProperty
-     */
-    void getAnimationPropertyValue(int propertyId, AnimationValue* value);
-    
-    /**
-     * @see AnimationTarget::setAnimationProperty
-     */
-    void setAnimationPropertyValue(int propertyId, AnimationValue* value, float blendWeight = 1.0f);
     
 private:
 

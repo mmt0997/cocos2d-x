@@ -1,7 +1,6 @@
 #ifndef MATERIALPARAMETER_H_
 #define MATERIALPARAMETER_H_
 
-#include "AnimationTarget.h"
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
@@ -34,7 +33,7 @@ namespace gameplay
  * you pass in are valid for the lifetime of the MaterialParameter
  * object.
  */
-class MaterialParameter : public AnimationTarget, public Ref
+class MaterialParameter : public Ref
 {
     friend class RenderState;
 
@@ -336,16 +335,6 @@ public:
      */
     unsigned int getAnimationPropertyComponentCount(int propertyId) const;
 
-    /**
-     * @see AnimationTarget::getAnimationProperty
-     */
-    void getAnimationPropertyValue(int propertyId, AnimationValue* value);
-
-    /**
-     * @see AnimationTarget::setAnimationProperty
-     */
-    void setAnimationPropertyValue(int propertyId, AnimationValue* value, float blendWeight = 1.0f);
-
 private:
    
     /**
@@ -431,8 +420,6 @@ private:
     void clearValue();
 
     void bind(Effect* effect);
-
-    void applyAnimationValue(AnimationValue* value, float blendWeight, int components);
 
     void cloneInto(MaterialParameter* materialParameter) const;
 

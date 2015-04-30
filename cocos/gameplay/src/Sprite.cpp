@@ -649,9 +649,6 @@ Drawable* Sprite::clone(NodeCloneContext& context)
 {
     Sprite* spriteClone = new Sprite();
 
-    // Clone animations
-    AnimationTarget::cloneInto(static_cast<AnimationTarget*>(spriteClone), context);
-
     // Get copied node if it exists
     if (Node* node = getNode())
     {
@@ -680,90 +677,6 @@ Drawable* Sprite::clone(NodeCloneContext& context)
     spriteClone->_batch = _batch;
 
     return spriteClone;
-}
-
-int Sprite::getPropertyId(TargetType type, const char* propertyIdStr)
-{
-    GP_ASSERT(propertyIdStr);
-
-    if (type == AnimationTarget::TRANSFORM)
-    {
-        if (strcmp(propertyIdStr, "ANIMATE_OPACITY") == 0)
-        {
-            return Sprite::ANIMATE_OPACITY;
-        }
-        else if (strcmp(propertyIdStr, "ANIMATE_COLOR") == 0)
-        {
-            return Sprite::ANIMATE_COLOR;
-        }
-        else if (strcmp(propertyIdStr, "ANIMATE_KEYFRAME") == 0)
-        {
-            return Sprite::ANIMATE_KEYFRAME;
-        }
-    }
-
-    return AnimationTarget::getPropertyId(type, propertyIdStr);
-}
-
-unsigned int Sprite::getAnimationPropertyComponentCount(int propertyId) const
-{
-    switch (propertyId)
-    {
-        case ANIMATE_OPACITY:
-            return 1;
-        case ANIMATE_COLOR:
-            return 4;
-        case ANIMATE_KEYFRAME:
-            return 1;
-        default:
-            return -1;
-    }
-}
-
-void Sprite::getAnimationPropertyValue(int propertyId, AnimationValue* value)
-{
-    GP_ASSERT(value);
-    
-    switch (propertyId)
-    {
-        case ANIMATE_OPACITY:
-            value->setFloat(0, _opacity);
-            break;
-        case ANIMATE_COLOR:
-            value->setFloat(0, _color.x);
-            value->setFloat(1, _color.y);
-            value->setFloat(2, _color.z);
-            value->setFloat(3, _color.w);
-            break;
-        case ANIMATE_KEYFRAME:
-            value->setFloat(0, (float)_frameIndex);
-            break;
-        default:
-            break;
-    }
-}
-
-void Sprite::setAnimationPropertyValue(int propertyId, AnimationValue* value, float blendWeight)
-{
-    GP_ASSERT(value);
-    
-    switch(propertyId)
-    {
-        case ANIMATE_OPACITY:
-            setOpacity(Curve::lerp(blendWeight, _opacity, value->getFloat(0)));
-            break;
-        case ANIMATE_COLOR:
-            setColor(Vector4(Curve::lerp(blendWeight, _color.x, value->getFloat(0)),
-                             Curve::lerp(blendWeight, _color.x, value->getFloat(1)),
-                             Curve::lerp(blendWeight, _color.x, value->getFloat(2)),
-                             Curve::lerp(blendWeight, _color.x, value->getFloat(3))));
-            break;
-        case ANIMATE_KEYFRAME:
-            _frameIndex = (unsigned int)value->getFloat(0);
-            break;
-        default:
-            break;
-    }
 }
 
 }

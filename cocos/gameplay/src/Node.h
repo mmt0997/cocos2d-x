@@ -71,7 +71,7 @@ public:
      * @return The type name of this class: "Node"
      * @see ScriptTarget::getTypeName()
      */
-    const char* getTypeName() const;
+    //const char* getTypeName() const;
 
     /**
      * Gets the identifier for the node.
@@ -402,14 +402,6 @@ public:
     Vector3 getActiveCameraTranslationView() const;
 
     /**
-     * Gets the first animation in the node hierarchy with the specified ID.
-     *
-     * @param id The ID of the animation to get. Returns the first animation if ID is NULL.
-     * @return The first animation with the specified ID.
-     */
-    Animation* getAnimation(const char* id = NULL) const;
-
-    /**
      * Gets the drawable object attached to this node.
      *
      * @return The drawable component attached to this node.
@@ -632,23 +624,6 @@ public:
     ~NodeCloneContext();
 
     /**
-     * Finds the cloned animation of the given animation or NULL if this animation was not registered with this context.
-     *
-     * @param animation The animation to search for the cloned copy of.
-     *
-     * @return The cloned animation or NULL if not found.
-     */
-    Animation* findClonedAnimation(const Animation* animation);
-
-    /**
-     * Registers the cloned animation with this context so that it doesn't get cloned twice.
-     *
-     * @param original The pointer to the original animation.
-     * @param clone The pointer to the cloned animation.
-     */
-    void registerClonedAnimation(const Animation* original, Animation* clone);
-
-    /**
      * Finds the cloned node of the given node or NULL if this node was not registered with this context.
      *
      * @param node The node to search for the cloned copy of.
@@ -677,7 +652,6 @@ private:
      */
     NodeCloneContext& operator=(const NodeCloneContext&);
 
-    std::map<const Animation*, Animation*> _clonedAnimations;
     std::map<const Node*, Node*> _clonedNodes;
 };
 

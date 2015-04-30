@@ -426,7 +426,7 @@ void SceneLoader::applyNodeProperty(SceneNode& sceneNode, Node* node, const Prop
             break;
         }
         case SceneNodeProperty::SCRIPT:
-            node->addScript(snp._value.c_str());
+            //node->addScript(snp._value.c_str());
             break;
         default:
             GP_ERROR("Unsupported node property type (%d).", snp._type);
@@ -850,28 +850,28 @@ void SceneLoader::parseNode(Properties* ns, SceneNode* parent, const std::string
 
 void SceneLoader::createAnimations()
 {
-    // Create the scene animations.
-    for (size_t i = 0, count = _animations.size(); i < count; i++)
-    {
-        // If the target node doesn't exist in the scene, then we
-        // can't do anything so we skip to the next animation.
-        Node* node = _scene->findNode(_animations[i]._targetID);
-        if (!node)
-        {
-            GP_ERROR("Attempting to create an animation targeting node '%s', which does not exist in the scene.", _animations[i]._targetID);
-            continue;
-        }
-
-        // Check to make sure the referenced properties object was loaded properly.
-        Properties* p = _properties[_animations[i]._url];
-        if (!p)
-        {
-            GP_ERROR("The referenced animation data at url '%s' failed to load.", _animations[i]._url.c_str());
-            continue;
-        }
-
-        node->createAnimation(_animations[i]._animationID, p);
-    }
+//    // Create the scene animations.
+//    for (size_t i = 0, count = _animations.size(); i < count; i++)
+//    {
+//        // If the target node doesn't exist in the scene, then we
+//        // can't do anything so we skip to the next animation.
+//        Node* node = _scene->findNode(_animations[i]._targetID);
+//        if (!node)
+//        {
+//            GP_ERROR("Attempting to create an animation targeting node '%s', which does not exist in the scene.", _animations[i]._targetID);
+//            continue;
+//        }
+//
+//        // Check to make sure the referenced properties object was loaded properly.
+//        Properties* p = _properties[_animations[i]._url];
+//        if (!p)
+//        {
+//            GP_ERROR("The referenced animation data at url '%s' failed to load.", _animations[i]._url.c_str());
+//            continue;
+//        }
+//
+//        node->createAnimation(_animations[i]._animationID, p);
+//    }
 }
 
 Scene* SceneLoader::loadMainSceneData(const Properties* sceneProperties)

@@ -6,10 +6,11 @@
 #include "Touch.h"
 #include "Gesture.h"
 #include "Gamepad.h"
-#include "AnimationController.h"
 #include "Rectangle.h"
 #include "Vector4.h"
 #include "TimeListener.h"
+#include "Properties.h"
+#include "ScriptTarget.h"
 
 namespace gameplay
 {
@@ -224,14 +225,6 @@ public:
      * @param clearStencil The stencil value to clear to when the flags includes the color buffer.
      */
     void clear(ClearFlags flags, float red, float green, float blue, float alpha, float clearDepth, int clearStencil);
-
-    /**
-     * Gets the animation controller for managing control of animations
-     * associated with the game.
-     * 
-     * @return The animation controller for this game.
-     */
-    inline AnimationController* getAnimationController() const;
 
     /**
      * Gets the script controller for managing control of Lua scripts
@@ -723,7 +716,6 @@ private:
     float _clearDepth;                          // The clear depth value last used for clearing the depth buffer.
     int _clearStencil;                          // The clear stencil value last used for clearing the stencil buffer.
     Properties* _properties;                    // Game configuration properties object.
-    AnimationController* _animationController;  // Controls the scheduling and running of animations.
     std::priority_queue<TimeEvent, std::vector<TimeEvent>, std::less<TimeEvent> >* _timeEvents;     // Contains the scheduled time events.
     ScriptController* _scriptController;            // Controls the scripting engine.
     ScriptTarget* _scriptTarget;                // Script target for the game

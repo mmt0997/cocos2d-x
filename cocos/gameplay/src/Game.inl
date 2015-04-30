@@ -39,11 +39,6 @@ inline const Rectangle& Game::getViewport() const
     return _viewport;
 }
 
-inline AnimationController* Game::getAnimationController() const
-{
-    return _animationController;
-}
-
 inline ScriptController* Game::getScriptController() const
 {
     return _scriptController;

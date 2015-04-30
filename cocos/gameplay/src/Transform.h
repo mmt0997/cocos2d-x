@@ -5,7 +5,6 @@
 #include "Vector3.h"
 #include "Quaternion.h"
 #include "Matrix.h"
-#include "AnimationTarget.h"
 
 namespace gameplay
 {
@@ -28,11 +27,11 @@ class ScriptListener;
  * components using matrix.decompose(Vector3, Quaternion, Vector3) and then pass
  * those arguments to the appropriate constructor or set methods of Transform.
  */
-class Transform : public AnimationTarget, public ScriptTarget
+class Transform// : public AnimationTarget, public ScriptTarget
 {
-    GP_SCRIPT_EVENTS_START();
-    GP_SCRIPT_EVENT(transformChanged, "<Transform>");
-    GP_SCRIPT_EVENTS_END();
+//    GP_SCRIPT_EVENTS_START();
+//    GP_SCRIPT_EVENT(transformChanged, "<Transform>");
+//    GP_SCRIPT_EVENTS_END();
 
 public:
 
@@ -782,21 +781,6 @@ public:
      * @param listener The listener to remove.
      */
     void removeListener(Transform::Listener* listener);
-    
-    /**
-     * @see AnimationTarget::getAnimationPropertyComponentCount
-     */
-    unsigned int getAnimationPropertyComponentCount(int propertyId) const;
-
-    /**
-     * @see AnimationTarget::getAnimationProperty
-     */
-    void getAnimationPropertyValue(int propertyId, AnimationValue* value);
-
-    /**
-     * @see AnimationTarget::setAnimationProperty
-     */
-    void setAnimationPropertyValue(int propertyId, AnimationValue* value, float blendWeight = 1.0f);
 
 protected:
 
@@ -891,8 +875,6 @@ protected:
     std::list<TransformListener>* _listeners;
 
 private:
-   
-    void applyAnimationValueRotation(AnimationValue* value, unsigned int index, float blendWeight);
 
     static int _suspendTransformChanged;
     static std::vector<Transform*> _transformsChanged;

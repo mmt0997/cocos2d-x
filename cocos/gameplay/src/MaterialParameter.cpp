@@ -642,118 +642,6 @@ unsigned int MaterialParameter::getAnimationPropertyComponentCount(int propertyI
     return 0;
 }
 
-void MaterialParameter::getAnimationPropertyValue(int propertyId, AnimationValue* value)
-{
-    GP_ASSERT(value);
-    switch (propertyId)
-    {
-        case ANIMATE_UNIFORM:
-        {
-            switch (_type)
-            {
-                case FLOAT:
-                    value->setFloat(0, _value.floatValue);
-                    break;
-                case FLOAT_ARRAY:
-                    GP_ASSERT(_value.floatPtrValue);
-                    for (unsigned int i = 0; i < _count; i++)
-                    {
-                        value->setFloat(i, _value.floatPtrValue[i]);
-                    }
-                    break;
-                case INT:
-                    value->setFloat(0, _value.intValue);
-                    break;
-                case INT_ARRAY:
-                    GP_ASSERT(_value.intPtrValue);
-                    for (unsigned int i = 0; i < _count; i++)
-                    {
-                        value->setFloat(i, _value.intPtrValue[i]);
-                    }
-                    break;
-                case VECTOR2:
-                    value->setFloats(0, _value.floatPtrValue, _count * 2);
-                    break;
-                case VECTOR3:
-                    value->setFloats(0, _value.floatPtrValue, _count * 3);
-                    break;
-                case VECTOR4:
-                    value->setFloats(0, _value.floatPtrValue, _count * 4);
-                    break;
-                case NONE:
-                case MATRIX:
-                case METHOD:
-                case SAMPLER:
-                case SAMPLER_ARRAY:
-                    // Unsupported material parameter types for animation.
-                    break;
-                default:
-                    break;
-            }
-        }
-        break;
-    }
-}
-
-void MaterialParameter::setAnimationPropertyValue(int propertyId, AnimationValue* value, float blendWeight)
-{
-    GP_ASSERT(value);
-    GP_ASSERT(blendWeight >= 0.0f && blendWeight <= 1.0f);
-
-    switch (propertyId)
-    {
-        case ANIMATE_UNIFORM:
-        {
-            switch (_type)
-            {
-                case FLOAT:
-                    _value.floatValue = Curve::lerp(blendWeight, _value.floatValue, value->getFloat(0));
-                    break;
-                case FLOAT_ARRAY:
-                    applyAnimationValue(value, blendWeight, 1);
-                    break;
-                case INT:
-                    _value.intValue = Curve::lerp(blendWeight, _value.intValue, value->getFloat(0));
-                    break;
-                case INT_ARRAY:
-                    GP_ASSERT(_value.intPtrValue);
-                    for (unsigned int i = 0; i < _count; i++)
-                        _value.intPtrValue[i] = Curve::lerp(blendWeight, _value.intPtrValue[i], value->getFloat(i));
-                    break;
-                case VECTOR2:
-                    applyAnimationValue(value, blendWeight, 2);
-                    break;
-                case VECTOR3:
-                    applyAnimationValue(value, blendWeight, 3);
-                    break;
-                case VECTOR4:
-                    applyAnimationValue(value, blendWeight, 4);
-                    break;
-                case NONE:
-                case MATRIX:
-                case METHOD:
-                case SAMPLER:
-                case SAMPLER_ARRAY:
-                    // Unsupported material parameter types for animation.
-                    break;
-                default:
-                    break;
-            }
-        }
-        break;
-    }
-}
-
-void MaterialParameter::applyAnimationValue(AnimationValue* value, float blendWeight, int components)
-{
-    GP_ASSERT(value);
-    GP_ASSERT(_value.floatPtrValue);
-
-    unsigned int count = _count * components;
-    for (unsigned int i = 0; i < count; i++)
-        _value.floatPtrValue[i] = Curve::lerp(blendWeight, _value.floatPtrValue[i], value->getFloat(i));
-}
-
 void MaterialParameter::cloneInto(MaterialParameter* materialParameter) const
 {
     GP_ASSERT(materialParameter);
@@ -848,9 +736,6 @@ void MaterialParameter::cloneInto(MaterialParameter* materialParameter) const
         GP_ERROR("Unsupported material parameter type(%d).", _type);
         break;
     }
-    
-    NodeCloneContext context;
-    this->AnimationTarget::cloneInto(materialParameter, context);
 }
 
 MaterialParameter::MethodBinding::MethodBinding(MaterialParameter* param) :

@@ -60,7 +60,6 @@ Game::Game()
     : _initialized(false), _state(UNINITIALIZED), _pausedCount(0),
       _frameLastFPS(0), _frameCount(0), _frameRate(0), _width(0), _height(0),
       _clearDepth(1.0f), _clearStencil(0), _properties(NULL),
-      _animationController(NULL),
       _timeEvents(NULL), _scriptController(NULL), _scriptTarget(NULL)
 {
     GP_ASSERT(__gameInstance == NULL);
@@ -160,9 +159,6 @@ bool Game::startup()
     RenderState::initialize();
     FrameBuffer::initialize();
 
-    _animationController = new AnimationController();
-    _animationController->initialize();
-
     _scriptController = new ScriptController();
     _scriptController->initialize();
 
@@ -246,9 +242,6 @@ void Game::shutdown()
             SAFE_DELETE(gamepad);
         }
 
-        _animationController->finalize();
-        SAFE_DELETE(_animationController);
-
         // Note: we do not clean up the script controller here
         // because users can call Game::exit() from a script.
 
@@ -272,7 +265,6 @@ void Game::pause()
         GP_ASSERT(_aiController);
         _state = PAUSED;
         _pausedTimeLast = Platform::getAbsoluteTime();
-        _animationController->pause();
     }
 
     ++_pausedCount;
@@ -292,7 +284,6 @@ void Game::resume()
             GP_ASSERT(_aiController);
             _state = RUNNING;
             _pausedTimeTotal += Platform::getAbsoluteTime() - _pausedTimeLast;
-            _animationController->resume();
         }
     }
 }
@@ -352,9 +343,6 @@ void Game::frame()
         // Update Time.
         float elapsedTime = (frameTime - lastFrameTime);
         lastFrameTime = frameTime;
-
-        // Update the scheduled and running animations.
-        _animationController->update(elapsedTime);
 
         // Update gamepads.
         Gamepad::updateInternal(elapsedTime);
@@ -422,8 +410,6 @@ void Game::updateOnce()
     float elapsedTime = (frameTime - lastFrameTime);
     lastFrameTime = frameTime;
 
-    // Update the internal controllers.
-    _animationController->update(elapsedTime);
     if (_scriptTarget)
         _scriptTarget->fireScriptEvent<void>(GP_GET_SCRIPT_EVENT(GameScriptTarget, update), elapsedTime);
 }

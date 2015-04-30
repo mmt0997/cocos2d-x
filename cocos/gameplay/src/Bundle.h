@@ -389,46 +389,6 @@ private:
     MeshSkin* readMeshSkin();
 
     /**
-     * Reads an animation from the current file position.
-     * 
-     * @param scene The scene to load the animations into.
-     */
-    void readAnimation(Scene* scene);
-
-    /**
-     * Reads an "animations" object from the current file position and all of the animations contained in it.
-     * 
-     * @param scene The scene to load the animations into.
-     */
-    void readAnimations(Scene* scene);
-
-    /**
-     * Reads an animation channel at the current file position into the given animation.
-     * 
-     * @param scene The scene that the animation is in.
-     * @param animation The animation to the load channel into.
-     * @param animationId The ID of the animation that this channel is loaded into.
-     * 
-     * @return The animation that the channel was loaded into.
-     */
-    Animation* readAnimationChannel(Scene* scene, Animation* animation, const char* animationId);
-
-    /**
-     * Reads the animation channel data at the current file position into the given animation
-     * (with the given animation target and target attribute).
-     * 
-     * Note: this is used by Bundle::loadNode(const char*, Scene*) and Bundle::readAnimationChannel(Scene*, Animation*, const char*).
-     * 
-     * @param animation The animation to the load channel into.
-     * @param id The ID of the animation that this channel is loaded into.
-     * @param target The animation target.
-     * @param targetAttribute The target attribute being animated.
-     * 
-     * @return The animation that the channel was loaded into.
-     */
-    Animation* readAnimationChannelData(Animation* animation, const char* id, AnimationTarget* target, unsigned int targetAttribute);
-
-    /**
      * Sets the transformation matrix.
      *
      * @param values A pointer to array of 16 floats.
