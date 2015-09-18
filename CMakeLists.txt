@@ -37,7 +37,6 @@ include(CocosBuildHelpers)
 #===============================================================================
 # CMake settings for entire project.
 
-#set(CMAKE_USE_RELATIVE_PATHS TRUE)
 set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
 
 # For multi-config IDE(e.g. VS, Xcode), set debug and release as default.
@@ -65,45 +64,51 @@ add_subdirectory("cocos")
 option(BUILD_TESTS_CPP "Build Cocos2D cpp tests." ON)
 if(BUILD_TESTS_CPP)
     add_subdirectory("tests/cpp-empty-test")
-    add_subdirectory("tests/cpp-tests")
+    #add_subdirectory("tests/cpp-tests")
     if(COCOS_TARGET_SYSTEM_IOS)
         add_subdirectory("tests/game-controller-test")
     endif()
 endif()
 
 #===============================================================================
-# Include library target 'luacocos2d'.
-option(BUILD_LUA_COCOS2D "Build Cocos2D LUA binding libraries." ON)
-if(BUILD_LUA_COCOS2D)
-    add_subdirectory("cocos/scripting/lua-bindings")
-endif()
-# Include lua tests.
-include(CMakeDependentOption)
-CMAKE_DEPENDENT_OPTION(BUILD_TESTS_LUA
-    "Build Cocos2D LUA binging tests, depends BUILD_TESTS_CPP."
-    ON "BUILD_LUA_COCOS2D AND BUILD_TESTS_CPP"
-    OFF
-    )
-if(BUILD_TESTS_LUA)
-    add_subdirectory("tests/lua-empty-test/project")
-    add_subdirectory("tests/lua-tests/project")
-    if(COCOS_TARGET_SYSTEM_IOS)
-        add_subdirectory("tests/lua-game-controller-test/project")
+# Luacocos2d don't support Windows Store and Windows Phone.
+if(NOT COCOS_TARGET_SYSTEM_WINSTORE AND NOT COCOS_TARGET_SYSTEM_WINPHONE)
+    # Include library target 'luacocos2d'.
+    option(BUILD_LUA_COCOS2D "Build Cocos2D LUA binding libraries." ON)
+    if(BUILD_LUA_COCOS2D)
+        add_subdirectory("cocos/scripting/lua-bindings")
+    endif()
+    # Include lua tests.
+    include(CMakeDependentOption)
+    CMAKE_DEPENDENT_OPTION(BUILD_TESTS_LUA
+        "Build Cocos2D LUA binging tests, depends BUILD_TESTS_CPP."
+        ON "BUILD_LUA_COCOS2D AND BUILD_TESTS_CPP"
+        OFF
+        )
+    if(BUILD_TESTS_LUA)
+        add_subdirectory("tests/lua-empty-test/project")
+        add_subdirectory("tests/lua-tests/project")
+        if(COCOS_TARGET_SYSTEM_IOS)
+            add_subdirectory("tests/lua-game-controller-test/project")
+        endif()
     endif()
 endif()
 
 #===============================================================================
-# Include library target 'jscocos2d'.
-option(BUILD_JS_COCOS2D "Build Cocos2D JavaScript binding libraries." ON)
-if(BUILD_JS_COCOS2D)
-    add_subdirectory("cocos/scripting/js-bindings")
-endif()
-CMAKE_DEPENDENT_OPTION(BUILD_TESTS_JS
-    "Build Cocos2D JavaScript binging tests."
-    ON "BUILD_JS_COCOS2D"
-    OFF
-    )
-if(BUILD_TESTS_JS)
-    add_subdirectory("tests/js-tests/project")
+# JScocos2d don't support Windows Store and Windows Phone.
+if(NOT COCOS_TARGET_SYSTEM_WINSTORE AND NOT COCOS_TARGET_SYSTEM_WINPHONE)
+    # Include library target 'jscocos2d'.
+    option(BUILD_JS_COCOS2D "Build Cocos2D JavaScript binding libraries." ON)
+    if(BUILD_JS_COCOS2D)
+        add_subdirectory("cocos/scripting/js-bindings")
+    endif()
+    CMAKE_DEPENDENT_OPTION(BUILD_TESTS_JS
+        "Build Cocos2D JavaScript binging tests."
+        ON "BUILD_JS_COCOS2D"
+        OFF
+        )
+    if(BUILD_TESTS_JS)
+        add_subdirectory("tests/js-tests/project")
+    endif()
 endif()
 

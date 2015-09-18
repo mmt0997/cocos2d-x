@@ -25,6 +25,7 @@
 
 #include <errno.h>
 #include <assert.h>
+#include "CCStdC.h"
 
 #if defined(_DEBUG)
 #define DEBUGASSERT(x) assert(x)

@@ -15,7 +15,7 @@ if(COCOS_TARGET_SYSTEM_MACOSX OR
         message(FATAL_ERROR "sqlite3 Not Found")
     endif()
     target_link_libraries(${COCOS2D_TARGET} ${SQLITE3_LIBRARIES})
-elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+elseif(COCOS_TARGET_SYSTEM_WINDOWS OR COCOS_TARGET_SYSTEM_WINSTORE)
     cocos_use_package(${COCOS2D_TARGET} SQLITE3 REQUIRED)
 elseif(COCOS_TARGET_SYSTEM_ANDROID)
     set(storage_src "storage/local-storage/LocalStorage-android.cpp")

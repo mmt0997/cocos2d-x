@@ -74,3 +74,10 @@ if(base_src)
     cocos_target_sources(${COCOS2D_TARGET} GROUP "base" FILES ${base_src})
 endif()
 
+if(COCOS_TARGET_SYSTEM_WINSTORE)
+    # FIXME: this file compile failed if not FI cocos2d.h
+    set_source_files_properties("base/CCDirector.cpp"
+        PROPERTIES COMPILE_FLAGS
+        /FI"cocos2d.h"
+        )
+endif()

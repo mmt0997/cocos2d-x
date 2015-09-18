@@ -19,12 +19,12 @@ if(CMAKE_SYSTEM_NAME MATCHES "Darwin")
         set(COCOS_TARGET_SYSTEM ${COCOS_TARGET_SYSTEM_MACOSX})
     endif()
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    if(WINRT)
-        set(COCOS_TARGET_SYSTEM_WINRT "Windows RT")
-        set(COCOS_TARGET_SYSTEM ${COCOS_TARGET_SYSTEM_WINRT})
-    elseif(WP8)
-        set(COCOS_TARGET_SYSTEM_WP8 "Windows Phone 8")
-        set(COCOS_TARGET_SYSTEM ${COCOS_TARGET_SYSTEM_WP8})
+    if(WINDOWS_STORE)
+        set(COCOS_TARGET_SYSTEM_WINSTORE "Windows Store")
+        set(COCOS_TARGET_SYSTEM ${COCOS_TARGET_SYSTEM_WINSTORE})
+    elseif(WINDOWS_PHONE)
+        set(COCOS_TARGET_SYSTEM_WINPHONE "Windows Phone")
+        set(COCOS_TARGET_SYSTEM ${COCOS_TARGET_SYSTEM_WINPHONE})
     else()
         set(COCOS_TARGET_SYSTEM_WINDOWS "Windows Desktop")
         set(COCOS_TARGET_SYSTEM ${COCOS_TARGET_SYSTEM_WINDOWS})
@@ -57,7 +57,7 @@ else()
 endif()
 #===============================================================================
 # Define BUILD_SHARED_LIBS and BUILD_USE_PREBUILT_LIBS options.
-if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+if(COCOS_TARGET_SYSTEM_WINDOWS)
      # Prebuilt windows libs can't be used with mingw.
     if(NOT MINGW)
         option(BUILD_USE_PREBUILT_LIBS
@@ -66,7 +66,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
             )
     endif()
     option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
+elseif(COCOS_TARGET_SYSTEM_LINUX)
     # The prebuilt libraries on linux don't support build shared library.
     # if wan't build shared cocos2d project, use '-fPIC' to recompile all
     #     prebuilt libs.
@@ -76,9 +76,14 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
         ON "NOT BUILD_SHARED_LIBS"
         OFF
         )
-elseif(CMAKE_SYSTEM_NAME MATCHES "iOS")
+elseif(COCOS_TARGET_SYSTEM_IOS)
     set(BUILD_USE_PREBUILT_LIBS TRUE CACHE INTERNAL "")
     set(BUILD_SHARED_LIBS FALSE CACHE INTERNAL "")
+elseif(COCOS_TARGET_SYSTEM_WINSTORE)
+    # warning LNK4264: note that when authoring Windows Runtime types it is not
+    # recommended to link with a static library that contains Windows Runtime
+    # metadata.
+    set(BUILD_SHARED_LIBS TRUE CACHE INTERNAL "")
 else()
     option(BUILD_USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ON)
     option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
@@ -95,7 +100,6 @@ if(MSVC)
     add_definitions(
        -D_CRT_SECURE_NO_WARNINGS
        -D_SCL_SECURE_NO_WARNINGS
-       -D_UNICODE -DUNICODE
        -wd4267 -wd4251 -wd4244
         #-wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710 -wd4514 -wd4056 -wd4996 -wd4099
         )
@@ -127,6 +131,8 @@ if(COCOS_TARGET_SYSTEM_MACOSX)
     endif()
 
 elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    # All binaries using cocos2d should use unicode.
+    add_definitions(-D_UNICODE -DUNICODE)
     # Cocos only support win32.
     if(CMAKE_CL_64)
         message(FATAL_ERROR "Cocos only support i386 architecture on Windows!")
@@ -186,6 +192,58 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
     set(COCOS_ARCH_FOLDER_SUFFIX "${ANDROID_ABI}" CACHE INTERNAL "" FORCE)
     include(../AndroidNdkModules)
     android_ndk_import_module_cpufeatures()
+
+elseif(COCOS_TARGET_SYSTEM_WINSTORE)
+    # Default CMAKE_C_FLAGS has defined WIN32 _WINDOWS, which is useless.
+    # /W3 warning level 3
+    # /EHsc Code Generation->Enable C++ Exceptions
+    set(CMAKE_C_FLAGS "/W3")
+    set(CMAKE_CXX_FLAGS "/W3 /EHsc")
+    # -D_VARIADIC_MAX=10 : extend std::tuple template arguments max to 10
+    add_definitions(
+        -DWINRT
+        -D_VARIADIC_MAX=10
+        -DNOMINMAX
+        -DGL_GLEXT_PROTOTYPES
+        )
+
+    # TODO
+    set(_platform_winmd_dir "C:/Program Files (x86)/Microsoft SDKs/Windows/v8.1/ExtensionSDKs/Microsoft.VCLibs/12.0/References/CommonConfiguration/neutral/")
+    set(_windows_winmd_dir "C:/Program Files (x86)/Windows Kits/8.1/References/CommonConfiguration/Neutral/")
+
+    # /sdl- turn off C/C++->General->SDK checks,
+    #   it cause treat deprecated fucntion as error.
+    # /ZW enable C/C++->General->Consume Windows Runtime Extension
+    # /AI and /FU force using the system winmd file.
+    add_compile_options(
+        /sdl-
+        /ZW
+        /ZW:nostdlib
+        /AI"${_platform_winmd_dir}"
+        /AI"${_windows_winmd_dir}"
+        /FU"platform.winmd"
+        /FU"Windows.winmd"
+        )
+    if(NOT CMAKE_SYSTEM_VERSION)
+        set(CMAKE_SYSTEM_VERSION 8.1)
+    elseif(CMAKE_SYSTEM_VERSION LESS "8.1")
+        message(AUTHOR_WARNING "Cocos only support 8.1 or higher version.")
+    endif()
+
+    if(CMAKE_GENERATOR MATCHES "ARM")
+        set(BUILD_TARGET_ARCHITECTURE "arm" CACHE INTERNAL "" FORCE)
+        set(COCOS_ARCH_FOLDER_SUFFIX "ARM")
+    elseif(CMAKE_GENERATOR MATCHES "Win64")
+        message(AUTHOR_WARNING "Cocos don't test on x86_64 arch yet.")
+        # don't have prebuilt lib for x86_64
+        set(BUILD_USE_PREBUILT_LIBS FALSE CACHE INTERNAL "" FORCE)
+        set(BUILD_TARGET_ARCHITECTURE "x86_64" CACHE INTERNAL "" FORCE)
+    else()
+        # this is windows store i386 arch
+        set(BUILD_TARGET_ARCHITECTURE "i386" CACHE INTERNAL "" FORCE)
+        set(COCOS_ARCH_FOLDER_SUFFIX "Win32")
+    endif()
+
 else()
     message(FATAL_ERROR
         "${CMAKE_CURRENT_LIST_FILE} build on unsupported target platform!"
@@ -219,7 +277,7 @@ macro(cocos_find_package pkg_name pkg_prefix)
     endif()
     set(${pkg_prefix}_LIBRARIES ${${pkg_prefix}_LIBRARIES} CACHE STRING "" FORCE)
     mark_as_advanced(${pkg_prefix}_LIBRARIES)
-  
+
     message(STATUS "cocos find package '${pkg_name}':")
     message(STATUS "    pkg_libs: ${${pkg_prefix}_LIBRARIES}")
     message(STATUS "    inc_dirs: ${${pkg_prefix}_INCLUDE_DIRS}")

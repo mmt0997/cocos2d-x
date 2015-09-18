@@ -51,6 +51,15 @@ target_include_directories(${COCOS2D_TARGET} PRIVATE
     "../external"
     )
 
+if(COCOS_TARGET_SYSTEM_WINSTORE)
+    # pch.h, which tests used, in win8.1-universal directory
+    # tests include Keyboard-winrt.h, which in winrt dir, directly
+    target_include_directories(${COCOS2D_TARGET} PUBLIC
+        "platform/winrt"
+        "platform/win8.1-universal"
+        )
+endif()
+
 #===============================================================================
 # Include all subdirectories, each subdirectory maybe has headers, sources, 
 #   and special definations.
@@ -106,6 +115,11 @@ if(COCOS_TARGET_SYSTEM_MACOSX OR
     cocos_use_package(${COCOS2D_TARGET} GLFW3 REQUIRED)
 endif()
 
+if(COCOS_TARGET_SYSTEM_WINSTORE OR COCOS_TARGET_SYSTEM_WINPHONE)
+    cocos_use_package(${COCOS2D_TARGET} ANGLE_EGL REQUIRED)
+    cocos_use_package(${COCOS2D_TARGET} ANGLE_GLES REQUIRED)
+endif()
+
 if(COCOS_TARGET_SYSTEM_MACOSX)
     # There is no specific libs for MacOSX.
 elseif(COCOS_TARGET_SYSTEM_WINDOWS)
@@ -153,19 +167,58 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
         "cpufeatures"
         )
 
+elseif(COCOS_TARGET_SYSTEM_WINSTORE)
+    target_link_libraries(${COCOS2D_TARGET}
+        "ws2_32.lib"
+        "d2d1.lib"
+        "d3d11.lib"
+        "dxgi.lib"
+        "windowscodecs.lib"
+        "dwrite.lib"
+        "dxguid.lib"
+        "mfcore.lib"
+        "mfplat.lib"
+        "mfreadwrite.lib"
+        "mfuuid.lib"
+        )
 else()
     message(FATAL_ERROR "${CMAKE_CURRENT_LIST_FILE} build for unsupported os.")
 endif()
 
 #===============================================================================
 #  Specific settings.
-if(COCOS_TARGET_SYSTEM_WINDOWS)
+if(COCOS_TARGET_SYSTEM_WINDOWS OR
+        COCOS_TARGET_SYSTEM_WINSTORE OR
+        COCOS_TARGET_SYSTEM_WINDOWS)
     target_compile_definitions(${COCOS2D_TARGET} PUBLIC UNICODE _UNICODE)
     if(BUILD_SHARED_LIBS)
-        target_compile_definitions(${COCOS2D_TARGET} PRIVATE _USRDLL _USE3DDLL)
+        # _USRDLL:      cocos2d build as dll
+        # _USEGUIDLL:   used by cocos/ui
+        target_compile_definitions(${COCOS2D_TARGET} PRIVATE _USRDLL _USEGUIDLL)
     else()
         target_compile_definitions(${COCOS2D_TARGET} PUBLIC CC_STATIC)
     endif()
 
+endif()
+
+if(COCOS_TARGET_SYSTEM_WINSTORE)
+        #/FI"pch.h"
+    target_compile_options(${COCOS2D_TARGET} PRIVATE
+        /Z7
+        /Zm384
+        )
+    set(def_file_path "/DEF:\"${CMAKE_CURRENT_LIST_DIR}/2d/cocos2d.def\"")
+    get_target_property(link_flags ${COCOS2D_TARGET} LINK_FLAGS)
+    if(link_flags)
+        set(link_flags
+            "${link_flags} ${def_file_path}"
+            )
+    else()
+        set(link_flags ${def_file_path})
+    endif()
+
+    set_target_properties(${COCOS2D_TARGET} PROPERTIES
+        LINK_FLAGS ${link_flags}
+        )
 endif()
 

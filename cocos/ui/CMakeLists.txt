@@ -62,6 +62,16 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
         "ui/UIWebView.cpp"
         "ui/UIWebViewImpl-android.cpp"
         )
+elseif(COCOS_TARGET_SYSTEM_WINSTORE)
+    list(APPEND ui_src
+        "ui/UIEditBox/UIEditBoxImpl-winrt.cpp"
+        )
+    # FIXME: this file compile failed if not FI cocos2d.h
+    set_source_files_properties(
+        "ui/UIEditBox/UIEditBoxImpl-winrt.cpp"
+        PROPERTIES COMPILE_FLAGS
+        /FI"cocos2d.h"
+        )
 else()
     message(FATAL_ERROR "${CMAKE_CURRENT_LIST_FILE} build for unsupported OS.")
 endif()

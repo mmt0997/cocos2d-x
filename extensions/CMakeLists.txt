@@ -28,8 +28,12 @@ cocos_target_sources(${COCOS2D_TARGET} GROUP "extensions" FILES
     "../extensions/physics-nodes/CCPhysicsSprite.cpp"
 )
 
-if(COCOS_TARGET_SYSTEM_WINDOWS AND BUILD_SHARED_LIBS)
-    target_compile_definitions(${COCOS2D_TARGET} PRIVATE _USREXDLL)
+if(COCOS_TARGET_SYSTEM_WINDOWS OR
+        COCOS_TARGET_SYSTEM_WINSTORE OR
+        COCOS_TARGET_SYSTEM_WINPHONE)
+    if(BUILD_SHARED_LIBS)
+        target_compile_definitions(${COCOS2D_TARGET} PRIVATE _USREXDLL)
+    endif()
 endif()
 
 #===============================================================================

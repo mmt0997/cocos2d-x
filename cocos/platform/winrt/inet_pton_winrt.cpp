@@ -24,6 +24,7 @@
 
 #include <errno.h>
 #include <assert.h>
+#include "CCStdC.h"
 
 #define ERRNO         ((int)GetLastError())
 #define SET_ERRNO(x)  (SetLastError((DWORD)(x)))

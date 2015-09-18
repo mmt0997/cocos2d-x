@@ -8,7 +8,7 @@ endif()
 
 #===============================================================================
 # Common sources.
-set(platform_src
+cocos_target_sources(${COCOS2D_TARGET} GROUP "platform" FILES
     ${CMAKE_CURRENT_LIST_FILE}
     "platform/CCSAXParser.cpp"
     "platform/CCThread.cpp"
@@ -19,18 +19,28 @@ set(platform_src
 
 #===============================================================================
 # System specific sources.
-if(COCOS_TARGET_SYSTEM_MACOSX)
-    set(platform_specific_src
-        "platform/mac/CCApplication-mac.mm"
-        "platform/mac/CCCommon-mac.mm"
-        "platform/mac/CCDevice-mac.mm"
+if(APPLE)
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\apple" FILES
         "platform/apple/CCLock-apple.cpp"
         "platform/apple/CCFileUtils-apple.mm"
         "platform/apple/CCThread-apple.mm"
+    )
+endif()
+
+#if(COCOS_TARGET_SYSTEM_WINSTORE AND COCOS_TARGET_SYSTEM_WINPHONE)
+#    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\universal" FILES
+#        )
+#endif()
+
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\mac" FILES
+        "platform/mac/CCApplication-mac.mm"
+        "platform/mac/CCCommon-mac.mm"
+        "platform/mac/CCDevice-mac.mm"
         "platform/desktop/CCGLViewImpl-desktop.cpp"
     )
 elseif(COCOS_TARGET_SYSTEM_WINDOWS)
-    set(platform_specific_src
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\win32" FILES
         "platform/win32/CCStdC-win32.cpp"
         "platform/win32/CCFileUtils-win32.cpp"
         "platform/win32/CCCommon-win32.cpp"
@@ -39,7 +49,7 @@ elseif(COCOS_TARGET_SYSTEM_WINDOWS)
         "platform/desktop/CCGLViewImpl-desktop.cpp"
     )
 elseif(COCOS_TARGET_SYSTEM_LINUX)
-    set(platform_specific_src
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\linux" FILES
         "platform/linux/CCStdC-linux.cpp"
         "platform/linux/CCFileUtils-linux.cpp"
         "platform/linux/CCCommon-linux.cpp"
@@ -48,7 +58,7 @@ elseif(COCOS_TARGET_SYSTEM_LINUX)
         "platform/desktop/CCGLViewImpl-desktop.cpp"
     )
 elseif(COCOS_TARGET_SYSTEM_IOS)
-    set(platform_specific_src
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\ios" FILES
         "platform/ios/CCApplication-ios.h"
         "platform/ios/CCApplication-ios.mm"
         "platform/ios/CCCommon-ios.mm"
@@ -67,18 +77,17 @@ elseif(COCOS_TARGET_SYSTEM_IOS)
         "platform/ios/CCPlatformDefine-ios.h"
         "platform/ios/CCStdC-ios.h"
         "platform/ios/OpenGL_Internal-ios.h"
-        "platform/apple/CCLock-apple.cpp"
-        "platform/apple/CCFileUtils-apple.mm"
-        "platform/apple/CCThread-apple.mm"
     )
 elseif(COCOS_TARGET_SYSTEM_ANDROID)
-    set(platform_specific_src
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\android" FILES
         "platform/android/CCApplication-android.cpp"
         "platform/android/CCCommon-android.cpp"
         "platform/android/CCDevice-android.cpp"
         "platform/android/CCGLViewImpl-android.cpp"
         "platform/android/CCFileUtils-android.cpp"
         "platform/android/javaactivity-android.cpp"
+        )
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\android\\jni" FILES
         "platform/android/jni/CocosPlayClient.cpp"
         "platform/android/jni/DPIJni.cpp"
         "platform/android/jni/IMEJni.cpp"
@@ -89,12 +98,54 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
         "platform/android/jni/JniHelper.cpp"
         "platform/android/jni/TouchesJni.cpp"
     )
+elseif(COCOS_TARGET_SYSTEM_WINSTORE)
+    cocos_target_sources(${COCOS2D_TARGET} GROUP "platform\\winrt" FILES
+        "platform/winrt/shaders/precompiledshaders.h"
+        "platform/winrt/CCApplication.cpp"
+        "platform/winrt/CCApplication.h"
+        "platform/winrt/CCCommon.cpp"
+        "platform/winrt/CCDevice.cpp"
+        "platform/winrt/CCFileUtilsWinRT.cpp"
+        "platform/winrt/CCFileUtilsWinRT.h"
+        "platform/winrt/CCFreeTypeFont.cpp"
+        "platform/winrt/CCFreeTypeFont.h"
+        "platform/winrt/CCGL.h"
+        "platform/winrt/CCGLViewImpl-winrt.cpp"
+        "platform/winrt/CCGLViewImpl-winrt.h"
+        #"platform/winrt/CCGLViewImpl.cpp"
+        "platform/winrt/CCGLViewImpl.h"
+        "platform/winrt/CCGL_Angle.h"
+        "platform/winrt/CCPThreadWinRT.cpp"
+        "platform/winrt/CCPThreadWinRT.h"
+        "platform/winrt/CCPlatformDefine-winrt.h"
+        "platform/winrt/CCStdC.cpp"
+        "platform/winrt/CCStdC.h"
+        "platform/winrt/CCWinRTUtils.cpp"
+        "platform/winrt/CCWinRTUtils.h"
+        "platform/winrt/DirectXBase.cpp"
+        "platform/winrt/DirectXBase.h"
+        "platform/winrt/DirectXHelper.h"
+        "platform/winrt/InputEvent.cpp"
+        "platform/winrt/InputEvent.h"
+        "platform/winrt/InputEventTypes.h"
+        "platform/winrt/Keyboard-winrt.cpp"
+        "platform/winrt/Keyboard-winrt.h"
+        "platform/winrt/inet_ntop_winrt.cpp"
+        "platform/winrt/inet_ntop_winrt.h"
+        "platform/winrt/inet_pton_winrt.cpp"
+        "platform/winrt/inet_pton_winrt.h"
+        "platform/winrt/pch.cpp"
+        "platform/winrt/pch.h"
+        "platform/winrt/sha1.cpp"
+        "platform/winrt/sha1.h"
+        "platform/winrt/shaders"
+        "platform/winrt/targetver.h"
+        )
+else()
+    message(AUTHOR_WARNING
+        "${CMAKE_CURRENT_LIST_FILE} build on unsupport system."
+        )
 endif()
-
-cocos_target_sources(${COCOS2D_TARGET} GROUP "platform" FILES
-    ${platform_src}
-    ${platform_specific_src}
-    )
 
 # CCGLViewImpl-ios.mm depends on CCSet.h yet, need remove sometime.
 if(COCOS_TARGET_SYSTEM_IOS)
@@ -110,3 +161,12 @@ if(COCOS_TARGET_SYSTEM_ANDROID)
         )
 endif()
 
+if(COCOS_TARGET_SYSTEM_WINSTORE)
+    # FIXME: this file compile failed if not FI cocos2d.h
+    set_source_files_properties(
+        "platform/winrt/InputEvent.cpp"
+        "platform/winrt/keyboard-winrt.cpp"
+        PROPERTIES COMPILE_FLAGS
+        /FI"cocos2d.h"
+        )
+endif()

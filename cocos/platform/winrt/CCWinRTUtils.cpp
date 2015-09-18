@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include <ppl.h>
 #include <ppltasks.h>
 #include <sstream>
+#include "base/CCConsole.h"
 
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -116,7 +117,7 @@ void CC_DLL CCLogIPAddresses()
         if (hn->IPInformation != nullptr)
         {
             std::string s = PlatformStringToString(hn->DisplayName);
-            CCLog("IP Address: %s:", s.c_str());
+			cocos2d::log("IP Address: %s:", s.c_str());
         }
     }
 }
